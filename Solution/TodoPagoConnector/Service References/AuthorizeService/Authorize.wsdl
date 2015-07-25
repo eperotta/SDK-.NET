@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://api.todopago.com.ar" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:DIME="http://schemas.xmlsoap.org/ws/2002/04/dime/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:WSDL="http://schemas.xmlsoap.org/wsdl/" xmlns:MIME="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns="http://api.todopago.com.ar" xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://api.todopago.com.ar">
+  <WSDL:types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://api.todopago.com.ar">
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:element name="SendAuthorizeRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="Security" type="xsd:string" />
+            <xsd:element minOccurs="0" name="Session" nillable="true" type="xsd:string" />
+            <xsd:element name="Merchant" type="xsd:string" />
+            <xsd:element minOccurs="0" name="URL_OK" nillable="true" type="xsd:string" />
+            <xsd:element minOccurs="0" name="URL_ERROR" nillable="true" type="xsd:string" />
+            <xsd:element minOccurs="0" name="EncodingMethod" nillable="true" type="xsd:string" />
+            <xsd:element minOccurs="0" name="Payload" nillable="true" type="xsd:anyType" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="SendAuthorizeRequestResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="StatusCode" type="xsd:int" />
+            <xsd:element minOccurs="0" name="StatusMessage" nillable="true" type="xsd:string" />
+            <xsd:element minOccurs="0" name="URL_Request" nillable="true" type="xsd:string" />
+            <xsd:element minOccurs="0" name="RequestKey" nillable="true" type="xsd:string" />
+            <xsd:element minOccurs="0" name="PublicRequestKey" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetAuthorizeAnswer">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="Security" type="xsd:string" />
+            <xsd:element minOccurs="0" name="Session" nillable="true" type="xsd:string" />
+            <xsd:element name="Merchant" type="xsd:string" />
+            <xsd:element minOccurs="0" name="RequestKey" nillable="true" type="xsd:string" />
+            <xsd:element minOccurs="0" name="AnswerKey" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetAuthorizeAnswerResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="StatusCode" type="xsd:int" />
+            <xsd:element minOccurs="0" name="StatusMessage" nillable="true" type="xsd:string" />
+            <xsd:element minOccurs="0" name="AuthorizationKey" nillable="true" type="xsd:string" />
+            <xsd:element minOccurs="0" name="EncodingMethod" nillable="true" type="xsd:string" />
+            <xsd:element minOccurs="0" name="Payload" nillable="true" type="xsd:anyType" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </WSDL:types>
+  <WSDL:message name="SendAuthorizeRequest">
+    <WSDL:part name="parameters" element="ns:SendAuthorizeRequest" />
+  </WSDL:message>
+  <WSDL:message name="SendAuthorizeRequestResponse">
+    <WSDL:part name="parameters" element="ns:SendAuthorizeRequestResponse" />
+  </WSDL:message>
+  <WSDL:message name="GetAuthorizeAnswer">
+    <WSDL:part name="parameters" element="ns:GetAuthorizeAnswer" />
+  </WSDL:message>
+  <WSDL:message name="GetAuthorizeAnswerResponse">
+    <WSDL:part name="parameters" element="ns:GetAuthorizeAnswerResponse" />
+  </WSDL:message>
+  <WSDL:portType name="AuthorizePortType">
+    <WSDL:operation name="SendAuthorizeRequest">
+      <wsdl:documentation>Service definition of Operation SendAuthorizeRequest: Utilizada para enviar los datos que se utilizaran en el  requerimiento de Autorizacion, para Clientes PCI</wsdl:documentation>
+      <WSDL:input message="ns:SendAuthorizeRequest" />
+      <WSDL:output wsaw:Action="//api.decidir.com.ar/AuthorizePortType/SendAuthorizeRequestResponse" message="ns:SendAuthorizeRequestResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="GetAuthorizeAnswer">
+      <wsdl:documentation>Service definition of Operation GetAuthorizeAnswer: Utilizada para recuerar los datos de la Respuesta de la Autorizacion en el Caso de Clientes no PCI</wsdl:documentation>
+      <WSDL:input message="ns:GetAuthorizeAnswer" />
+      <WSDL:output wsaw:Action="//api.decidir.com.ar/AuthorizePortType/GetAuthorizeAnswerResponse" message="ns:GetAuthorizeAnswerResponse" />
+    </WSDL:operation>
+  </WSDL:portType>
+  <WSDL:binding name="AuthorizeSoap11Binding" type="ns:AuthorizePortType">
+    <SOAP:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <WSDL:operation name="SendAuthorizeRequest">
+      <SOAP:operation soapAction="" style="document" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="GetAuthorizeAnswer">
+      <SOAP:operation soapAction="" style="document" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+  </WSDL:binding>
+  <WSDL:binding name="AuthorizeSoap12Binding" type="ns:AuthorizePortType">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <WSDL:operation name="SendAuthorizeRequest">
+      <soap12:operation soapAction="" style="document" />
+      <WSDL:input>
+        <soap12:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <soap12:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="GetAuthorizeAnswer">
+      <soap12:operation soapAction="" style="document" />
+      <WSDL:input>
+        <soap12:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <soap12:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+  </WSDL:binding>
+  <WSDL:binding name="AuthorizeHttpBinding" type="ns:AuthorizePortType">
+    <http:binding verb="POST" />
+    <WSDL:operation name="SendAuthorizeRequest">
+      <http:operation location="SendAuthorizeRequest" />
+      <WSDL:input>
+        <MIME:content part="parameters" type="text/xml" />
+      </WSDL:input>
+      <WSDL:output>
+        <MIME:content part="parameters" type="text/xml" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="GetAuthorizeAnswer">
+      <http:operation location="GetAuthorizeAnswer" />
+      <WSDL:input>
+        <MIME:content part="parameters" type="text/xml" />
+      </WSDL:input>
+      <WSDL:output>
+        <MIME:content part="parameters" type="text/xml" />
+      </WSDL:output>
+    </WSDL:operation>
+  </WSDL:binding>
+  <WSDL:service name="Authorize">
+    <WSDL:port name="AuthorizeHttpsSoap11Endpoint" binding="ns:AuthorizeSoap11Binding">
+      <SOAP:address location="https://10.168.91.22:8243/services/Authorize.AuthorizeHttpsSoap11Endpoint" />
+    </WSDL:port>
+    <WSDL:port name="AuthorizeHttpSoap11Endpoint" binding="ns:AuthorizeSoap11Binding">
+      <SOAP:address location="http://10.168.91.22:8280/services/Authorize.AuthorizeHttpSoap11Endpoint" />
+    </WSDL:port>
+    <WSDL:port name="AuthorizeHttpSoap12Endpoint" binding="ns:AuthorizeSoap12Binding">
+      <soap12:address location="http://10.168.91.22:8280/services/Authorize.AuthorizeHttpSoap12Endpoint" />
+    </WSDL:port>
+    <WSDL:port name="AuthorizeHttpsSoap12Endpoint" binding="ns:AuthorizeSoap12Binding">
+      <soap12:address location="https://10.168.91.22:8243/services/Authorize.AuthorizeHttpsSoap12Endpoint" />
+    </WSDL:port>
+    <WSDL:port name="AuthorizeHttpsEndpoint" binding="ns:AuthorizeHttpBinding">
+      <http:address location="https://10.168.91.22:8243/services/Authorize.AuthorizeHttpsEndpoint" />
+    </WSDL:port>
+    <WSDL:port name="AuthorizeHttpEndpoint" binding="ns:AuthorizeHttpBinding">
+      <http:address location="http://10.168.91.22:8280/services/Authorize.AuthorizeHttpEndpoint" />
+    </WSDL:port>
+  </WSDL:service>
+</wsdl:definitions>

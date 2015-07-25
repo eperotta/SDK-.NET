@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:ns0="http://api.todopago.com.ar" xmlns:ns1="http://ws.wso2.org/dataservice" targetNamespace="http://api.todopago.com.ar" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation>Servicio de Consulta de Operaciones o Transacciones                                </wsdl:documentation>
+  <wsdl:types>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://api.todopago.com.ar">
+      <xs:element name="GetByOperationId">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="MERCHANT" nillable="true" type="xs:string" />
+            <xs:element name="OPERATIONID" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="OperationsColections" type="ns0:OperationsColections" />
+      <xs:complexType name="OperationsColections">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Operations" type="ns0:Operations" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Operations">
+        <xs:sequence>
+          <xs:element name="RESULTCODE" nillable="true" type="xs:string" />
+          <xs:element name="RESULTMESSAGE" nillable="true" type="xs:string" />
+          <xs:element name="DATETIME" nillable="true" type="xs:dateTime" />
+          <xs:element name="OPERATIONID" nillable="true" type="xs:string" />
+          <xs:element name="CURRENCYCODE" nillable="true" type="xs:string" />
+          <xs:element name="AMOUNT" nillable="true" type="xs:float" />
+          <xs:element name="TYPE" nillable="true" type="xs:string" />
+          <xs:element name="INSTALLMENTPAYMENTS" nillable="true" type="xs:string" />
+          <xs:element name="CUSTOMEREMAIL" nillable="true" type="xs:string" />
+          <xs:element name="IDENTIFICATIONTYPE" nillable="true" type="xs:string" />
+          <xs:element name="IDENTIFICATION" nillable="true" type="xs:string" />
+          <xs:element name="CARDNUMBER" nillable="true" type="xs:string" />
+          <xs:element name="CARDHOLDERNAME" nillable="true" type="xs:string" />
+          <xs:element name="TICKETNUMBER" nillable="true" type="xs:integer" />
+          <xs:element name="AUTHORIZATIONCODE" nillable="true" type="xs:string" />
+          <xs:element name="BARCODE" nillable="true" type="xs:string" />
+          <xs:element name="COUPONEXPDATE" nillable="true" type="xs:string" />
+          <xs:element name="COUPONSECEXPDATE" nillable="true" type="xs:string" />
+          <xs:element name="COUPONSUBSCRIBER" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ws.wso2.org/dataservice">
+      <xs:element name="DataServiceFault">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="current_params" type="xs:string" />
+            <xs:element name="current_request_name" type="xs:string" />
+            <xs:element name="nested_exception" type="xs:string" />
+            <xs:element name="source_data_service">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="location" type="xs:string" />
+                  <xs:element name="default_namespace" type="xs:string" />
+                  <xs:element name="description" type="xs:string" />
+                  <xs:element name="data_service_name" type="xs:string" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ds_code" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="REQUEST_STATUS" type="xs:string" />
+      <xs:element name="DATA_SERVICE_RESPONSE">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:any minOccurs="0" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="GetByOperationIdRequest">
+    <wsdl:part name="parameters" element="ns0:GetByOperationId" />
+  </wsdl:message>
+  <wsdl:message name="GetByOperationIdResponse">
+    <wsdl:part name="parameters" element="ns0:OperationsColections" />
+  </wsdl:message>
+  <wsdl:message name="DataServiceFault">
+    <wsdl:part name="parameters" element="ns1:DataServiceFault" />
+  </wsdl:message>
+  <wsdl:portType name="OperationsPortType">
+    <wsdl:operation name="GetByOperationId">
+      <wsdl:documentation>Consulta por id De Operacion y Comercio                                                               </wsdl:documentation>
+      <wsdl:input wsaw:Action="urn:GetByOperationId" message="ns0:GetByOperationIdRequest" />
+      <wsdl:output wsaw:Action="urn:GetByOperationIdResponse" message="ns0:GetByOperationIdResponse" />
+      <wsdl:fault wsaw:Action="urn:GetByOperationIdDataServiceFault" name="DataServiceFault" message="ns0:DataServiceFault" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="OperationsSoap11Binding" type="ns0:OperationsPortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetByOperationId">
+      <soap:operation soapAction="urn:GetByOperationId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DataServiceFault">
+        <soap:fault use="literal" name="DataServiceFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="OperationsSoap12Binding" type="ns0:OperationsPortType">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetByOperationId">
+      <soap12:operation soapAction="urn:GetByOperationId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DataServiceFault">
+        <soap12:fault use="literal" name="DataServiceFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="OperationsHttpBinding" type="ns0:OperationsPortType">
+    <http:binding verb="POST" />
+    <wsdl:operation name="GetByOperationId">
+      <http:operation location="GetByOperationId" />
+      <wsdl:input>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Operations">
+    <wsdl:port name="OperationsHttpsSoap11Endpoint" binding="ns0:OperationsSoap11Binding">
+      <soap:address location="https://10.168.91.22:8243/services/Operations.OperationsHttpsSoap11Endpoint" />
+    </wsdl:port>
+    <wsdl:port name="OperationsHttpSoap11Endpoint" binding="ns0:OperationsSoap11Binding">
+      <soap:address location="http://10.168.91.22:8280/services/Operations.OperationsHttpSoap11Endpoint" />
+    </wsdl:port>
+    <wsdl:port name="OperationsHttpsSoap12Endpoint" binding="ns0:OperationsSoap12Binding">
+      <soap12:address location="https://10.168.91.22:8243/services/Operations.OperationsHttpsSoap12Endpoint" />
+    </wsdl:port>
+    <wsdl:port name="OperationsHttpSoap12Endpoint" binding="ns0:OperationsSoap12Binding">
+      <soap12:address location="http://10.168.91.22:8280/services/Operations.OperationsHttpSoap12Endpoint" />
+    </wsdl:port>
+    <wsdl:port name="OperationsHttpsEndpoint" binding="ns0:OperationsHttpBinding">
+      <http:address location="https://10.168.91.22:8243/services/Operations.OperationsHttpsEndpoint" />
+    </wsdl:port>
+    <wsdl:port name="OperationsHttpEndpoint" binding="ns0:OperationsHttpBinding">
+      <http:address location="http://10.168.91.22:8280/services/Operations.OperationsHttpEndpoint" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

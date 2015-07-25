@@ -1,0 +1,11 @@
+D:\net\TodoPagoConnector\TodoPagoConnector\WindowsFormsApplication1\bin\Release\TodoPagoTest.exe.config
+D:\net\TodoPagoConnector\TodoPagoConnector\WindowsFormsApplication1\bin\Release\TodoPagoTest.exe
+D:\net\TodoPagoConnector\TodoPagoConnector\WindowsFormsApplication1\bin\Release\TodoPagoTest.pdb
+D:\net\TodoPagoConnector\TodoPagoConnector\WindowsFormsApplication1\bin\Release\TodoPagoConnector.dll
+D:\net\TodoPagoConnector\TodoPagoConnector\WindowsFormsApplication1\bin\Release\TodoPagoConnector.pdb
+D:\net\TodoPagoConnector\TodoPagoConnector\WindowsFormsApplication1\obj\Release\TPTest.csprojResolveAssemblyReference.cache
+D:\net\TodoPagoConnector\TodoPagoConnector\WindowsFormsApplication1\obj\Release\TodoPagoTest.Properties.Resources.resources
+D:\net\TodoPagoConnector\TodoPagoConnector\WindowsFormsApplication1\obj\Release\WindowsFormsApplication1.TPTestForm.resources
+D:\net\TodoPagoConnector\TodoPagoConnector\WindowsFormsApplication1\obj\Release\TPTest.csproj.GenerateResource.Cache
+D:\net\TodoPagoConnector\TodoPagoConnector\WindowsFormsApplication1\obj\Release\TodoPagoTest.exe
+D:\net\TodoPagoConnector\TodoPagoConnector\WindowsFormsApplication1\obj\Release\TodoPagoTest.pdb
