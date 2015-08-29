@@ -9,3 +9,14 @@ D:\net\TodoPagoConnector\TodoPagoConnector\WindowsFormsApplication1\obj\Release\
 D:\net\TodoPagoConnector\TodoPagoConnector\WindowsFormsApplication1\obj\Release\TPTest.csproj.GenerateResource.Cache
 D:\net\TodoPagoConnector\TodoPagoConnector\WindowsFormsApplication1\obj\Release\TodoPagoTest.exe
 D:\net\TodoPagoConnector\TodoPagoConnector\WindowsFormsApplication1\obj\Release\TodoPagoTest.pdb
+D:\GitHub\dev-SDK-.Net\Solution\WindowsFormsApplication1\bin\Release\TodoPagoTest.exe.config
+D:\GitHub\dev-SDK-.Net\Solution\WindowsFormsApplication1\bin\Release\TodoPagoTest.exe
+D:\GitHub\dev-SDK-.Net\Solution\WindowsFormsApplication1\bin\Release\TodoPagoTest.pdb
+D:\GitHub\dev-SDK-.Net\Solution\WindowsFormsApplication1\bin\Release\TodoPagoConnector.dll
+D:\GitHub\dev-SDK-.Net\Solution\WindowsFormsApplication1\bin\Release\TodoPagoConnector.pdb
+D:\GitHub\dev-SDK-.Net\Solution\WindowsFormsApplication1\obj\Release\TPTest.csprojResolveAssemblyReference.cache
+D:\GitHub\dev-SDK-.Net\Solution\WindowsFormsApplication1\obj\Release\TodoPagoTest.Properties.Resources.resources
+D:\GitHub\dev-SDK-.Net\Solution\WindowsFormsApplication1\obj\Release\WindowsFormsApplication1.TPTestForm.resources
+D:\GitHub\dev-SDK-.Net\Solution\WindowsFormsApplication1\obj\Release\TPTest.csproj.GenerateResource.Cache
+D:\GitHub\dev-SDK-.Net\Solution\WindowsFormsApplication1\obj\Release\TodoPagoTest.exe
+D:\GitHub\dev-SDK-.Net\Solution\WindowsFormsApplication1\obj\Release\TodoPagoTest.pdb

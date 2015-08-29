@@ -33,7 +33,7 @@ namespace TPTestConsole
             Console.WriteLine("init TodoPagoConnectorSample");
 
             TodoPagoConnectorSample tpcs = new TodoPagoConnectorSample();
-
+            
             Console.WriteLine("------------------------------------------------------------------------");
 
             Console.WriteLine("initSendAuthorizeRequestParams");
@@ -47,13 +47,24 @@ namespace TPTestConsole
             tpcs.initGetAuthorizeAnswer();
             Console.WriteLine("sendGetAuthorizeAnswer");
             tpcs.sendGetAuthorizeAnswer();
-
+            
             Console.WriteLine("------------------------------------------------------------------------");
-
+            /*
             Console.WriteLine("initGetStatus");
-            tpcs.initGetStatus();
+            
             Console.WriteLine("sendGetStatus");
             tpcs.sendGetStatus();
+            Console.WriteLine("------------------------------------------------------------------------");
+            */
+
+
+
+            tpcs.initGetStatus();
+            tpcs.sendGetStatus();//TODO Rename method to GetStatus
+
+            Console.WriteLine("------------------------------------------------------------------------");
+            
+            tpcs.getAllPaymentMethods();
 
             Console.Read();
         }
@@ -104,8 +115,8 @@ namespace TPTestConsole
 
 
             //Authentification and Endpoint
-            string authorization = "PRISMA 912EC803B2CE49E4A541068D495AB570";
-            string endpoint = "https://50.19.97.101:8243";
+            string authorization = "PRISMA f3d8b72c94ab4a06be2ef7c95490f7d3";
+            string endpoint = "https://developers.todopago.com.ar/t/1.1/api/";
         
 
 
@@ -264,59 +275,33 @@ namespace TPTestConsole
             public void initGetStatus()
             {
                 getStatusOperationId = "01";
-                getStatusMerchant = "538";
+                getStatusMerchant = "2153";
             }
 
             public void sendGetStatus()
             {
-                string output = "";
-                try
+                List<Dictionary<string, object>> res = connector.GetStatus(getStatusMerchant, getStatusOperationId);
+
+                for (int i = 0; i < res.Count; i++)
                 {
-                    var res = connector.GetStatus(getStatusMerchant, getStatusOperationId);
-                    /*
-                    string response = res.Count().ToString();
-                    string detail = "";
-                    foreach (var operation in res)
+                    Dictionary<string, object> dic = res[i];
+                    foreach (Dictionary<string, string> aux in dic.Values)
                     {
-                        foreach (var propName in operation.Keys)
+                        foreach (string k in aux.Keys)
                         {
-                            detail += propName + ": " + operation[propName] + "\r\n";
-                        }
-
-                    }
-                    Console.WriteLine(response);
-                    Console.WriteLine(detail);
-                    */
-
-                    output += "\r\n- " + res.Count().ToString();
-                    string detail = "";
-                    foreach (var operation in res)
-                    {
-                        foreach (var propName in operation.Keys)
-                        {
-                            output += "\r\n     " + propName + ": " + operation[propName];
-                        }
-
-                    }
-                }
-                catch (WebException ex)
-                {
-                    if (ex.Status == WebExceptionStatus.ProtocolError)
-                    {
-                        WebResponse resp = ex.Response;
-                        using (StreamReader sr = new StreamReader(resp.GetResponseStream()))
-                        {
-
-                            output += "\r\n" + sr.ReadToEnd() + "\r\n" + ex.Message;
-                            //Response.Write(sr.ReadToEnd());
+                            Console.WriteLine("- " + k + ": " + aux[k]);
                         }
                     }
                 }
-                catch (Exception ex)
-                {
-                    output += "\r\n" + ex.Message + "\r\n" + ex.InnerException.Message + "\r\n" + ex.HelpLink;
-                }
-                Console.WriteLine(output);
+            }
+
+
+
+            public void getAllPaymentMethods()
+            {
+
+                Dictionary<string, object> res = connector.GetAllPaymentMethods("2153");
+                printDictionary(res, "");
 
             }
 
@@ -336,6 +321,33 @@ namespace TPTestConsole
             {
                 return true;
             }
+
+
+            
+            
+            
+            private void printDictionary(Dictionary<string, object> p, string tab)
+            {
+
+                foreach (string k in p.Keys)
+                {
+                    if (p[k].GetType().ToString().Contains("System.Collections.Generic.Dictionary"))//.ToString().Contains("string"))
+                    {
+                        Console.WriteLine(tab + "- " + k);
+                        Dictionary<string, object> n = (Dictionary<string, object>)p[k];
+                        printDictionary(n, tab + "  ");
+                        
+                    }
+                    else
+                    {
+                        Console.WriteLine(tab + "- " + k + ": " + p[k]);
+                    }
+
+                }
+
+            }
+
+
         }
 
     }

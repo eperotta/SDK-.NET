@@ -74,11 +74,16 @@
             this.label18 = new System.Windows.Forms.Label();
             this.tbGSMerc = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.gAPMMerchant = new System.Windows.Forms.TextBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.tabPage5.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnGetAuth
@@ -136,6 +141,7 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -161,7 +167,7 @@
             this.tbGCAuth.Name = "tbGCAuth";
             this.tbGCAuth.Size = new System.Drawing.Size(480, 20);
             this.tbGCAuth.TabIndex = 3;
-            this.tbGCAuth.Text = "PRISMA 912EC803B2CE49E4A541068D495AB570";
+            this.tbGCAuth.Text = "PRISMA f3d8b72c94ab4a06be2ef7c95490f7d3";
             // 
             // label3
             // 
@@ -178,7 +184,7 @@
             this.tbGCEp.Name = "tbGCEp";
             this.tbGCEp.Size = new System.Drawing.Size(480, 20);
             this.tbGCEp.TabIndex = 1;
-            this.tbGCEp.Text = "https://50.19.97.101:8243";
+            this.tbGCEp.Text = "https://developers.todopago.com.ar/t/1.1/api/";
             // 
             // label2
             // 
@@ -512,7 +518,7 @@
             this.tbGSMerc.Name = "tbGSMerc";
             this.tbGSMerc.Size = new System.Drawing.Size(480, 20);
             this.tbGSMerc.TabIndex = 5;
-            this.tbGSMerc.Text = "305";
+            this.tbGSMerc.Text = "2153";
             // 
             // label17
             // 
@@ -523,11 +529,51 @@
             this.label17.TabIndex = 4;
             this.label17.Text = "Merchant";
             // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.gAPMMerchant);
+            this.tabPage5.Controls.Add(this.label19);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(851, 194);
+            this.tabPage5.TabIndex = 4;
+            this.tabPage5.Text = "GetAllPaymentMethods";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // gAPMMerchant
+            // 
+            this.gAPMMerchant.Location = new System.Drawing.Point(87, 12);
+            this.gAPMMerchant.Name = "gAPMMerchant";
+            this.gAPMMerchant.Size = new System.Drawing.Size(480, 20);
+            this.gAPMMerchant.TabIndex = 7;
+            this.gAPMMerchant.Text = "2153";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(3, 12);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(52, 13);
+            this.label19.TabIndex = 6;
+            this.label19.Text = "Merchant";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(656, 238);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(131, 27);
+            this.button1.TabIndex = 11;
+            this.button1.Text = "GetAllPaymentMethods";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // TPTestForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(916, 418);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.lDetail);
             this.Controls.Add(this.lResult);
@@ -545,6 +591,8 @@
             this.tabPage2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            this.tabPage5.ResumeLayout(false);
+            this.tabPage5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -598,6 +646,10 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox tbGSMerc;
         private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.TextBox gAPMMerchant;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Button button1;
     }
 }
 

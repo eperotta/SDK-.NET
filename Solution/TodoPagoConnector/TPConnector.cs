@@ -7,11 +7,11 @@ namespace TodoPagoConnector
 {
     public class TPConnector
     {
+        string versionTodoPago = "1.0.0";
+        
         private AuthorizeBinding AuthorizeBinding;
         private AuthorizeEndpoint AuthorizeEndpoint;
-        private OperationsBinding OperationsBinding;
-        private OperationsEndpoint OperationsEndpoint;
-
+       
         private Dictionary<string, string> Headers;
 
         private const string SECURITY = "Security";
@@ -23,16 +23,37 @@ namespace TodoPagoConnector
         private const string URL_ERROR = "URL Error";
         private const string ENCODING_METHOD = "Encoding Method";
 
+        private RestConnector restClient;
+
+
         public TPConnector(string endpoint, Dictionary<string, string> headers)
         {
             this.AuthorizeBinding = new AuthorizeBinding();
             this.AuthorizeEndpoint = new AuthorizeEndpoint(endpoint);
 
-            this.OperationsBinding = new OperationsBinding();
-            this.OperationsEndpoint = new OperationsEndpoint(endpoint);
-
             this.Headers = headers;
+
+            restClient = new RestConnector(endpoint, headers);
+
         }
+
+        //TODO rename to GetStatus
+        public List<Dictionary<string, object>> GetStatus(string merchant, string operation)
+        {
+
+            return restClient.getByOperationID(merchant, operation);
+
+        }
+
+
+        public Dictionary<string, object> GetAllPaymentMethods(string merchant)
+        {
+
+            return restClient.GetAllPaymentMethods(merchant);
+
+        }
+
+
 
         public Dictionary<string, object> GetAuthorizeAnswer(Dictionary<string, string> request)
         {
@@ -124,46 +145,5 @@ namespace TodoPagoConnector
 
             return result;
         }
-
-
-        
-
-        public List<Dictionary<string, object>> GetStatus(string merchant, string operationID)
-        {
-            var result = new List<Dictionary<string, object>>();
-
-            try
-            {
-                using (var client = new OperationsService.OperationsPortTypeClient(this.OperationsBinding, this.OperationsEndpoint))
-                {
-                    HeaderHttpExtension.AddCustomHeaderUserInformation(new OperationContextScope(client.InnerChannel), this.Headers);
-
-                    var operations = client.GetByOperationId(merchant, operationID);
-
-                    foreach (var operation in operations)
-                    {
-                        var dic = new Dictionary<string, object>();
-
-                        foreach (var prop in operation.GetType().GetProperties())
-                        {
-                            dic.Add(prop.Name, prop.GetValue(operation,null));
-                        }
-
-                        result.Add(dic);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                var resultDict = new Dictionary<string, object>();
-                ///TODO: ACA VA EL MANEJO DE EXCEPCIONES
-                resultDict.Add("ErrorMessage", ex.Message);
-                result.Add(resultDict);
-                throw ex;
-            }
-
-            return result;
-        }
-
     }
 }

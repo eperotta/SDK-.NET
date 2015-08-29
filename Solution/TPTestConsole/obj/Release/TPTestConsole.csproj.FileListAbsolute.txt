@@ -1,0 +1,8 @@
+D:\GitHub\dev-SDK-.Net\Solution\TPTestConsole\bin\Release\TPTestConsole.exe.config
+D:\GitHub\dev-SDK-.Net\Solution\TPTestConsole\bin\Release\TPTestConsole.exe
+D:\GitHub\dev-SDK-.Net\Solution\TPTestConsole\bin\Release\TPTestConsole.pdb
+D:\GitHub\dev-SDK-.Net\Solution\TPTestConsole\bin\Release\TodoPagoConnector.dll
+D:\GitHub\dev-SDK-.Net\Solution\TPTestConsole\bin\Release\TodoPagoConnector.pdb
+D:\GitHub\dev-SDK-.Net\Solution\TPTestConsole\obj\Release\TPTestConsole.csprojResolveAssemblyReference.cache
+D:\GitHub\dev-SDK-.Net\Solution\TPTestConsole\obj\Release\TPTestConsole.exe
+D:\GitHub\dev-SDK-.Net\Solution\TPTestConsole\obj\Release\TPTestConsole.pdb

@@ -147,46 +147,63 @@ namespace WindowsFormsApplication1
 
         private void btnGetStat_Click(object sender, EventArgs e)
         {
-            try
+            lResult.Text = string.Empty;
+            lDetail.Text = string.Empty;
+
+            var connector = initConnector();
+
+           
+            String merchant = tbGSMerc.Text;
+            String operationID = tbGSOp.Text;
+           
+            List<Dictionary<string, object>> res = connector.GetStatus(merchant, operationID);
+
+            for (int i = 0; i < res.Count; i++)
             {
-                lResult.Text = string.Empty;
-                lDetail.Text = string.Empty;
-
-                var connector = initConnector();
-
-                System.Net.ServicePointManager.ServerCertificateValidationCallback += new System.Net.Security.RemoteCertificateValidationCallback(ValidateCertificate);
-
-                String merchant = tbGSMerc.Text;
-                String operationID = tbGSOp.Text;
-                var res = connector.GetStatus(merchant, operationID);
-
-                lResult.Text = res.Count().ToString();
-                foreach (var operation in res)
+                Dictionary<string, object> dic = res[i];
+                foreach (Dictionary<string, string> aux in dic.Values)
                 {
-                    foreach (var propName in operation.Keys)
+                    foreach (string k in aux.Keys)
                     {
-                        lDetail.Text += propName + ": " + operation[propName] + "\r\n";
-                    }
-
-                }
-            }
-            catch (WebException ex)
-            {
-                if (ex.Status == WebExceptionStatus.ProtocolError)
-                {
-                    WebResponse resp = ex.Response;
-                    using (StreamReader sr = new StreamReader(resp.GetResponseStream()))
-                    {
-
-                        lDetail.Text = sr.ReadToEnd() + " \n  " + ex.Message;
-                        //Response.Write(sr.ReadToEnd());
+                        lDetail.Text += "- " + k + ": " + aux[k] + "\r\n";
                     }
                 }
             }
-            catch (Exception ex)
+            
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            lResult.Text = string.Empty;
+            lDetail.Text = string.Empty;
+
+            var connector = initConnector();
+
+
+            String merchant = gAPMMerchant.Text;
+            Dictionary<string, object> res = connector.GetAllPaymentMethods(merchant);
+            printDictionary(res, "");
+
+
+        }
+
+        private void printDictionary(Dictionary<string, object> p, string tab)
+        {
+            foreach (string k in p.Keys)
             {
-                lDetail.Text += ex.Message + " \n " + ex.InnerException.Message + " \n " + ex.HelpLink;
+                if (p[k].GetType().ToString().Contains("System.Collections.Generic.Dictionary"))//.ToString().Contains("string"))
+                {
+                    lDetail.Text += tab + "- " + k + "\r\n";
+                    Dictionary<string, object> n = (Dictionary<string, object>)p[k];
+                    printDictionary(n, tab + "  ");
+                }
+                else
+                {
+                    lDetail.Text += tab + "- " + k + ": " + p[k] + "\r\n";
+                }
+
             }
+
         }
     }
 }

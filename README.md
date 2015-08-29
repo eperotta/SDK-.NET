@@ -140,15 +140,15 @@ parameters.Add(CSMDD11", "");//Customer Cell Phone. NO MANDATORIO.
 ```C#	
 //Example
 var parameters = new Dictionary<string, string>();		
-parameters.Add("STCITY", "rosario");//Ciudad de enví­o de la orden. MANDATORIO.		
-parameters.Add("STCOUNTRY", "");//País de envío de la orden. MANDATORIO.		
-parameters.Add("STEMAIL", "jose@gmail.com");//Mail del destinatario, MANDATORIO.		
-parameters.Add("STFIRSTNAME", "Jose");//Nombre del destinatario. MANDATORIO.		
-parameters.Add("STLASTNAME", "Perez");//Apellido del destinatario. MANDATORIO.		
-parameters.Add("STPHONENUMBER", "541155893737");//Número de teléfono del destinatario. MANDATORIO.		
-parameters.Add("STPOSTALCODE", "1414");//Código postal del domicilio de envío. MANDATORIO.		
-parameters.Add("STSTATE", "D");//Provincia de envío. MANDATORIO. Son de 1 caracter		
-parameters.Add("STSTREET1", "San Martín 123");//Domicilio de envío. MANDATORIO.		
+parameters.Add("CSSTCITY", "rosario");//Ciudad de enví­o de la orden. MANDATORIO.		
+parameters.Add("CSSTCOUNTRY", "");//País de envío de la orden. MANDATORIO.		
+parameters.Add("CSSTEMAIL", "jose@gmail.com");//Mail del destinatario, MANDATORIO.		
+parameters.Add("CSSTFIRSTNAME", "Jose");//Nombre del destinatario. MANDATORIO.		
+parameters.Add("CSSTLASTNAME", "Perez");//Apellido del destinatario. MANDATORIO.		
+parameters.Add("CSSTPHONENUMBER", "541155893737");//Número de teléfono del destinatario. MANDATORIO.		
+parameters.Add("CSSTPOSTALCODE", "1414");//Código postal del domicilio de envío. MANDATORIO.		
+parameters.Add("CSSTSTATE", "D");//Provincia de envío. MANDATORIO. Son de 1 caracter		
+parameters.Add("CSSTSTREET1", "San Martín 123");//Domicilio de envío. MANDATORIO.		
 parameters.Add("CSMDD12", "");//Shipping DeadLine (Num Dias). NO MADATORIO.		
 parameters.Add("CSMDD13", "");//Método de Despacho. NO MANDATORIO.		
 parameters.Add("CSMDD14", "");//Customer requires Tax Bill ? (Y/N). NO MANDATORIO.		
