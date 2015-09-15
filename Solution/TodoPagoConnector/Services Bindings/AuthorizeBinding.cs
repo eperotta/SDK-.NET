@@ -21,7 +21,7 @@ namespace TodoPagoConnector
 
     public class AuthorizeEndpoint : EndpointAddress
     {
-        public AuthorizeEndpoint(string uri):base(uri+@"/services/Authorize")
+        public AuthorizeEndpoint(string uri):base(uri+@"/Authorize.AuthorizeHttpsSoap12Endpoint")
         {
         }
     }

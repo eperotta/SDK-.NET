@@ -43,7 +43,7 @@ Esta versión soporta únicamente pago en moneda nacional argentina (CURRENCYCOD
 - crear un String con el Endpoint suministrados por Todo Pago
 
 ```C#
-String endpoint = "https://developers.todopago.com.ar/services/";
+String endpoint = "https://developers.todopago.com.ar/";
 ```
 - crear un Dictionary<String, String> con los http header suministrados por Todo Pago
 ```C#

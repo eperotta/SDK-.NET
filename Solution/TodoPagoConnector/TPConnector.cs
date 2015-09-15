@@ -3,11 +3,21 @@ using System.Collections.Generic;
 using System.ServiceModel;
 using TodoPagoConnector.Service_Extensions;
 
+/*
+ * 
+ * EN CASO DE REGENERAR LA CONEXION AL SERVICIO SOAP
+ * MODIFICAR:
+ * public AuthorizeEndpoint(string uri):base(uri+@"/services/Authorize")
+ * POR:
+ * public AuthorizeEndpoint(string uri):base(uri+@"/Authorize.AuthorizeHttpsSoap12Endpoint")
+ * DENTRO DE "Service Bindings" -> AuthorizeBinding.cs
+ * */
+
 namespace TodoPagoConnector
 {
     public class TPConnector
     {
-        string versionTodoPago = "1.0.0";
+        string versionTodoPago = "1.0.1";
         
         private AuthorizeBinding AuthorizeBinding;
         private AuthorizeEndpoint AuthorizeEndpoint;
@@ -23,17 +33,23 @@ namespace TodoPagoConnector
         private const string URL_ERROR = "URL Error";
         private const string ENCODING_METHOD = "Encoding Method";
 
+        private const string tenant = "t/1.1";
+        private const string soapAppend = "services/";
+        private const string restAppend = "/api/";
+
         private RestConnector restClient;
 
 
         public TPConnector(string endpoint, Dictionary<string, string> headers)
         {
+            string sopaEndpoint = endpoint + soapAppend + tenant; 
             this.AuthorizeBinding = new AuthorizeBinding();
-            this.AuthorizeEndpoint = new AuthorizeEndpoint(endpoint);
+            this.AuthorizeEndpoint = new AuthorizeEndpoint(sopaEndpoint);
 
             this.Headers = headers;
 
-            restClient = new RestConnector(endpoint, headers);
+            string restEndpoint = endpoint + tenant + restAppend;
+            restClient = new RestConnector(restEndpoint, headers);
 
         }
 
@@ -110,10 +126,13 @@ namespace TodoPagoConnector
 
             try
             {
+
+                
                 using (var client = new AuthorizeService.AuthorizePortTypeClient(this.AuthorizeBinding, this.AuthorizeEndpoint))
                 {
                     HeaderHttpExtension.AddCustomHeaderUserInformation(new OperationContextScope(client.InnerChannel), this.Headers);
-                        
+                    
+
                     string statusMessage, URL_Request, RequestKey, PublicRequestKey;
 
                         var statusCode = client.SendAuthorizeRequest(

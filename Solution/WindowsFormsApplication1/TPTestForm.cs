@@ -131,6 +131,60 @@ namespace WindowsFormsApplication1
                 payload.Add("AMOUNT", tbSARAm.Text);
                 payload.Add("EMAILCLIENTE", tbSARMail.Text);
 
+
+
+                payload.Add("CSBTCITY", CSBTCITY.Text); //MANDATORIO.
+                payload.Add("CSBTCOUNTRY", CSBTCOUNTRY.Text);//MANDATORIO. Código ISO.
+                payload.Add("CSBTEMAIL", CSBTEMAIL.Text); //MANDATORIO.
+                payload.Add("CSBTFIRSTNAME", CSBTFIRSTNAME.Text);//MANDATORIO.      
+                payload.Add("CSBTLASTNAME", CSBTLASTNAME.Text);//MANDATORIO.
+                payload.Add("CSBTPHONENUMBER", CSBTPHONENUMBER.Text);//MANDATORIO.     
+                payload.Add("CSBTPOSTALCODE", CSBTPOSTALCODE.Text);//MANDATORIO.
+                payload.Add("CSBTSTATE", CSBTSTATE.Text);//MANDATORIO
+                payload.Add("CSBTSTREET1", CSBTSTREET1.Text);//MANDATORIO.
+                payload.Add("CSBTSTREET2", CSBTSTREET2.Text);//NO MANDATORIO
+
+                payload.Add("CSBTCUSTOMERID", CSBTCUSTOMERID.Text); //MANDATORIO.
+                payload.Add("CSBTIPADDRESS", CSBTIPADDRESS.Text); //MANDATORIO.       
+                payload.Add("CSPTCURRENCY", CSPTCURRENCY.Text);//MANDATORIO.      
+                payload.Add("CSPTGRANDTOTALAMOUNT", CSPTGRANDTOTALAMOUNT.Text);//MANDATORIO.
+
+                payload.Add("CSMDD6", CSMDD6.Text);//NO MANDATORIO.
+                payload.Add("CSMDD7", CSMDD7.Text);//NO MANDATORIO.        
+                payload.Add("CSMDD8", CSMDD8.Text); //NO MANDATORIO.       
+                payload.Add("CSMDD9", CSMDD9.Text);//NO MANDATORIO.       
+                payload.Add("CSMDD10", CSMDD10.Text);//NO MANDATORIO.      
+                payload.Add("CSMDD11", CSMDD11.Text);//NO MANDATORIO.
+
+                //retail
+                payload.Add("CSSTCITY", CSSTCITY.Text); //MANDATORIO.
+                payload.Add("CSSTCOUNTRY", CSSTCOUNTRY.Text);//MANDATORIO. Código ISO.
+                payload.Add("CSSTEMAIL", CSSTEMAIL.Text); //MANDATORIO.
+                payload.Add("CSSTFIRSTNAME", CSSTFIRSTNAME.Text);//MANDATORIO.      
+                payload.Add("CSSTLASTNAME", CSSTLASTNAME.Text);//MANDATORIO.
+                payload.Add("CSSTPHONENUMBER", CSSTPHONENUMBER.Text);//MANDATORIO.     
+                payload.Add("CSSTPOSTALCODE", CSSTPOSTALCODE.Text);//MANDATORIO.
+                payload.Add("CSSTSTATE", CSSTSTATE.Text);//MANDATORIO
+                payload.Add("CSSTSTREET1", CSSTSTREET1.Text);//MANDATORIO.
+                payload.Add("CSSTSTREET2", CSSTSTREET2.Text);//NO MANDATORIO.
+
+                payload.Add("CSITPRODUCTCODE", CSITPRODUCTCODE.Text);//CONDICIONAL
+                payload.Add("CSITPRODUCTDESCRIPTION", CSITPRODUCTDESCRIPTION.Text);//CONDICIONAL.     
+                payload.Add("CSITPRODUCTNAME", CSITPRODUCTNAME.Text);//CONDICIONAL.  
+                payload.Add("CSITPRODUCTSKU", CSITPRODUCTSKU.Text);//CONDICIONAL.      
+                payload.Add("CSITTOTALAMOUNT", CSITTOTALAMOUNT.Text);//CONDICIONAL.      
+                payload.Add("CSITQUANTITY", CSITQUANTITY.Text);//CONDICIONAL.       
+                payload.Add("CSITUNITPRICE", CSITUNITPRICE.Text);
+
+                payload.Add("CSMDD12", CSMDD12.Text);//NO MADATORIO.     
+                payload.Add("CSMDD13", CSMDD13.Text);//NO MANDATORIO.     
+                payload.Add("CSMDD14", CSMDD14.Text);//NO MANDATORIO.      
+                payload.Add("CSMDD15", CSMDD15.Text);//NO MANDATORIO.        
+                payload.Add("CSMDD16", CSMDD16.Text);//NO MANDATORIO.
+
+
+
+
                 System.Net.ServicePointManager.ServerCertificateValidationCallback += new System.Net.Security.RemoteCertificateValidationCallback(ValidateCertificate);
 
                 var res = connector.SendAuthorizeRequest(request, payload);
@@ -205,5 +259,6 @@ namespace WindowsFormsApplication1
             }
 
         }
+
     }
 }

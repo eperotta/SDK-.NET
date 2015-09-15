@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="vYC84Cey9kwl8cJe1yPSHmraB1A=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="NwFi9yOgtKtDu3+pzKlRyp2Jk2Y=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="AuthorizeSoap11Binding">
       <properties>
@@ -375,10 +375,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="AuthorizeHttpsSoap11Endpoint" contract="AuthorizeService.AuthorizePortType" bindingType="basicHttpBinding" address="https://10.168.91.22:8243/services/Authorize.AuthorizeHttpsSoap11Endpoint" bindingConfiguration="AuthorizeSoap11Binding">
+    <endpoint name="AuthorizeHttpsSoap11Endpoint" contract="AuthorizeService.AuthorizePortType" bindingType="basicHttpBinding" address="https://10.123.4.121:8243/services/t/1.1/Authorize.AuthorizeHttpsSoap11Endpoint" bindingConfiguration="AuthorizeSoap11Binding">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>https://10.168.91.22:8243/services/Authorize.AuthorizeHttpsSoap11Endpoint</serializedValue>
+          <serializedValue>https://10.123.4.121:8243/services/t/1.1/Authorize.AuthorizeHttpsSoap11Endpoint</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -460,10 +460,10 @@
         </property>
       </properties>
     </endpoint>
-    <endpoint name="AuthorizeHttpSoap11Endpoint" contract="AuthorizeService.AuthorizePortType" bindingType="basicHttpBinding" address="http://10.168.91.22:8280/services/Authorize.AuthorizeHttpSoap11Endpoint" bindingConfiguration="AuthorizeSoap11Binding1">
+    <endpoint name="AuthorizeHttpSoap11Endpoint" contract="AuthorizeService.AuthorizePortType" bindingType="basicHttpBinding" address="http://10.123.4.121:8280/services/t/1.1/Authorize.AuthorizeHttpSoap11Endpoint" bindingConfiguration="AuthorizeSoap11Binding1">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://10.168.91.22:8280/services/Authorize.AuthorizeHttpSoap11Endpoint</serializedValue>
+          <serializedValue>http://10.123.4.121:8280/services/t/1.1/Authorize.AuthorizeHttpSoap11Endpoint</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -545,10 +545,10 @@
         </property>
       </properties>
     </endpoint>
-    <endpoint name="AuthorizeHttpSoap12Endpoint" contract="AuthorizeService.AuthorizePortType" bindingType="customBinding" address="http://10.168.91.22:8280/services/Authorize.AuthorizeHttpSoap12Endpoint" bindingConfiguration="AuthorizeSoap12Binding">
+    <endpoint name="AuthorizeHttpSoap12Endpoint" contract="AuthorizeService.AuthorizePortType" bindingType="customBinding" address="http://10.123.4.121:8280/services/t/1.1/Authorize.AuthorizeHttpSoap12Endpoint" bindingConfiguration="AuthorizeSoap12Binding">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://10.168.91.22:8280/services/Authorize.AuthorizeHttpSoap12Endpoint</serializedValue>
+          <serializedValue>http://10.123.4.121:8280/services/t/1.1/Authorize.AuthorizeHttpSoap12Endpoint</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -630,10 +630,10 @@
         </property>
       </properties>
     </endpoint>
-    <endpoint name="AuthorizeHttpsSoap12Endpoint" contract="AuthorizeService.AuthorizePortType" bindingType="customBinding" address="https://10.168.91.22:8243/services/Authorize.AuthorizeHttpsSoap12Endpoint" bindingConfiguration="AuthorizeSoap12Binding">
+    <endpoint name="AuthorizeHttpsSoap12Endpoint" contract="AuthorizeService.AuthorizePortType" bindingType="customBinding" address="https://10.123.4.121:8243/services/t/1.1/Authorize.AuthorizeHttpsSoap12Endpoint" bindingConfiguration="AuthorizeSoap12Binding">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>https://10.168.91.22:8243/services/Authorize.AuthorizeHttpsSoap12Endpoint</serializedValue>
+          <serializedValue>https://10.123.4.121:8243/services/t/1.1/Authorize.AuthorizeHttpsSoap12Endpoint</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

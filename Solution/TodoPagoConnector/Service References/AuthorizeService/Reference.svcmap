@@ -20,10 +20,10 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="https://50.19.97.101:8243/services/Authorize?wsdl" Protocol="http" SourceId="1" />
+    <MetadataSource Address="https://developers.todopago.com.ar/services/t/1.1/Authorize?wsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="Authorize.wsdl" MetadataType="Wsdl" ID="f99338f7-82ad-4935-8441-14dca6b56028" SourceId="1" SourceUrl="https://50.19.97.101:8243/services/Authorize?wsdl" />
+    <MetadataFile FileName="Authorize1.wsdl" MetadataType="Wsdl" ID="c2966ecb-dc1c-49da-8e5d-f2e6d1e174d2" SourceId="1" SourceUrl="https://developers.todopago.com.ar/services/t/1.1/Authorize?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

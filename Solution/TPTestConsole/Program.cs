@@ -42,7 +42,7 @@ namespace TPTestConsole
             tpcs.sendAuthorizeRequest();
 
             Console.WriteLine("------------------------------------------------------------------------");
-
+            
             Console.WriteLine("initGetAuthorizeAnswer");
             tpcs.initGetAuthorizeAnswer();
             Console.WriteLine("sendGetAuthorizeAnswer");
@@ -58,7 +58,7 @@ namespace TPTestConsole
             */
 
 
-
+            
             tpcs.initGetStatus();
             tpcs.sendGetStatus();//TODO Rename method to GetStatus
 
@@ -116,7 +116,8 @@ namespace TPTestConsole
 
             //Authentification and Endpoint
             string authorization = "PRISMA f3d8b72c94ab4a06be2ef7c95490f7d3";
-            string endpoint = "https://developers.todopago.com.ar/t/1.1/api/";
+            //string endpoint = "https://apis.todopago.com.ar/";//produccion
+            string endpoint = "https://developers.todopago.com.ar/";//desarrollo
         
 
 
@@ -133,12 +134,7 @@ namespace TPTestConsole
                 var headers = new Dictionary<String, String>();
 
                 headers.Add("Authorization", authorization);
-
-                headers.Add("USERAGENT", "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)");
-                headers.Add("User-Agent", "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)");
-                headers.Add("UserAgent", "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)");
-
-
+                
                 //Override SSL security - must be removed on PRD
                 System.Net.ServicePointManager.ServerCertificateValidationCallback += new System.Net.Security.RemoteCertificateValidationCallback(ValidateCertificate);
 
@@ -151,19 +147,68 @@ namespace TPTestConsole
 
             public void initSendAuthorizeRequestParams()
             {
-                sendAuthorizeRequestParams.Add(SECURITY, "912EC803B2CE49E4A541068D495AB570");
+                sendAuthorizeRequestParams.Add(SECURITY, "3e4e3f553c4c44ca84082e67fb564d33");
                 sendAuthorizeRequestParams.Add(SESSION, "ABCDEF-1234-12221-FDE1-00000200");
-                sendAuthorizeRequestParams.Add(MERCHANT, "538");
-                sendAuthorizeRequestParams.Add(URL_OK, "http://google.com");
-                sendAuthorizeRequestParams.Add(URL_ERROR, "http://yahoo.com");
+                sendAuthorizeRequestParams.Add(MERCHANT, "5963");
+                sendAuthorizeRequestParams.Add(URL_OK, "http://someurl.com/ok");
+                sendAuthorizeRequestParams.Add(URL_ERROR, "http://someurl.com/fail");
                 sendAuthorizeRequestParams.Add(ENCODING_METHOD, "XML");
 
                 var payload = new Dictionary<string, string>();
-                sendAuthorizeRequestPayload.Add(MERCHANT, "538");
-                sendAuthorizeRequestPayload.Add(OPERATIONID, "01");
+                sendAuthorizeRequestPayload.Add(MERCHANT, "5963");
+                sendAuthorizeRequestPayload.Add(OPERATIONID, "2121");
                 sendAuthorizeRequestPayload.Add(CURRENCYCODE, "032");
                 sendAuthorizeRequestPayload.Add(AMOUNT, "55");
                 sendAuthorizeRequestPayload.Add(EMAILCLIENTE, "email_cliente@dominio.com");
+
+                sendAuthorizeRequestPayload.Add("CSBTCITY", "Villa General Belgrano"); //MANDATORIO.
+                sendAuthorizeRequestPayload.Add("CSBTCOUNTRY", "AR");//MANDATORIO. Código ISO.
+                sendAuthorizeRequestPayload.Add("CSBTEMAIL", "todopago@hotmail.com"); //MANDATORIO.
+                sendAuthorizeRequestPayload.Add("CSBTFIRSTNAME", "Juan");//MANDATORIO.      
+                sendAuthorizeRequestPayload.Add("CSBTLASTNAME", "Perez");//MANDATORIO.
+                sendAuthorizeRequestPayload.Add("CSBTPHONENUMBER", "541160913988");//MANDATORIO.     
+                sendAuthorizeRequestPayload.Add("CSBTPOSTALCODE", "1010");//MANDATORIO.
+                sendAuthorizeRequestPayload.Add("CSBTSTATE", "B");//MANDATORIO
+                sendAuthorizeRequestPayload.Add("CSBTSTREET1", "Cerrito 740");//MANDATORIO.
+                sendAuthorizeRequestPayload.Add("CSBTSTREET2", "");//NO MANDATORIO
+
+                sendAuthorizeRequestPayload.Add("CSBTCUSTOMERID", "453458"); //MANDATORIO.
+                sendAuthorizeRequestPayload.Add("CSBTIPADDRESS", "192.0.0.4"); //MANDATORIO.       
+                sendAuthorizeRequestPayload.Add("CSPTCURRENCY", "ARS");//MANDATORIO.      
+                sendAuthorizeRequestPayload.Add("CSPTGRANDTOTALAMOUNT", "1.00");//MANDATORIO.
+
+                sendAuthorizeRequestPayload.Add("CSMDD6", "");//NO MANDATORIO.
+                sendAuthorizeRequestPayload.Add("CSMDD7", "");//NO MANDATORIO.        
+                sendAuthorizeRequestPayload.Add("CSMDD8", ""); //NO MANDATORIO.       
+                sendAuthorizeRequestPayload.Add("CSMDD9", "");//NO MANDATORIO.       
+                sendAuthorizeRequestPayload.Add("CSMDD10", "");//NO MANDATORIO.      
+                sendAuthorizeRequestPayload.Add("CSMDD11", "");//NO MANDATORIO.
+
+                //retail
+                sendAuthorizeRequestPayload.Add("CSSTCITY", "Villa General Belgrano"); //MANDATORIO.
+                sendAuthorizeRequestPayload.Add("CSSTCOUNTRY", "AR");//MANDATORIO. Código ISO.
+                sendAuthorizeRequestPayload.Add("CSSTEMAIL", "todopago@hotmail.com"); //MANDATORIO.
+                sendAuthorizeRequestPayload.Add("CSSTFIRSTNAME", "Juan");//MANDATORIO.      
+                sendAuthorizeRequestPayload.Add("CSSTLASTNAME", "Perez");//MANDATORIO.
+                sendAuthorizeRequestPayload.Add("CSSTPHONENUMBER", "541160913988");//MANDATORIO.     
+                sendAuthorizeRequestPayload.Add("CSSTPOSTALCODE", "1010");//MANDATORIO.
+                sendAuthorizeRequestPayload.Add("CSSTSTATE", "B");//MANDATORIO
+                sendAuthorizeRequestPayload.Add("CSSTSTREET1", "Cerrito 740");//MANDATORIO.
+                sendAuthorizeRequestPayload.Add("CSSTSTREET2", "");//NO MANDATORIO.
+
+                sendAuthorizeRequestPayload.Add("CSITPRODUCTCODE", "electronic_good");//CONDICIONAL
+                sendAuthorizeRequestPayload.Add("CSITPRODUCTDESCRIPTION", "Prueba desde net");//CONDICIONAL.     
+                sendAuthorizeRequestPayload.Add("CSITPRODUCTNAME", "netsdk");//CONDICIONAL.  
+                sendAuthorizeRequestPayload.Add("CSITPRODUCTSKU", "nsdk123");//CONDICIONAL.      
+                sendAuthorizeRequestPayload.Add("CSITTOTALAMOUNT", "1.00");//CONDICIONAL.      
+                sendAuthorizeRequestPayload.Add("CSITQUANTITY", "1");//CONDICIONAL.       
+                sendAuthorizeRequestPayload.Add("CSITUNITPRICE", "1.00");
+
+                sendAuthorizeRequestPayload.Add("CSMDD12", "");//NO MADATORIO.     
+                sendAuthorizeRequestPayload.Add("CSMDD13", "");//NO MANDATORIO.     
+                sendAuthorizeRequestPayload.Add("CSMDD14", "");//NO MANDATORIO.      
+                sendAuthorizeRequestPayload.Add("CSMDD15", "");//NO MANDATORIO.        
+                sendAuthorizeRequestPayload.Add("CSMDD16", "");//NO MANDATORIO.
             }
 
             public void sendAuthorizeRequest()

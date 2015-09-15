@@ -63,12 +63,12 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="ClassDiagram1.cd" />
-    <None Include="Service References\AuthorizeService\Authorize.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\AuthorizeService\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Service References\AuthorizeService\Authorize1.wsdl" />
     <None Include="Service References\AuthorizeService\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
