@@ -5,6 +5,5 @@ D:\GitHub\dev-SDK-.Net\Solution\TodoPagoConnector\bin\Release\System.Net.Http.We
 D:\GitHub\dev-SDK-.Net\Solution\TodoPagoConnector\bin\Release\System.Net.Http.dll
 D:\GitHub\dev-SDK-.Net\Solution\TodoPagoConnector\bin\Release\System.Net.Http.WebRequest.xml
 D:\GitHub\dev-SDK-.Net\Solution\TodoPagoConnector\bin\Release\System.Net.Http.xml
-D:\GitHub\dev-SDK-.Net\Solution\TodoPagoConnector\obj\Release\TodoPagoConnector.csprojResolveAssemblyReference.cache
 D:\GitHub\dev-SDK-.Net\Solution\TodoPagoConnector\obj\Release\TodoPagoConnector.dll
 D:\GitHub\dev-SDK-.Net\Solution\TodoPagoConnector\obj\Release\TodoPagoConnector.pdb

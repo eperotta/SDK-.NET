@@ -43,10 +43,6 @@ namespace WindowsFormsApplication1
             String auth = tbGCAuth.Text;
             headers.Add("Authorization", auth);
 
-            headers.Add("USERAGENT", "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)");
-            headers.Add("User-Agent", "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)");
-            headers.Add("UserAgent", "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)");
-
             String endpoint = tbGCEp.Text;
 
             return new TPConnector(endpoint, headers);
