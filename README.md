@@ -66,30 +66,37 @@ request y payload deben ser un Dictionary<string, string> con la siguiente estru
 		
 ```C#
 var request = new Dictionary<string, string>();
-request.Add(SECURITY, "1234567890ABCDEF1234567890ABCDEF");
-request.Add(SESSION, String.Empty);
-request.Add(MERCHANT, "305");
-request.Add(URL_OK, "www.google.com.ar");
-request.Add(URL_ERROR, "www.google.com.ar");
+request.Add(SECURITY, "f3d8b72c94ab4a06be2ef7c95490f7d3");
+request.Add(SESSION, "ABCDEF-1234-12221-FDE1-00000200");
+request.Add(MERCHANT, "2153");
+request.Add(URL_OK, "http://someurl.com/ok");
+request.Add(URL_ERROR, "http://someurl.com/fail");
 request.Add(ENCODING_METHOD, "XML");
 
 var payload = new Dictionary<string, string>();
-payload.Add("MERCHANT", "305");
-payload.Add("OPERATIONID", "01");
+payload.Add("MERCHANT", "2153");
+payload.Add("OPERATIONID", "8000");
 payload.Add("CURRENCYCODE", "032");
-payload.Add("AMOUNT", "54");
-payload.Add("EMAILCLIENTE", "prueba@visa.com.ar");		
+payload.Add("AMOUNT", "1.00");
+payload.Add("EMAILCLIENTE", "some@someurl.com");
+
+//Optionals
+payload.Add("AVAILABLEPAYMENTMETHODSIDS", "1#194#43#45");
+payload.Add("PUSHNOTIFYENDPOINT", "");
+payload.Add("PUSHNOTIFYMETHOD", "");
+payload.Add("PUSHNOTIFYSTATES", "");
+		
 ```		
 		
 ####3.Confirmación de transacción.		
 En este caso hay que llamar a getAuthorizeAnswer(), que retorna Dictionary<string, object>, enviando como parámetro un Dictionary<String, String> como se describe a continuación.		
 ```C#		
 var request = new Dictionary<String, String>();
-request.Add(SECURITY, "1234567890ABCDEF1234567890ABCDEF");
+request.Add(SECURITY, "f3d8b72c94ab4a06be2ef7c95490f7d3");
 request.Add(SESSION, null);
-request.Add(MERCHANT, "305");
-request.Add(REQUESTKEY, "8496472a-8c87-e35b-dcf2-94d5e31eb12f");
-request.Add(ANSWERKEY, "8496472a-8c87-e35b-dcf2-94d5e31eb12f");
+request.Add(MERCHANT, "2153");
+request.Add(REQUESTKEY, "710268a7-7688-c8bf-68c9-430107e6b9da");
+request.Add(ANSWERKEY, "693ca9cc-c940-06a4-8d96-1ab0d66f3ee6");
 
 var res = connector.GetAuthorizeAnswer(request);
 ```		
@@ -113,21 +120,21 @@ parameters.Add("CSBTCOUNTRY", "AR");//País de facturación. MANDATORIO. Código
 parameters.Add("CSBTCUSTOMERID", "453458"); //Identificador del usuario al que se le emite la factura. MANDATORIO. No 
 			//puede contener un correo electrónico.		
 parameters.Add(CSBTIPADDRESS", "192.0.0.4"); //IP de la PC del comprador. MANDATORIO.		
-parameters.Add(CSBTEMAIL", "decidir@hotmail.com"); //Mail del usuario al que se le emite la factura. MANDATORIO.
+parameters.Add(CSBTEMAIL", "some@someurl.com"); //Mail del usuario al que se le emite la factura. MANDATORIO.
 parameters.Add(CSBTFIRSTNAME", "Juan");//Nombre del usuario al que se le emite la factura. MANDATORIO.		
 parameters.Add(CSBTLASTNAME", "Perez");//Apellido del usuario al que se le emite la factura. MANDATORIO.
 parameters.Add(CSBTPHONENUMBER", "541160913988");//Teléfono del usuario al que se le emite la factura. No utilizar 
 			//guiones, puntos o espacios. Incluir código de país. MANDATORIO.		
-parameters.Add(CSBTPOSTALCODE", " C1010AAP");//Código Postal de la dirección de facturación. MANDATORIO.
+parameters.Add(CSBTPOSTALCODE", " 1010");//Código Postal de la dirección de facturación. MANDATORIO.
 parameters.Add(CSBTSTATE", "B");//Provincia de la dirección de facturación. MANDATORIO. Ver tabla anexa de provincias.
-parameters.Add(CSBTSTREET1", "Cerrito 740");//Domicilio de facturación (calle y nro). MANDATORIO.		
-parameters.Add(CSBTSTREET2", "Piso 8");//Complemento del domicilio. (piso, departamento). NO MANDATORIO.
+parameters.Add(CSBTSTREET1", "Some Street 2153");//Domicilio de facturación (calle y nro). MANDATORIO.		
+parameters.Add(CSBTSTREET2", "");//Complemento del domicilio. (piso, departamento). NO MANDATORIO.
 parameters.Add(CSPTCURRENCY", "ARS");//Moneda. MANDATORIO.		
-parameters.Add(CSPTGRANDTOTALAMOUNT", "125.38");//Con decimales opcional usando el puntos como separador de decimales.
+parameters.Add(CSPTGRANDTOTALAMOUNT", "1.00");//Con decimales opcional usando el puntos como separador de decimales.
 			//No se permiten comas, ni como separador de miles ni como separador de decimales. MANDATORIO.
 			//(Ejemplos:$125,38-> 125.38 $12-> 12 o 12.00)		
 parameters.Add(CSMDD7", "");// Fecha registro comprador(num Dias). NO MANDATORIO.		
-parameters.Add(CSMDD8", "Y"); //Usuario Guest? (Y/N). En caso de ser Y, el campo CSMDD9 no deberá enviarse. NO 
+parameters.Add(CSMDD8", ""); //Usuario Guest? (Y/N). En caso de ser Y, el campo CSMDD9 no deberá enviarse. NO 
 			//MANDATORIO.		
 parameters.Add(CSMDD9", "");//Customer password Hash: criptograma asociado al password del comprador final. NO 	
 			//MANDATORIO.		
@@ -140,15 +147,15 @@ parameters.Add(CSMDD11", "");//Customer Cell Phone. NO MANDATORIO.
 ```C#	
 //Example
 var parameters = new Dictionary<string, string>();		
-parameters.Add("CSSTCITY", "rosario");//Ciudad de enví­o de la orden. MANDATORIO.		
-parameters.Add("CSSTCOUNTRY", "");//País de envío de la orden. MANDATORIO.		
-parameters.Add("CSSTEMAIL", "jose@gmail.com");//Mail del destinatario, MANDATORIO.		
-parameters.Add("CSSTFIRSTNAME", "Jose");//Nombre del destinatario. MANDATORIO.		
+parameters.Add("CSSTCITY", "Villa General Belgrano");//Ciudad de enví­o de la orden. MANDATORIO.		
+parameters.Add("CSSTCOUNTRY", "AR");//País de envío de la orden. MANDATORIO.		
+parameters.Add("CSSTEMAIL", "some@someurl.com");//Mail del destinatario, MANDATORIO.		
+parameters.Add("CSSTFIRSTNAME", "Juan");//Nombre del destinatario. MANDATORIO.		
 parameters.Add("CSSTLASTNAME", "Perez");//Apellido del destinatario. MANDATORIO.		
-parameters.Add("CSSTPHONENUMBER", "541155893737");//Número de teléfono del destinatario. MANDATORIO.		
-parameters.Add("CSSTPOSTALCODE", "1414");//Código postal del domicilio de envío. MANDATORIO.		
-parameters.Add("CSSTSTATE", "D");//Provincia de envío. MANDATORIO. Son de 1 caracter		
-parameters.Add("CSSTSTREET1", "San Martín 123");//Domicilio de envío. MANDATORIO.		
+parameters.Add("CSSTPHONENUMBER", "541160913988");//Número de teléfono del destinatario. MANDATORIO.		
+parameters.Add("CSSTPOSTALCODE", "1010");//Código postal del domicilio de envío. MANDATORIO.		
+parameters.Add("CSSTSTATE", "B");//Provincia de envío. MANDATORIO. Son de 1 caracter		
+parameters.Add("CSSTSTREET1", "Some Street 2153");//Domicilio de envío. MANDATORIO.		
 parameters.Add("CSMDD12", "");//Shipping DeadLine (Num Dias). NO MADATORIO.		
 parameters.Add("CSMDD13", "");//Método de Despacho. NO MANDATORIO.		
 parameters.Add("CSMDD14", "");//Customer requires Tax Bill ? (Y/N). NO MANDATORIO.		
@@ -156,12 +163,12 @@ parameters.Add("CSMDD15", "");//Customer Loyality Number. NO MANDATORIO.
 parameters.Add("CSMDD16", "");//Promotional / Coupon Code. NO MANDATORIO. 		
 	//Retail: datos a enviar por cada producto, los valores deben estar separado con #:		
 parameters.Add("CSITPRODUCTCODE", "electronic_good");//Código de producto. CONDICIONAL. Valores posibles(adult_content;coupon;default;electronic_good;electronic_software;gift_certificate;handling_only;service;shipping_and_handling;shipping_only;subscription)		
-parameters.Add("CSITPRODUCTDESCRIPTION", "NOTEBOOK L845 SP4304LA DF TOSHIBA");//Descripción del producto. CONDICIONAL.		
-parameters.Add("CSITPRODUCTNAME", "NOTEBOOK L845 SP4304LA DF TOSHIBA");//Nombre del producto. CONDICIONAL.	
-parameters.Add("CSITPRODUCTSKU", "LEVJNSL36GN");//Código identificador del producto. CONDICIONAL.		
-parameters.Add("CSITTOTALAMOUNT", "1254.40");//CSITTOTALAMOUNT=CSITUNITPRICE*CSITQUANTITY "999999[.CC]" Con decimales opcional usando el puntos como separador de decimales. No se permiten comas, ni como separador de miles ni como separador de decimales. CONDICIONAL.		
+parameters.Add("CSITPRODUCTDESCRIPTION", "Test Prd Description");//Descripción del producto. CONDICIONAL.		
+parameters.Add("CSITPRODUCTNAME", "TestPrd");//Nombre del producto. CONDICIONAL.	
+parameters.Add("CSITPRODUCTSKU", "SKU1234");//Código identificador del producto. CONDICIONAL.		
+parameters.Add("CSITTOTALAMOUNT", "10.01");//CSITTOTALAMOUNT=CSITUNITPRICE*CSITQUANTITY "999999[.CC]" Con decimales opcional usando el puntos como separador de decimales. No se permiten comas, ni como separador de miles ni como separador de decimales. CONDICIONAL.		
 parameters.Add("CSITQUANTITY", "1");//Cantidad del producto. CONDICIONAL.		
-parameters.Add("CSITUNITPRICE", "1254.40");//Formato Idem CSITTOTALAMOUNT. CONDICIONAL.	
+parameters.Add("CSITUNITPRICE", "10.01");//Formato Idem CSITTOTALAMOUNT. CONDICIONAL.	
 ```		
 
 [<sub>Volver a inicio</sub>](#inicio)		
@@ -177,8 +184,8 @@ Existe un ejemplo en la carpeta https://github.com/TodoPago/SDK-.NET/tree/master
 La SDK cuenta con un m&eacute;todo para consultar el status de la transacci&oacute;n desde la misma SDK. El m&eacute;todo se utiliza de la siguiente manera:
 ```C#
 TPConnector tpc = new TPConnector(endpoint, headers);
-String merchant = "305";
-String operationID = "01";
+String merchant = "2153";
+String operationID = "02";
 var res = connector.GetStatus(merchant, operationID);// Merchant es el id site y operationID es el id operación que se envio en el array a través del método sendAuthorizeRequest() 
 ```
 El siguiente m&eacute;todo retornara el status actual de la transacci&oacute;n en Todopago, y devuelve List<Dictionary<string, object>>.
@@ -238,7 +245,7 @@ El siguiente m&eacute;todo retornara el status actual de la transacci&oacute;n e
 <tr><td>Chubut</td><td>U</td></tr>		
 <tr><td>Córdoba</td><td>X</td></tr>		
 <tr><td>Corrientes</td><td>W</td></tr>		
-<tr><td>Entre Ríos</td><td>R</td></tr>		
+<tr><td>Entre Ríos</td><td>E</td></tr>		
 <tr><td>Formosa</td><td>P</td></tr>		
 <tr><td>Jujuy</td><td>Y</td></tr>		
 <tr><td>La Pampa</td><td>L</td></tr>		
