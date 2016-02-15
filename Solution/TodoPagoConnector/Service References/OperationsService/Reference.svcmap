@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="042c520f-a5ad-4c35-85ff-6a67cad0b810" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="6231e3f9-8123-45f4-9256-9f0baac65b41" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <EnableDataBinding>true</EnableDataBinding>
@@ -20,10 +20,10 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="https://developers.todopago.com.ar/services/t/1.1/Authorize?wsdl" Protocol="http" SourceId="1" />
+    <MetadataSource Address="https://developers.todopago.com.ar/services/t/1.1/Operations?wsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="Authorize1.wsdl" MetadataType="Wsdl" ID="c2966ecb-dc1c-49da-8e5d-f2e6d1e174d2" SourceId="1" SourceUrl="https://developers.todopago.com.ar/services/t/1.1/Authorize?wsdl" />
+    <MetadataFile FileName="Operations.wsdl" MetadataType="Wsdl" ID="30676734-5330-4685-bba4-4c91bbe3f185" SourceId="1" SourceUrl="https://developers.todopago.com.ar/services/t/1.1/Operations?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

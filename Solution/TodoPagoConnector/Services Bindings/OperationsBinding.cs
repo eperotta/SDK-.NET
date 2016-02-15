@@ -11,17 +11,19 @@ namespace TodoPagoConnector
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class AuthorizeBinding: BasicHttpBinding
+    public class OperationsBinding : BasicHttpBinding
     {
-        public AuthorizeBinding(): base()
+        public OperationsBinding()
+            : base()
         {
             this.Security.Mode = BasicHttpSecurityMode.Transport;
         }
     }
 
-    public class AuthorizeEndpoint : EndpointAddress
+    public class OperationsEndpoint : EndpointAddress
     {
-        public AuthorizeEndpoint(string uri):base(uri+@"/Authorize.AuthorizeHttpsSoap12Endpoint")
+        public OperationsEndpoint(string uri)
+            : base(uri + @"/Operations.OperationsHttpsSoap12Endpoint")
         {
         }
     }

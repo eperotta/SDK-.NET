@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="NwFi9yOgtKtDu3+pzKlRyp2Jk2Y=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="SynZjtUYRP0B0igotXXqNtuyKOA=">
   <bindingConfigurations>
-    <bindingConfiguration bindingType="basicHttpBinding" name="AuthorizeSoap11Binding">
+    <bindingConfiguration bindingType="basicHttpBinding" name="OperationsSoap11Binding">
       <properties>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>AuthorizeSoap11Binding</serializedValue>
+          <serializedValue>OperationsSoap11Binding</serializedValue>
         </property>
         <property path="/closeTimeout" isComplexType="false" isExplicitlyDefined="true" clrType="System.TimeSpan, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -110,10 +110,10 @@
         </property>
       </properties>
     </bindingConfiguration>
-    <bindingConfiguration bindingType="basicHttpBinding" name="AuthorizeSoap11Binding1">
+    <bindingConfiguration bindingType="basicHttpBinding" name="OperationsSoap11Binding1">
       <properties>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>AuthorizeSoap11Binding1</serializedValue>
+          <serializedValue>OperationsSoap11Binding1</serializedValue>
         </property>
         <property path="/closeTimeout" isComplexType="false" isExplicitlyDefined="true" clrType="System.TimeSpan, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -219,10 +219,10 @@
         </property>
       </properties>
     </bindingConfiguration>
-    <bindingConfiguration bindingType="customBinding" name="AuthorizeSoap12Binding">
+    <bindingConfiguration bindingType="customBinding" name="OperationsSoap12Binding">
       <properties>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>AuthorizeSoap12Binding</serializedValue>
+          <serializedValue>OperationsSoap12Binding</serializedValue>
         </property>
         <property path="/closeTimeout" isComplexType="false" isExplicitlyDefined="true" clrType="System.TimeSpan, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -375,10 +375,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="AuthorizeHttpsSoap11Endpoint" contract="AuthorizeService.AuthorizePortType" bindingType="basicHttpBinding" address="https://10.123.4.121:8243/services/t/1.1/Authorize.AuthorizeHttpsSoap11Endpoint" bindingConfiguration="AuthorizeSoap11Binding">
+    <endpoint name="OperationsHttpsSoap11Endpoint" contract="OperationsService.OperationsPortType" bindingType="basicHttpBinding" address="https://10.123.4.121:8243/services/t/1.1/Operations.OperationsHttpsSoap11Endpoint" bindingConfiguration="OperationsSoap11Binding">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>https://10.123.4.121:8243/services/t/1.1/Authorize.AuthorizeHttpsSoap11Endpoint</serializedValue>
+          <serializedValue>https://10.123.4.121:8243/services/t/1.1/Operations.OperationsHttpsSoap11Endpoint</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -387,10 +387,10 @@
           <serializedValue>basicHttpBinding</serializedValue>
         </property>
         <property path="/bindingConfiguration" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>AuthorizeSoap11Binding</serializedValue>
+          <serializedValue>OperationsSoap11Binding</serializedValue>
         </property>
         <property path="/contract" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>AuthorizeService.AuthorizePortType</serializedValue>
+          <serializedValue>OperationsService.OperationsPortType</serializedValue>
         </property>
         <property path="/headers" isComplexType="true" isExplicitlyDefined="false" clrType="System.ServiceModel.Configuration.AddressHeaderCollectionElement, System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>System.ServiceModel.Configuration.AddressHeaderCollectionElement</serializedValue>
@@ -450,7 +450,7 @@
           <serializedValue>False</serializedValue>
         </property>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>AuthorizeHttpsSoap11Endpoint</serializedValue>
+          <serializedValue>OperationsHttpsSoap11Endpoint</serializedValue>
         </property>
         <property path="/kind" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -460,10 +460,10 @@
         </property>
       </properties>
     </endpoint>
-    <endpoint name="AuthorizeHttpSoap11Endpoint" contract="AuthorizeService.AuthorizePortType" bindingType="basicHttpBinding" address="http://10.123.4.121:8280/services/t/1.1/Authorize.AuthorizeHttpSoap11Endpoint" bindingConfiguration="AuthorizeSoap11Binding1">
+    <endpoint name="OperationsHttpSoap11Endpoint" contract="OperationsService.OperationsPortType" bindingType="basicHttpBinding" address="http://10.123.4.121:8280/services/t/1.1/Operations.OperationsHttpSoap11Endpoint" bindingConfiguration="OperationsSoap11Binding1">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://10.123.4.121:8280/services/t/1.1/Authorize.AuthorizeHttpSoap11Endpoint</serializedValue>
+          <serializedValue>http://10.123.4.121:8280/services/t/1.1/Operations.OperationsHttpSoap11Endpoint</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -472,10 +472,10 @@
           <serializedValue>basicHttpBinding</serializedValue>
         </property>
         <property path="/bindingConfiguration" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>AuthorizeSoap11Binding1</serializedValue>
+          <serializedValue>OperationsSoap11Binding1</serializedValue>
         </property>
         <property path="/contract" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>AuthorizeService.AuthorizePortType</serializedValue>
+          <serializedValue>OperationsService.OperationsPortType</serializedValue>
         </property>
         <property path="/headers" isComplexType="true" isExplicitlyDefined="false" clrType="System.ServiceModel.Configuration.AddressHeaderCollectionElement, System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>System.ServiceModel.Configuration.AddressHeaderCollectionElement</serializedValue>
@@ -535,7 +535,7 @@
           <serializedValue>False</serializedValue>
         </property>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>AuthorizeHttpSoap11Endpoint</serializedValue>
+          <serializedValue>OperationsHttpSoap11Endpoint</serializedValue>
         </property>
         <property path="/kind" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -545,10 +545,10 @@
         </property>
       </properties>
     </endpoint>
-    <endpoint name="AuthorizeHttpSoap12Endpoint" contract="AuthorizeService.AuthorizePortType" bindingType="customBinding" address="http://10.123.4.121:8280/services/t/1.1/Authorize.AuthorizeHttpSoap12Endpoint" bindingConfiguration="AuthorizeSoap12Binding">
+    <endpoint name="OperationsHttpsSoap12Endpoint" contract="OperationsService.OperationsPortType" bindingType="customBinding" address="https://10.123.4.121:8243/services/t/1.1/Operations.OperationsHttpsSoap12Endpoint" bindingConfiguration="OperationsSoap12Binding">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://10.123.4.121:8280/services/t/1.1/Authorize.AuthorizeHttpSoap12Endpoint</serializedValue>
+          <serializedValue>https://10.123.4.121:8243/services/t/1.1/Operations.OperationsHttpsSoap12Endpoint</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -557,10 +557,10 @@
           <serializedValue>customBinding</serializedValue>
         </property>
         <property path="/bindingConfiguration" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>AuthorizeSoap12Binding</serializedValue>
+          <serializedValue>OperationsSoap12Binding</serializedValue>
         </property>
         <property path="/contract" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>AuthorizeService.AuthorizePortType</serializedValue>
+          <serializedValue>OperationsService.OperationsPortType</serializedValue>
         </property>
         <property path="/headers" isComplexType="true" isExplicitlyDefined="false" clrType="System.ServiceModel.Configuration.AddressHeaderCollectionElement, System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>System.ServiceModel.Configuration.AddressHeaderCollectionElement</serializedValue>
@@ -620,7 +620,7 @@
           <serializedValue>False</serializedValue>
         </property>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>AuthorizeHttpSoap12Endpoint</serializedValue>
+          <serializedValue>OperationsHttpsSoap12Endpoint</serializedValue>
         </property>
         <property path="/kind" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -630,10 +630,10 @@
         </property>
       </properties>
     </endpoint>
-    <endpoint name="AuthorizeHttpsSoap12Endpoint" contract="AuthorizeService.AuthorizePortType" bindingType="customBinding" address="https://10.123.4.121:8243/services/t/1.1/Authorize.AuthorizeHttpsSoap12Endpoint" bindingConfiguration="AuthorizeSoap12Binding">
+    <endpoint name="OperationsHttpSoap12Endpoint" contract="OperationsService.OperationsPortType" bindingType="customBinding" address="http://10.123.4.121:8280/services/t/1.1/Operations.OperationsHttpSoap12Endpoint" bindingConfiguration="OperationsSoap12Binding">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>https://10.123.4.121:8243/services/t/1.1/Authorize.AuthorizeHttpsSoap12Endpoint</serializedValue>
+          <serializedValue>http://10.123.4.121:8280/services/t/1.1/Operations.OperationsHttpSoap12Endpoint</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -642,10 +642,10 @@
           <serializedValue>customBinding</serializedValue>
         </property>
         <property path="/bindingConfiguration" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>AuthorizeSoap12Binding</serializedValue>
+          <serializedValue>OperationsSoap12Binding</serializedValue>
         </property>
         <property path="/contract" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>AuthorizeService.AuthorizePortType</serializedValue>
+          <serializedValue>OperationsService.OperationsPortType</serializedValue>
         </property>
         <property path="/headers" isComplexType="true" isExplicitlyDefined="false" clrType="System.ServiceModel.Configuration.AddressHeaderCollectionElement, System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>System.ServiceModel.Configuration.AddressHeaderCollectionElement</serializedValue>
@@ -705,7 +705,7 @@
           <serializedValue>False</serializedValue>
         </property>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>AuthorizeHttpsSoap12Endpoint</serializedValue>
+          <serializedValue>OperationsHttpSoap12Endpoint</serializedValue>
         </property>
         <property path="/kind" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
