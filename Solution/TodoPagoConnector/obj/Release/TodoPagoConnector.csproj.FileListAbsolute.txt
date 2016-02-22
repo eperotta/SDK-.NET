@@ -4,3 +4,9 @@ D:\TodoPago\dev-SDK-.Net\Solution\TodoPagoConnector\bin\Release\TodoPagoConnecto
 D:\TodoPago\dev-SDK-.Net\Solution\TodoPagoConnector\obj\Release\TodoPagoConnector.csprojResolveAssemblyReference.cache
 D:\TodoPago\dev-SDK-.Net\Solution\TodoPagoConnector\obj\Release\TodoPagoConnector.dll
 D:\TodoPago\dev-SDK-.Net\Solution\TodoPagoConnector\obj\Release\TodoPagoConnector.pdb
+C:\Users\gghioldi\Documents\GitHub\dev-SDK-.Net\Solution\TodoPagoConnector\bin\Release\TodoPagoConnector.dll.config
+C:\Users\gghioldi\Documents\GitHub\dev-SDK-.Net\Solution\TodoPagoConnector\bin\Release\TodoPagoConnector.dll
+C:\Users\gghioldi\Documents\GitHub\dev-SDK-.Net\Solution\TodoPagoConnector\bin\Release\TodoPagoConnector.pdb
+C:\Users\gghioldi\Documents\GitHub\dev-SDK-.Net\Solution\TodoPagoConnector\obj\Release\TodoPagoConnector.dll
+C:\Users\gghioldi\Documents\GitHub\dev-SDK-.Net\Solution\TodoPagoConnector\obj\Release\TodoPagoConnector.pdb
+C:\Users\gghioldi\Documents\GitHub\dev-SDK-.Net\Solution\TodoPagoConnector\obj\Release\TodoPagoConnector.csprojResolveAssemblyReference.cache

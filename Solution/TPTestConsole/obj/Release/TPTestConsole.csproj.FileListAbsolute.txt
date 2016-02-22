@@ -6,3 +6,11 @@ D:\TodoPago\dev-SDK-.Net\Solution\TPTestConsole\bin\Release\TodoPagoConnector.pd
 D:\TodoPago\dev-SDK-.Net\Solution\TPTestConsole\obj\Release\TPTestConsole.exe
 D:\TodoPago\dev-SDK-.Net\Solution\TPTestConsole\obj\Release\TPTestConsole.pdb
 D:\TodoPago\dev-SDK-.Net\Solution\TPTestConsole\obj\Release\TPTestConsole.csprojResolveAssemblyReference.cache
+C:\Users\gghioldi\Documents\GitHub\dev-SDK-.Net\Solution\TPTestConsole\bin\Release\TPTestConsole.exe.config
+C:\Users\gghioldi\Documents\GitHub\dev-SDK-.Net\Solution\TPTestConsole\bin\Release\TPTestConsole.exe
+C:\Users\gghioldi\Documents\GitHub\dev-SDK-.Net\Solution\TPTestConsole\bin\Release\TPTestConsole.pdb
+C:\Users\gghioldi\Documents\GitHub\dev-SDK-.Net\Solution\TPTestConsole\bin\Release\TodoPagoConnector.dll
+C:\Users\gghioldi\Documents\GitHub\dev-SDK-.Net\Solution\TPTestConsole\bin\Release\TodoPagoConnector.pdb
+C:\Users\gghioldi\Documents\GitHub\dev-SDK-.Net\Solution\TPTestConsole\obj\Release\TPTestConsole.csprojResolveAssemblyReference.cache
+C:\Users\gghioldi\Documents\GitHub\dev-SDK-.Net\Solution\TPTestConsole\obj\Release\TPTestConsole.exe
+C:\Users\gghioldi\Documents\GitHub\dev-SDK-.Net\Solution\TPTestConsole\obj\Release\TPTestConsole.pdb

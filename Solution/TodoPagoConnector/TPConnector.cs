@@ -17,7 +17,7 @@ namespace TodoPagoConnector
 {
     public class TPConnector
     {
-        string versionTodoPago = "1.0.3";
+        string versionTodoPago = "1.0.4";
         
         private AuthorizeBinding AuthorizeBinding;
         private AuthorizeEndpoint AuthorizeEndpoint;
