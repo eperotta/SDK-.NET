@@ -13,7 +13,7 @@ namespace TPTestConsole
     {
         private static void Main(string[] args)
         {
-            Console.WriteLine("init TodoPagoConnectorSample");
+            // Console.WriteLine("init TodoPagoConnectorSample");
 
             TodoPagoConnectorSample tpcs = new TodoPagoConnectorSample();
 
@@ -42,7 +42,16 @@ namespace TPTestConsole
             tpcs.getAllPaymentMethods();
             Console.WriteLine("------------------------------------------------------------------------");
 
+            Console.WriteLine("initGetByRangeDateTime");
             tpcs.getByRangeDateTime();
+
+            Console.WriteLine("------------------------------------------------------------------------");
+            Console.WriteLine("VoidRequest");
+            tpcs.voidRequest();
+
+            Console.WriteLine("------------------------------------------------------------------------");
+            Console.WriteLine("ReturnRequest");
+            tpcs.returnRequest();
 
             Console.Read();
         }
@@ -97,8 +106,8 @@ namespace TPTestConsole
             {
                 var headers = new Dictionary<String, String>();
 
-                headers.Add("Authorization", authorization);
-
+                headers.Add("Authorization", authorization); 
+                
                 //Override SSL security - must be removed on PRD
                 System.Net.ServicePointManager.ServerCertificateValidationCallback += new System.Net.Security.RemoteCertificateValidationCallback(ValidateCertificate);
 
@@ -107,15 +116,15 @@ namespace TPTestConsole
 
             public void initSendAuthorizeRequestParams()
             {
-                sendAuthorizeRequestParams.Add(SECURITY, "3e4e3f553c4c44ca84082e67fb564d33");
+                sendAuthorizeRequestParams.Add(SECURITY, "f3d8b72c94ab4a06be2ef7c95490f7d3");
                 sendAuthorizeRequestParams.Add(SESSION, "ABCDEF-1234-12221-FDE1-00000200");
-                sendAuthorizeRequestParams.Add(MERCHANT, "5963");
+                sendAuthorizeRequestParams.Add(MERCHANT, "2153");
                 sendAuthorizeRequestParams.Add(URL_OK, "http://someurl.com/ok");
                 sendAuthorizeRequestParams.Add(URL_ERROR, "http://someurl.com/fail");
                 sendAuthorizeRequestParams.Add(ENCODING_METHOD, "XML");
 
                 var payload = new Dictionary<string, string>();
-                sendAuthorizeRequestPayload.Add(MERCHANT, "5963");
+                sendAuthorizeRequestPayload.Add(MERCHANT, "2153");
                 sendAuthorizeRequestPayload.Add(OPERATIONID, "2121");
                 sendAuthorizeRequestPayload.Add(CURRENCYCODE, "032");
                 sendAuthorizeRequestPayload.Add(AMOUNT, "55");
@@ -212,11 +221,11 @@ namespace TPTestConsole
 
             public void initGetAuthorizeAnswer()
             {
-                getAuthorizeAnswerParams.Add(SECURITY, "1234567890ABCDEF1234567890ABCDEF");
+                getAuthorizeAnswerParams.Add(SECURITY, "f3d8b72c94ab4a06be2ef7c95490f7d3");
                 getAuthorizeAnswerParams.Add(SESSION, null);
-                getAuthorizeAnswerParams.Add(MERCHANT, "305");
-                getAuthorizeAnswerParams.Add(REQUESTKEY, "8496472a-8c87-e35b-dcf2-94d5e31eb12f");
-                getAuthorizeAnswerParams.Add(ANSWERKEY, "8496472a-8c87-e35b-dcf2-94d5e31eb12f");
+                getAuthorizeAnswerParams.Add(MERCHANT, "2153");
+                getAuthorizeAnswerParams.Add(REQUESTKEY, "0db2e848-b0ab-6baf-f9e1-b70a82ed5844");
+                getAuthorizeAnswerParams.Add(ANSWERKEY, "31b8ae04-318c-89dd-5354-494dd5fefb2f");
             }
 
             public void sendGetAuthorizeAnswer()
@@ -296,19 +305,41 @@ namespace TPTestConsole
                 printDictionary(res, "");
             }
 
-            public void getByRangeDateTime()
+            public void voidRequest() 
             {
-                Dictionary<string, object> gbrdt = new Dictionary<string, object>();
-                //DateTime start = new DateTime(yy, mm, day, hour, minute, second);
-
-                DateTime startDate = new DateTime(2015, 1, 1);
-                DateTime endDate = new DateTime(2015, 12, 10);
+                Dictionary<string, string> gbrdt = new Dictionary<string, string>();
 
                 gbrdt.Add(TPConnector.MERCHANT, "2153");
-                gbrdt.Add(TPConnector.STARTDATE, startDate);//"2015-01-01T17:34:42.903");
-                gbrdt.Add(TPConnector.ENDDATE, endDate);//"2015-12-10T17:34:42.903");
+                gbrdt.Add(TPConnector.SECURITY, "f3d8b72c94ab4a06be2ef7c95490f7d3");
+                gbrdt.Add(TPConnector.REQUESTKEY, "bb25d589-52bc-8e21-fc5d-47d677b0995c");
 
-                Dictionary<string, object> res = connector.getByRangeDateTime(gbrdt);
+                string res = connector.VoidRequest(gbrdt);
+                Console.WriteLine("\nResponse received was :\n{0} ", res);
+            }
+            
+            public void returnRequest()
+            {
+                Dictionary<string, string> gbrdt = new Dictionary<string, string>();
+  
+                gbrdt.Add(TPConnector.MERCHANT, "2153");
+                gbrdt.Add(TPConnector.SECURITY, "f3d8b72c94ab4a06be2ef7c95490f7d3");
+                gbrdt.Add(TPConnector.REQUESTKEY, "0db2e848-b0ab-6baf-f9e1-b70a82ed5844");
+                gbrdt.Add(TPConnector.AMOUNT, "10");
+
+                string res = connector.ReturnRequest(gbrdt);
+                Console.WriteLine("\nResponse received was :\n{0} ", res);
+            }
+
+            public void getByRangeDateTime()
+            {
+                Dictionary<string, string> gbrdt = new Dictionary<string, string>();
+               
+                gbrdt.Add(TPConnector.MERCHANT, "2153");
+                gbrdt.Add(TPConnector.STARTDATE, "2015-01-01");
+                gbrdt.Add(TPConnector.ENDDATE, "2015-12-10");
+                gbrdt.Add(TPConnector.PAGENUMBER, "1");
+
+                Dictionary<string, Object> res = connector.getByRangeDateTime(gbrdt);
                 printDictionary(res, "");
             }
 

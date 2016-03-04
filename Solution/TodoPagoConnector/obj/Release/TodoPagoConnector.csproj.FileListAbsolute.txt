@@ -1,6 +1,0 @@
-D:\TodoPago\dev-SDK-.Net\Solution\TodoPagoConnector\bin\Release\TodoPagoConnector.dll.config
-D:\TodoPago\dev-SDK-.Net\Solution\TodoPagoConnector\bin\Release\TodoPagoConnector.dll
-D:\TodoPago\dev-SDK-.Net\Solution\TodoPagoConnector\bin\Release\TodoPagoConnector.pdb
-D:\TodoPago\dev-SDK-.Net\Solution\TodoPagoConnector\obj\Release\TodoPagoConnector.csprojResolveAssemblyReference.cache
-D:\TodoPago\dev-SDK-.Net\Solution\TodoPagoConnector\obj\Release\TodoPagoConnector.dll
-D:\TodoPago\dev-SDK-.Net\Solution\TodoPagoConnector\obj\Release\TodoPagoConnector.pdb

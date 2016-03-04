@@ -12,6 +12,8 @@ Modulo para conexión con gateway de pago Todo Pago
 ######[Ejemplo](#ejemplo)		
 ######[Modo test](#test)
 ######[Status de la operación](#status)
+######[Consulta de operaciones por rango de tiempo](#statusdate)
+######[Devoluciónes](#devolucion)
 ######[Tablas de referencia](#tablas)		
 
 <a name="instalacion"></a>		
@@ -191,6 +193,56 @@ var res = connector.GetStatus(merchant, operationID);// Merchant es el id site y
 El siguiente m&eacute;todo retornara el status actual de la transacci&oacute;n en Todopago, y devuelve List<Dictionary<string, object>>.
 [<sub>Volver a inicio</sub>](#inicio)		
 
+<a name="statusdate"></a>
+## Consulta de operaciones por rango de tiempo
+En este caso hay que llamar a getByRangeDateTime() y devolvera todas las operaciones realizadas en el rango de fechas dado
+
+```C#
+TPConnector tpc = new TPConnector(endpoint, headers);
+
+Dictionary<string, string> gbrdt = new Dictionary<string, string>();
+gbrdt.Add(TPConnector.MERCHANT, "2153");
+gbrdt.Add(TPConnector.STARTDATE, "2015-01-01");
+gbrdt.Add(TPConnector.ENDDATE, "2015-12-10");
+gbrdt.Add(TPConnector.PAGENUMBER, "1");
+
+Dictionary<string, Object> res = connector.getByRangeDateTime(gbrdt);
+```
+
+[<sub>Volver a inicio</sub>](#inicio)	
+
+<a name="devolucion"></a>
+## Devoluciónes
+La SDK dispone de dos m&eacute;todos para realizar la Devolución online, total o parcial, de una transacci&oacute;n realizada a traves de TodoPago. El m&eacute;todo se utiliza de la siguiente manera:
+
+Devolución Total
+```C#
+TPConnector tpc = new TPConnector(endpoint, headers);
+
+Dictionary<string, string> gbrdt = new Dictionary<string, string>();
+gbrdt.Add(TPConnector.MERCHANT, "2153");
+gbrdt.Add(TPConnector.SECURITY, "f3d8b72c94ab4a06be2ef7c95490f7d3");
+gbrdt.Add(TPConnector.REQUESTKEY, "bb25d589-52bc-8e21-fc5d-47d677b0995c");
+
+string res = connector.VoidRequest(gbrdt);// Merchant es el id site y requestKey es la key se que retorna a travÃ©s del mÃ©todo SendAuthorizeRequest() 
+```
+Devolución Parcial
+```C#
+TPConnector tpc = new TPConnector(endpoint, headers);
+
+Dictionary<string, string> gbrdt = new Dictionary<string, string>();
+gbrdt.Add(TPConnector.MERCHANT, "2153");
+gbrdt.Add(TPConnector.SECURITY, "f3d8b72c94ab4a06be2ef7c95490f7d3");
+gbrdt.Add(TPConnector.REQUESTKEY, "0db2e848-b0ab-6baf-f9e1-b70a82ed5844");
+gbrdt.Add(TPConnector.AMOUNT, "10");
+
+string res = connector.ReturnRequest(gbrdt);// Merchant es el id site , AuthorizationKey es la key se que retorna a travÃ©s del mÃ©todo SendAuthorizeRequest() y Amount la cantidad a devolver (float Type)
+```
+
+Si la operación fue realizada correctamente se informará con un código 2011 y un mensaje indicando el éxito de la operación.
+
+[<sub>Volver a inicio</sub>](#inicio)	
+
 <a name="tablas"></a>		
 ## Tablas de Referencia		
 ######[Códigos de Estado](#cde)		
@@ -264,4 +316,6 @@ El siguiente m&eacute;todo retornara el status actual de la transacci&oacute;n e
 <tr><td>Tucumán</td><td>T</td></tr>		
 </table>		
 [<sub>Volver a inicio</sub>](#inicio)
+
+
 

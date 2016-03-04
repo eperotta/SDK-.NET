@@ -17,7 +17,7 @@ namespace TodoPagoConnector
 {
     public class TPConnector
     {
-        string versionTodoPago = "1.0.3";
+        string versionTodoPago = "1.1.0";
         
         private AuthorizeBinding AuthorizeBinding;
         private AuthorizeEndpoint AuthorizeEndpoint;
@@ -35,9 +35,14 @@ namespace TodoPagoConnector
         public const string URL_OK = "URL OK";
         public const string URL_ERROR = "URL Error";
         public const string ENCODING_METHOD = "Encoding Method";
-
-        public const string STARTDATE = "StartDate";
-        public const string ENDDATE = "EndDate";
+        public const string AUTHORIZATIONKEY = "AuthorizationKey";
+        public const string AMOUNT = "Amount";
+        public const string REQUESTCHANNEL = "requestChannel";
+        public const string CURRENCYCODE = "currencyCode";
+  
+        public const string STARTDATE = "STARTDATE";
+        public const string ENDDATE = "ENDDATE";
+        public const string PAGENUMBER = "PAGENUMBER";
 
         private const string tenant = "t/1.1";
         private const string soapAppend = "services/";
@@ -64,20 +69,28 @@ namespace TodoPagoConnector
 
         public List<Dictionary<string, object>> GetStatus(string merchant, string operation)
         {
-
             return restClient.getByOperationID(merchant, operation);
-
         }
-
 
         public Dictionary<string, object> GetAllPaymentMethods(string merchant)
         {
-
             return restClient.GetAllPaymentMethods(merchant);
-
         }
 
+        public string VoidRequest(Dictionary<string, string> param)
+        {
+            return restClient.VoidRequest(param);
+        }
 
+        public string ReturnRequest(Dictionary<string, string> param)
+        {
+            return restClient.ReturnRequest(param);
+        }
+
+        public Dictionary<string, object> getByRangeDateTime(Dictionary<string, string> param)
+        { 
+            return restClient.GetByRangeDateTime(param);
+        }
 
         public Dictionary<string, object> GetAuthorizeAnswer(Dictionary<string, string> request)
         {
@@ -120,37 +133,37 @@ namespace TodoPagoConnector
             return result;
         }
 
-        public Dictionary<string, object> SendAuthorizeRequest(Dictionary<string, string> request, Dictionary<string, string> payloads) 
+        public Dictionary<string, object> SendAuthorizeRequest(Dictionary<string, string> request, Dictionary<string, string> payloads)
         {
 
             //Add version to payload dictionary
-            string val = "";
-            if (payloads.TryGetValue("SDK", out val))
-            {
-                payloads["SDK"] = ".NET";
-            }
-            else
-            {
-                payloads.Add("SDK", ".NET");
-            }
+            // string val = "";
+            // if (payloads.TryGetValue("SDK", out val))
+            //{
+            // payloads["SDK"] = ".NET";
+            //}
+            // else
+            //{
+            //payloads.Add("SDK", ".NET");
+            //}
 
-            if (payloads.TryGetValue("SDKVERSION", out val))
-            {
-                payloads["SDKVERSION"] = versionTodoPago;
-            }
-            else
-            {
-                payloads.Add("SDKVERSION", versionTodoPago);
-            }
+            //if (payloads.TryGetValue("SDKVERSION", out val))
+            //{
+            // payloads["SDKVERSION"] = versionTodoPago;
+            //}
+            //else
+            //{
+            //payloads.Add("SDKVERSION", versionTodoPago);
+            //}
 
-            if (payloads.TryGetValue("LENGUAGEVERSION", out val))
-            {
-                payloads["LENGUAGEVERSION"] = Environment.Version.ToString();
-            }
-            else
-            {
-                payloads.Add("LENGUAGEVERSION", Environment.Version.ToString());
-            }
+            // if (payloads.TryGetValue("LENGUAGEVERSION", out val))
+            //{
+            //payloads["LENGUAGEVERSION"] = Environment.Version.ToString();
+            //}
+            //else
+            //{
+           // payloads.Add("LENGUAGEVERSION", Environment.Version.ToString());
+            //}
 
 
             var result = new Dictionary<string, object>();
@@ -199,72 +212,6 @@ namespace TodoPagoConnector
                 ///TODO: ACA VA EL MANEJO DE EXCEPCIONES
                 result.Add("ErrorMessage", ex.Message);
                 throw ex;
-            }
-
-            return result;
-        }
-
-
-        public Dictionary<string, object> getByRangeDateTime(Dictionary<string, object> request)
-        {
-            var result = new Dictionary<string, object>();
-
-            try
-            {
-                using (var client = new OperationsService.OperationsPortTypeClient(this.OperationsBinding, this.OperationsEndpoint))
-                {
-                    HeaderHttpExtension.AddCustomHeaderUserInformation(new OperationContextScope(client.InnerChannel), this.Headers);
-
-                    //DateTime start = new DateTime(yy, mm, day, hour, minute, second);
-
-                    TodoPagoConnector.OperationsService.Operations[] ret = client.GetByRangeDateTime(
-                        (string)request[MERCHANT],
-                        (DateTime)request[STARTDATE],
-                        (DateTime)request[ENDDATE]);
-
-                    //swap from custom [] to Dictionary
-                    for (int i = 0; i < ret.Length; i++)
-                    {
-                        Console.WriteLine(ret[i]);
-                        Dictionary<string, string> tmp = new Dictionary<string, string>();
-
-                        tmp.Add("AMOUNT", "" + ret[i].AMOUNT);
-                        tmp.Add("AMOUNTBUYER", "" + ret[i].AMOUNTBUYER);
-                        tmp.Add("AUTHORIZATIONCODE", "" + ret[i].AUTHORIZATIONCODE);
-                        tmp.Add("BANKID", "" + ret[i].BANKID);
-                        tmp.Add("BARCODE", "" + ret[i].BARCODE);
-                        tmp.Add("CARDHOLDERNAME", "" + ret[i].CARDHOLDERNAME);
-                        tmp.Add("CARDNUMBER", "" + ret[i].CARDNUMBER);
-                        tmp.Add("COUPONEXPDATE", "" + ret[i].COUPONEXPDATE);
-                        tmp.Add("COUPONSECEXPDATE", "" + ret[i].COUPONSECEXPDATE);
-                        tmp.Add("COUPONSUBSCRIBER", "" + ret[i].COUPONSUBSCRIBER);
-                        tmp.Add("CURRENCYCODE", "" + ret[i].CURRENCYCODE);
-                        tmp.Add("CUSTOMEREMAIL", "" + ret[i].CUSTOMEREMAIL);
-                        tmp.Add("DATETIME", "" + ret[i].DATETIME);
-                        tmp.Add("IDENTIFICATION", "" + ret[i].IDENTIFICATION);
-                        tmp.Add("IDENTIFICATIONTYPE", "" + ret[i].IDENTIFICATIONTYPE);
-                        tmp.Add("INSTALLMENTPAYMENTS", "" + ret[i].INSTALLMENTPAYMENTS);
-                        tmp.Add("OPERATIONID", "" + ret[i].OPERATIONID);
-                        tmp.Add("PAYMENTMETHODCODE", "" + ret[i].PAYMENTMETHODCODE);
-                        tmp.Add("PAYMENTMETHODNAME", "" + ret[i].PAYMENTMETHODNAME);
-                        tmp.Add("PAYMENTMETHODTYPE", "" + ret[i].PAYMENTMETHODTYPE);
-                        tmp.Add("PROMOTIONID", "" + ret[i].PROMOTIONID);
-                        tmp.Add("REFUNDED", "" + ret[i].REFUNDED);
-                        tmp.Add("RESULTCODE", "" + ret[i].RESULTCODE);
-                        tmp.Add("RESULTMESSAGE", "" + ret[i].RESULTMESSAGE);
-                        tmp.Add("TICKETNUMBER", "" + ret[i].TICKETNUMBER);
-                        tmp.Add("TYPE", "" + ret[i].TYPE);
-
-                        result.Add("" + ret[i].OPERATIONID, tmp);
-                    }
-                    
-                }
-            }
-            catch (Exception ex)
-            {
-                ///TODO: ACA VA EL MANEJO DE EXCEPCIONES
-                result.Add("ErrorMessage", ex.Message);
-                //throw ex;
             }
 
             return result;

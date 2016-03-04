@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2013 for Windows Desktop
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoPagoConnector", "TodoPagoConnector\TodoPagoConnector.csproj", "{0A86E52F-D739-4C13-958C-2BB1EB47FCE8}"
 EndProject
@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPTestConsole", "TPTestCons
 	ProjectSection(ProjectDependencies) = postProject
 		{0A86E52F-D739-4C13-958C-2BB1EB47FCE8} = {0A86E52F-D739-4C13-958C-2BB1EB47FCE8}
 	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "VB Console Sample", "VB Console Sample\VB Console Sample.vbproj", "{305D8194-13F4-47F2-A778-0830BD7A6CFC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,6 +54,16 @@ Global
 		{00CF0966-5EF4-49A2-ABB4-B81E7498DDED}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{00CF0966-5EF4-49A2-ABB4-B81E7498DDED}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{00CF0966-5EF4-49A2-ABB4-B81E7498DDED}.Release|x86.ActiveCfg = Release|Any CPU
+		{305D8194-13F4-47F2-A778-0830BD7A6CFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{305D8194-13F4-47F2-A778-0830BD7A6CFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{305D8194-13F4-47F2-A778-0830BD7A6CFC}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{305D8194-13F4-47F2-A778-0830BD7A6CFC}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{305D8194-13F4-47F2-A778-0830BD7A6CFC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{305D8194-13F4-47F2-A778-0830BD7A6CFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{305D8194-13F4-47F2-A778-0830BD7A6CFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{305D8194-13F4-47F2-A778-0830BD7A6CFC}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{305D8194-13F4-47F2-A778-0830BD7A6CFC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{305D8194-13F4-47F2-A778-0830BD7A6CFC}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,8 +1,0 @@
-D:\TodoPago\dev-SDK-.Net\Solution\TPTestConsole\bin\Release\TPTestConsole.exe.config
-D:\TodoPago\dev-SDK-.Net\Solution\TPTestConsole\bin\Release\TPTestConsole.exe
-D:\TodoPago\dev-SDK-.Net\Solution\TPTestConsole\bin\Release\TPTestConsole.pdb
-D:\TodoPago\dev-SDK-.Net\Solution\TPTestConsole\bin\Release\TodoPagoConnector.dll
-D:\TodoPago\dev-SDK-.Net\Solution\TPTestConsole\bin\Release\TodoPagoConnector.pdb
-D:\TodoPago\dev-SDK-.Net\Solution\TPTestConsole\obj\Release\TPTestConsole.exe
-D:\TodoPago\dev-SDK-.Net\Solution\TPTestConsole\obj\Release\TPTestConsole.pdb
-D:\TodoPago\dev-SDK-.Net\Solution\TPTestConsole\obj\Release\TPTestConsole.csprojResolveAssemblyReference.cache
