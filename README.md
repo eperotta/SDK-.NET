@@ -19,7 +19,7 @@ Modulo para conexión con gateway de pago Todo Pago
 <a name="instalacion"></a>		
 ## Instalación		
 Se debe descargar la última versión del SDK desde el botón Download ZIP, branch master.		
-Una vez descargado y descomprimido, se debe agregar a las librerias del proyecto y en el codigo se debe agregar siguiente using.
+Una vez descargado y descomprimido, se debe agregar la libreria TodoPagoConnector.dll que se encuntra dentro de la carpeta dist, a las librerias del proyecto y en el codigo se debe agregar siguiente using.
 ```C#
 using TodoPagoConnector;
 ```
@@ -29,7 +29,7 @@ using TodoPagoConnector;
 
 <a name="Versionesdenetsoportadas"></a>		
 ## Versiones de .net soportadas		
-La versi&oacute;n implementada de la SDK, esta testeada para versiones desde .net 4.X C#.
+La versi&oacute;n implementada de la SDK, esta testeada para versiones desde .net 3.5
 <br />		
 [<sub>Volver a inicio</sub>](#inicio)		
 
@@ -81,12 +81,6 @@ payload.Add("OPERATIONID", "8000");
 payload.Add("CURRENCYCODE", "032");
 payload.Add("AMOUNT", "1.00");
 payload.Add("EMAILCLIENTE", "some@someurl.com");
-
-//Optionals
-payload.Add("AVAILABLEPAYMENTMETHODSIDS", "1#194#43#45");
-payload.Add("PUSHNOTIFYENDPOINT", "");
-payload.Add("PUSHNOTIFYMETHOD", "");
-payload.Add("PUSHNOTIFYSTATES", "");
 		
 ```		
 		
