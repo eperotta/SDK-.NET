@@ -1,27 +1,11 @@
 ﻿Option Infer On
 
 Imports TodoPagoConnector
+Imports TodoPagoConnector.Utils
+Imports TodoPagoConnector.Model
+Imports TodoPagoConnector.Exceptions
 
 Module Module1
-    Dim SECURITY = "Security"
-    Dim SESSION = "Session"
-    Dim MERCHANT = "Merchant"
-    Dim URL_OK = "URL OK"
-    Dim URL_ERROR = "URL Error"
-    Dim ENCODING_METHOD = "Encoding Method"
-
-    Dim AUTHORIZATIONKEY = "AuthorizationKey"
-    Dim AMOUNT = "Amount"
-    Dim REQUESTCHANNEL = "requestChannel"
-    Dim CURRENCYCODE = "currencyCode"
-
-    Dim STARTDATE = "STARTDATE"
-    Dim ENDDATE = "ENDDATE"
-    Dim PAGENUMBER = "PAGENUMBER"
-
-    'Requeridos para GetAuthorizeAnswer
-    Dim REQUESTKEY = "RequestKey"
-    Dim ANSWERKEY = "AnswerKey"
 
     Sub Main()
         sendAuthorizeRequest()
@@ -30,6 +14,7 @@ Module Module1
         getByRangeDateTime()
         voidRequest()
         returnRequest()
+        getCredentials()
         Console.Read()
     End Sub
 
@@ -43,18 +28,18 @@ Module Module1
         Dim payload = New Dictionary(Of String, String)
         Dim request = New Dictionary(Of String, String)
 
-        request.Add(SECURITY, "f3d8b72c94ab4a06be2ef7c95490f7d3")
-        request.Add(SESSION, "ABCDEF-1234-12221-FDE1-00000200")
-        request.Add(MERCHANT, "2153")
-        request.Add(URL_OK, "http:  //someurl.com/ok")
-        request.Add(URL_ERROR, "http://someurl.com/fail")
-        request.Add(ENCODING_METHOD, "XML")
+        request.Add(ElementNames.SECURITY, "f3d8b72c94ab4a06be2ef7c95490f7d3")
+        request.Add(ElementNames.SESSION, "ABCDEF-1234-12221-FDE1-00000200")
+        request.Add(ElementNames.MERCHANT, "2153")
+        request.Add(ElementNames.URL_OK, "http:  //someurl.com/ok")
+        request.Add(ElementNames.URL_ERROR, "http://someurl.com/fail")
+        request.Add(ElementNames.ENCODING_METHOD, "XML")
 
-        payload.Add("MERCHANT", "2153")
-        payload.Add("OPERATIONID", "2121")
-        payload.Add("CURRENCYCODE", "032")
-        payload.Add("AMOUNT", "1.00")
-        payload.Add("EMAILCLIENTE", "some@someurl.com")
+        payload.Add(ElementNames.MERCHANT, "2153")
+        payload.Add(ElementNames.OPERATIONID, "2121")
+        payload.Add(ElementNames.CURRENCYCODE, "032")
+        payload.Add(ElementNames.AMOUNT, "1.00")
+        payload.Add(ElementNames.EMAILCLIENTE, "some@someurl.com")
 
         'Optionals
         payload.Add("AVAILABLEPAYMENTMETHODSIDS", "1#194#43#45")
@@ -113,11 +98,11 @@ Module Module1
         Dim tpc As TPConnector = New TPConnector(endPoint, headers)
 
         Dim getAuthorizeAnswerParams = New Dictionary(Of String, String)
-        getAuthorizeAnswerParams.Add(SECURITY, "f3d8b72c94ab4a06be2ef7c95490f7d3")
-        getAuthorizeAnswerParams.Add(SESSION, "")
-        getAuthorizeAnswerParams.Add(MERCHANT, "2153")
-        getAuthorizeAnswerParams.Add(REQUESTKEY, "710268a7-7688-c8bf-68c9-430107e6b9da")
-        getAuthorizeAnswerParams.Add(ANSWERKEY, "693ca9cc-c940-06a4-8d96-1ab0d66f3ee6")
+        getAuthorizeAnswerParams.Add(ElementNames.SECURITY, "f3d8b72c94ab4a06be2ef7c95490f7d3")
+        getAuthorizeAnswerParams.Add(ElementNames.SESSION, "")
+        getAuthorizeAnswerParams.Add(ElementNames.MERCHANT, "2153")
+        getAuthorizeAnswerParams.Add(ElementNames.REQUESTKEY, "710268a7-7688-c8bf-68c9-430107e6b9da")
+        getAuthorizeAnswerParams.Add(ElementNames.ANSWERKEY, "693ca9cc-c940-06a4-8d96-1ab0d66f3ee6")
 
 
         Dim res = tpc.GetAuthorizeAnswer(getAuthorizeAnswerParams)
@@ -136,10 +121,10 @@ Module Module1
 
         Dim param = New Dictionary(Of String, String)
 
-        param.Add(MERCHANT, "2153")
-        param.Add(STARTDATE, "2015-01-01")
-        param.Add(ENDDATE, "2015-12-10")
-        param.Add(PAGENUMBER, "1")
+        param.Add(ElementNames.MERCHANT, "2153")
+        param.Add(ElementNames.STARTDATE, "2015-01-01")
+        param.Add(ElementNames.ENDDATE, "2015-12-10")
+        param.Add(ElementNames.PAGENUMBER, "1")
 
         Dim res = tpc.getByRangeDateTime(param)
 
@@ -158,14 +143,14 @@ Module Module1
 
         Dim param = New Dictionary(Of String, String)
 
-        param.Add(MERCHANT, "2153")
-        param.Add(SECURITY, "f3d8b72c94ab4a06be2ef7c95490f7d3")
-        param.Add(REQUESTKEY, "bb25d589-52bc-8e21-fc5d-47d677b0995c")
+        param.Add(ElementNames.MERCHANT, "2153")
+        param.Add(ElementNames.SECURITY, "f3d8b72c94ab4a06be2ef7c95490f7d3")
+        param.Add(ElementNames.REQUESTKEY, "bb25d589-52bc-8e21-fc5d-47d677b0995c")
 
         Dim res = tpc.VoidRequest(param)
 
         Console.WriteLine("--------------------------------------------------------------------")
-        Console.WriteLine("Result: " + res.ToString)
+        printDictionarys(res)
 
     End Sub
 
@@ -178,15 +163,39 @@ Module Module1
 
         Dim param = New Dictionary(Of String, String)
 
-        param.Add(MERCHANT, "2153")
-        param.Add(SECURITY, "f3d8b72c94ab4a06be2ef7c95490f7d3")
-        param.Add(REQUESTKEY, "bb25d589-52bc-8e21-fc5d-47d677b0995c")
-        param.Add(AMOUNT, "10")
+        param.Add(ElementNames.MERCHANT, "2153")
+        param.Add(ElementNames.SECURITY, "f3d8b72c94ab4a06be2ef7c95490f7d3")
+        param.Add(ElementNames.REQUESTKEY, "bb25d589-52bc-8e21-fc5d-47d677b0995c")
+        param.Add(ElementNames.AMOUNT, "10")
 
         Dim res = tpc.ReturnRequest(param)
 
         Console.WriteLine("--------------------------------------------------------------------")
-        Console.WriteLine("Result: " + res.ToString)
+        printDictionarys(res)
+
+    End Sub
+
+    Private Sub getCredentials()
+
+        Dim endPoint As String = "https://developers.todopago.com.ar/"
+        Dim tpc As TPConnector = New TPConnector(endPoint)
+
+        Dim user As User = New User("rbianchi@easytech.com.ar", "1379Qwerty")
+
+        Try
+            user = tpc.getCredentials(user)
+            tpc.setAuthorize(user.getApiKey())
+        Catch ex As EmptyFieldException
+            Console.WriteLine(ex.Message)
+
+        Catch ex As ResponseException
+            Console.WriteLine(ex.Message)
+
+        End Try
+
+            Console.WriteLine("--------------------------------------------------------------------")
+        Console.WriteLine("Merchant: " + user.getMerchant + " --- ApiKey: " + user.getApiKey)
+
 
     End Sub
 
@@ -218,6 +227,7 @@ Module Module1
 
     End Sub
 
+
     Private Sub printList(list As List(Of Dictionary(Of String, Object)))
 
         For Each ld In list
@@ -226,12 +236,28 @@ Module Module1
 
             For Each kvp As KeyValuePair(Of String, Object) In dic
                 Dim v1 As String = kvp.Key
-                Dim dic2 As Dictionary(Of String, String) = kvp.Value
+                Dim dic2 As Dictionary(Of String, Object) = kvp.Value
                 Console.WriteLine("opertion: " + v1.ToString)
-                For Each kv2 As KeyValuePair(Of String, String) In dic2
-                    Dim vk1 As String = kv2.Key
-                    Dim vk2 As String = kv2.Value
-                    Console.WriteLine("Key: " + vk1.ToString + " --- Value: " + vk2.ToString)
+                For Each kv2 As KeyValuePair(Of String, Object) In dic2
+
+                    If kv2.Key Is "REFUNDS" Then
+                        Dim dic3 As Dictionary(Of String, Object) = kv2.Value
+                        Console.WriteLine("- " + kv2.Key + ": ")
+                        For Each kv3 As KeyValuePair(Of String, Object) In dic3
+                            Console.WriteLine("- REFUND: ")
+                            For Each kv4 As KeyValuePair(Of String, Object) In kv3.Value
+                                Console.WriteLine("- " + kv4.Key + ": " + kv4.Value)
+                            Next
+                           
+                        Next
+
+                    Else
+                        Dim vk1 As String = kv2.Key
+                        Dim vk2 As String = kv2.Value
+                        Console.WriteLine("Key: " + vk1.ToString + " --- Value: " + vk2.ToString)
+
+                    End If
+
                 Next
             Next
         Next
@@ -247,7 +273,13 @@ Module Module1
             For Each kv2 As KeyValuePair(Of String, Object) In dic2
                 Dim vk1 As String = kv2.Key
                 Dim vk2 As String = kv2.Value
-                Console.WriteLine("Key: " + vk1.ToString + " --- Value: " + vk2.ToString)
+
+                If Not vk2 Is Nothing Then
+                    Console.WriteLine("Key: " + vk1.ToString + " --- Value: " + vk2.ToString)
+                Else
+                    Console.WriteLine("Key: " + vk1.ToString + " --- Value: ")
+                End If
+
             Next
         Next
 

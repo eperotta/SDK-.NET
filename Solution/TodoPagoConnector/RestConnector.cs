@@ -2,7 +2,12 @@
 using System.Net;
 using System.Xml;
 using System.IO;
-
+using System;
+using Newtonsoft.Json;
+using TodoPagoConnector.Model;
+using TodoPagoConnector.Exceptions;
+using TodoPagoConnector.Utils;
+using TodoPagoConnector.Operations;
 
 namespace TodoPagoConnector
 {
@@ -11,62 +16,94 @@ namespace TodoPagoConnector
         private string endpoint = "";
         private Dictionary<string, string> headders;
         private WebClient client;
-
-        public const string SECURITY = "Security";
-        public const string MERCHANT = "Merchant";
-        public const string REQUESTKEY = "RequestKey";
-        public const string AUTHORIZATIONKEY = "AuthorizationKey";
-        public const string AMOUNT = "Amount";
-        public const string REQUESTCHANNEL = "requestChannel";
-        public const string CURRENCYCODE = "currencyCode";
-
-        public const string STARTDATE = "STARTDATE";
-        public const string ENDDATE = "ENDDATE";
-        public const string PAGENUMBER = "PAGENUMBER";
+        private const string REQUESTTYPE = "RequestType";
 
         public RestConnector(string endpoint, Dictionary<string, string> headders)
         {
             this.endpoint = endpoint;
-            this.headders = headders;
-
             client = new WebClient();
+
+            IWebProxy theProxy = client.Proxy;
+            if (theProxy != null)
+            {
+                theProxy.Credentials = CredentialCache.DefaultCredentials;
+            }
+
+            if (headders!= null) { 
+                 this.headders = headders;
+                 foreach (var key in this.headders.Keys){
+                     client.Headers.Add(key, this.headders[key]);
+                 } 
+            }
             
-            //Add all headers on the Dictionary
-            foreach (var key in this.headders.Keys){
-                client.Headers.Add(key, this.headders[key]);
-            }  
         }
 
         public List<Dictionary<string, object>> getByOperationID(string merchant, string operation)
         {
             string res = client.DownloadString(endpoint + "Operations/GetByOperationId" + "/MERCHANT/" + merchant + "/OPERATIONID/" + operation);
-            
+
             List<Dictionary<string, object>> returnList = new List<Dictionary<string, object>>();
             XmlDocument xd = new XmlDocument();
-            xd.LoadXml(res);
-            XmlNodeList nl = xd.GetElementsByTagName("OperationsColections");
-            for (int i = 0; i < nl.Count; i++)
+
+            try
             {
-                Dictionary<string, object> masterDic = new Dictionary<string, object>();
-                XmlDocument xd2 = new XmlDocument();
-                xd2.LoadXml(nl[i].InnerXml);
-                XmlNodeList nl2 = xd2.GetElementsByTagName("Operations");
-                for (int j = 0; j < nl2.Count; j++)
+                xd.LoadXml(res);
+
+                XmlNodeList nl = xd.GetElementsByTagName("OperationsColections");
+                for (int i = 0; i < nl.Count; i++)
                 {
-                    Dictionary<string, string> detailsDic = new Dictionary<string, string>();
-                    XmlNode aux = nl2[i].FirstChild;
-                    while (aux != null)
+                    Dictionary<string, object> masterDic = new Dictionary<string, object>();
+                    XmlDocument xd2 = new XmlDocument();
+                    xd2.LoadXml(nl[i].InnerXml);
+                    XmlNodeList nl2 = xd2.GetElementsByTagName("Operations");
+                    XmlNodeList nl3 = xd2.GetElementsByTagName("REFUND");
+
+                    Dictionary<string, object> detailsDic = new Dictionary<string, object>();
+                    for (int j = 0; j < nl2.Count; j++)
                     {
-                        string a = aux.InnerText;
-                        string b = aux.Name;
-                        //Console.WriteLine("- " + b + " : " + a);
-                        detailsDic.Add(b, a);
-                        aux = aux.NextSibling;
+                        detailsDic = new Dictionary<string, object>();
+                        XmlNode aux = nl2[i].FirstChild;
+                        while (aux != null)
+                        {
+                            if (!"REFUNDS".Equals(aux.Name))
+                            {
+                                 string a = aux.InnerText;
+                                 string b = aux.Name;
+                                 //Console.WriteLine("- " + b + " : " + a);
+                                detailsDic.Add(b, a);
+                            }
+                            aux = aux.NextSibling;
+                        }
+                        masterDic.Add("Operations", detailsDic);
                     }
-                    masterDic.Add("Operations", detailsDic);
+
+                    Dictionary<string, object> detailsDic2 = new Dictionary<string, object>();
+                    for (int k = 0; k < nl3.Count; k++)
+                    {
+                        Dictionary<string, object> detailsDic3 = new Dictionary<string, object>();
+                        XmlNode aux2 = nl3[i].FirstChild;
+
+                        while (aux2 != null)
+                        {
+                            string a2 = aux2.InnerText;
+                            string b2 = aux2.Name;
+
+                            detailsDic3.Add(b2, a2);
+                            aux2 = aux2.NextSibling;
+
+                        }
+                        detailsDic2.Add("REFUND" + k, detailsDic3);
+                    }
+                    detailsDic.Add("REFUNDS", detailsDic2);
+                    returnList.Add(masterDic);
                 }
-                returnList.Add(masterDic);
+
             }
+            catch (System.Xml.XmlException ex)
+            {
+                throw new ResponseException(res);
+            }
+
             return returnList;
         }
 
@@ -74,13 +111,19 @@ namespace TodoPagoConnector
         public Dictionary<string, object> GetAllPaymentMethods(string merchant)
         {
             string res = client.DownloadString(endpoint + "PaymentMethods/Get" + "/MERCHANT/" + merchant);
-            //Console.WriteLine(res);
-            XmlDocument xd = new XmlDocument();
-            xd.LoadXml(res);
+            //System.Console.WriteLine(res);
+             XmlDocument xd = new XmlDocument();
+            try{         
+                xd.LoadXml(res);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
             return toDictionary(xd);
         }
 
-        public string VoidRequest(Dictionary<string, string> param)
+        public Dictionary<string, object> VoidRequest(Dictionary<string, string> param)
         {    
             string URL = endpoint + "Authorize";
             string result;
@@ -88,57 +131,37 @@ namespace TodoPagoConnector
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "POST";
 
+            IWebProxy theProxy = httpWebRequest.Proxy;
+
+            if (theProxy != null)
+            {
+                theProxy.Credentials = CredentialCache.DefaultCredentials;
+            }
+
             foreach (var key in this.headders.Keys)
             {
                 httpWebRequest.Headers.Add(key, this.headders[key]);
             }
-       
+
+            param.Add(REQUESTTYPE, "VoidRequest");
+          
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
-
-                string json = "{\"RequestType\":\"VoidRequest\"";
-
-                     if (param.ContainsKey(SECURITY))
-                     {
-                         string security = param[SECURITY];
-                         json = json + ",\"Security\":\"" + security + "\"";
-                     }
-                     if (param.ContainsKey(REQUESTKEY))
-                     {
-                        string requestKey = param[REQUESTKEY];
-                        json = json + ",\"RequestKey\":\"" + requestKey + "\"";
-                     }
-                     if (param.ContainsKey(AUTHORIZATIONKEY))
-                     {
-                        string authorizationKey = param[AUTHORIZATIONKEY];
-                        json = json + ",\"AuthorizationKey\":\"" + authorizationKey + "\"";
-                     }
-                     if (param.ContainsKey(MERCHANT))
-                     {
-                        string merchant = param[MERCHANT];
-                        json = json + ",\"Merchant\":\"" + merchant + "\"";
-                     }               
-                    if (param.ContainsKey(REQUESTCHANNEL))
-                    {
-                        string requestChannel = param[REQUESTCHANNEL];
-                        json = json + ",\"RequestChannel\":\"" + requestChannel + "\"";
-                    }
-
-                json = json + "}";
-                streamWriter.Write(json);
-                //Console.WriteLine(json);
+                 string json = JsonConvert.SerializeObject(param, Newtonsoft.Json.Formatting.Indented);
+                 streamWriter.Write(json);
+               //System.Console.WriteLine(json);
             }
 
             var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
             {
                  result = streamReader.ReadToEnd();
-                 //Console.WriteLine(result);
+                //System.Console.WriteLine(result);
             }
-            return result;
+            return OperationsParser.parseJsonToVoidRequest(result);
         }
 
-        public string ReturnRequest(Dictionary<string, string> param)
+        public Dictionary<string, object> ReturnRequest(Dictionary<string, string> param)
         {
             string URL = endpoint + "Authorize";
             string result;
@@ -146,92 +169,114 @@ namespace TodoPagoConnector
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "POST";
 
+            IWebProxy theProxy = httpWebRequest.Proxy;
+
+            if (theProxy != null)
+            {
+                theProxy.Credentials = CredentialCache.DefaultCredentials;
+            }
+
             foreach (var key in this.headders.Keys)
             {
                 httpWebRequest.Headers.Add(key, this.headders[key]);
             }
 
+            param.Add(REQUESTTYPE, "ReturnRequest");
+
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
-
-                string json = "{\"RequestType\":\"ReturnRequest\"";
-
-                if (param.ContainsKey(SECURITY))
-                {
-                    string security = param[SECURITY];
-                    json = json + ",\"Security\":\"" + security + "\"";
-                }
-                if (param.ContainsKey(AUTHORIZATIONKEY))
-                {
-                    string authorizationKey = param[AUTHORIZATIONKEY];
-                    json = json + ",\"AuthorizationKey\":\"" + authorizationKey + "\"";
-                }
-                if (param.ContainsKey(MERCHANT))
-                {
-                    string merchant = param[MERCHANT];
-                    json = json + ",\"Merchant\":\"" + merchant + "\"";
-                }
-                if (param.ContainsKey(AMOUNT))
-                {
-                    float amount = float.Parse(param[AMOUNT]);
-                    json = json + ",\"Amount\":" + amount + "";
-                }
-                if (param.ContainsKey(REQUESTKEY))
-                {
-                    string requestKey = param[REQUESTKEY];
-                    json = json + ",\"RequestKey\":\"" + requestKey + "\"";
-                }
-                if (param.ContainsKey(CURRENCYCODE))
-                {
-                    string currencyCode = param[CURRENCYCODE];
-                    json = json + ",\"CurrencyCode\":\"" + currencyCode + "\"";
-                }
-
-                json = json + "}";
+                string json = JsonConvert.SerializeObject(param, Newtonsoft.Json.Formatting.Indented);
                 streamWriter.Write(json);
-                //Console.WriteLine(json);
+                //System.Console.WriteLine(json);
             }
 
             var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
             {
                 result = streamReader.ReadToEnd();
-                //Console.WriteLine(result);
+                //System.Console.WriteLine(result);
             }
-            return result;
+
+            return OperationsParser.parseJsonToReturnRequest(result);
         }
 
         public Dictionary<string, object> GetByRangeDateTime(Dictionary<string, string> param)
         {
             string url = endpoint + "Operations/GetByRangeDateTime";
 
-            if (param.ContainsKey(MERCHANT))
+            if (param.ContainsKey(ElementNames.MERCHANT))
             {
-                string merchant = param[MERCHANT];
+                string merchant = param[ElementNames.MERCHANT];
                 url = url + "/MERCHANT/" + merchant;
             }
-            if (param.ContainsKey(STARTDATE))
+            if (param.ContainsKey(ElementNames.STARTDATE))
             {
-                string startDate = param[STARTDATE];
+                string startDate = param[ElementNames.STARTDATE];
                 url = url + "/STARTDATE/" + startDate;
             }
-            if (param.ContainsKey(ENDDATE))
+            if (param.ContainsKey(ElementNames.ENDDATE))
             {
-                string endDate = param[ENDDATE];
+                string endDate = param[ElementNames.ENDDATE];
                 url = url + "/ENDDATE/" + endDate;
             }
-            if (param.ContainsKey(PAGENUMBER))
+            if (param.ContainsKey(ElementNames.PAGENUMBER))
             {
-                string pageNumber = param[PAGENUMBER];
+                string pageNumber = param[ElementNames.PAGENUMBER];
                 url = url + "/PAGENUMBER/" + pageNumber;
             }
 
-            string res = client.DownloadString(url);
-            //Console.WriteLine(res);
             XmlDocument xd = new XmlDocument();
-            xd.LoadXml(res);
+
+            try{
+                string res = client.DownloadString(url);
+              //System.Console.WriteLine(res);
+                xd.LoadXml(res);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
             return toDictionary(xd);
         }
+
+
+        public User getCredentials(User user)
+        {
+            string URL = endpoint + "Credentials";
+            URL = URL.Replace("t/1.1/", "");
+
+            string result;
+            User userResponse = new User();
+
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(URL);
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Method = "POST";
+
+            IWebProxy theProxy = httpWebRequest.Proxy;
+            if (theProxy != null)
+            {
+                theProxy.Credentials = CredentialCache.DefaultCredentials;
+            }
+
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                string json = JsonConvert.SerializeObject(user.toDictionary(), Newtonsoft.Json.Formatting.Indented);
+                streamWriter.Write(json);
+                //System.Console.WriteLine(json);
+            }
+
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                result = streamReader.ReadToEnd();
+                //System.Console.WriteLine(result);
+            }
+
+            userResponse = OperationsParser.parseJsonToUser(result);
+            return userResponse;
+        }
+
 
         public Dictionary<string, object> toDictionary(XmlDocument xd)
         {
@@ -299,5 +344,7 @@ namespace TodoPagoConnector
             aux.Add(keyVal, ret);
             return aux;
         }
+
     }
+
 }

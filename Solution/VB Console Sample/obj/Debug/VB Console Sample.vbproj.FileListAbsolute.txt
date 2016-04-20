@@ -1,10 +1,12 @@
+C:\Users\juan.peregrina\Source\Repos\dev-SDK-.Net\Solution\VB Console Sample\obj\Debug\VB Console Sample.vbprojResolveAssemblyReference.cache
 C:\Users\juan.peregrina\Source\Repos\dev-SDK-.Net\Solution\VB Console Sample\bin\Debug\VB Console Sample.exe.config
 C:\Users\juan.peregrina\Source\Repos\dev-SDK-.Net\Solution\VB Console Sample\bin\Debug\VB Console Sample.exe
 C:\Users\juan.peregrina\Source\Repos\dev-SDK-.Net\Solution\VB Console Sample\bin\Debug\VB Console Sample.pdb
 C:\Users\juan.peregrina\Source\Repos\dev-SDK-.Net\Solution\VB Console Sample\bin\Debug\VB Console Sample.xml
 C:\Users\juan.peregrina\Source\Repos\dev-SDK-.Net\Solution\VB Console Sample\bin\Debug\TodoPagoConnector.dll
+C:\Users\juan.peregrina\Source\Repos\dev-SDK-.Net\Solution\VB Console Sample\bin\Debug\Newtonsoft.Json.dll
 C:\Users\juan.peregrina\Source\Repos\dev-SDK-.Net\Solution\VB Console Sample\bin\Debug\TodoPagoConnector.pdb
-C:\Users\juan.peregrina\Source\Repos\dev-SDK-.Net\Solution\VB Console Sample\obj\Debug\VB Console Sample.vbprojResolveAssemblyReference.cache
+C:\Users\juan.peregrina\Source\Repos\dev-SDK-.Net\Solution\VB Console Sample\bin\Debug\Newtonsoft.Json.xml
 C:\Users\juan.peregrina\Source\Repos\dev-SDK-.Net\Solution\VB Console Sample\obj\Debug\VB_Console_Sample.Resources.resources
 C:\Users\juan.peregrina\Source\Repos\dev-SDK-.Net\Solution\VB Console Sample\obj\Debug\VB Console Sample.vbproj.GenerateResource.Cache
 C:\Users\juan.peregrina\Source\Repos\dev-SDK-.Net\Solution\VB Console Sample\obj\Debug\VB Console Sample.exe

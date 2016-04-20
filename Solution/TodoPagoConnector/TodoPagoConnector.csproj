@@ -32,6 +32,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net35\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
@@ -45,6 +49,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\ConnectionException.cs" />
+    <Compile Include="Exceptions\EmptyFieldException.cs" />
+    <Compile Include="Exceptions\EmptyFieldPassException.cs" />
+    <Compile Include="Exceptions\EmptyFieldUserException.cs" />
+    <Compile Include="Exceptions\ResponseException.cs" />
+    <Compile Include="Model\User.cs" />
+    <Compile Include="Operations\OperationsParser.cs" />
     <Compile Include="RestConnector.cs" />
     <Compile Include="Service References\AuthorizeService\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -61,6 +72,7 @@
     <Compile Include="Services Extensions\HeaderHttpExtension.cs" />
     <Compile Include="TPConnector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\ElementNames.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
@@ -70,6 +82,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="ClassDiagram1.cd" />
+    <None Include="packages.config" />
     <None Include="Service References\OperationsService\Operations.wsdl" />
     <None Include="Service References\OperationsService\TodoPagoConnector.OperationsService.Operations.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -104,6 +117,7 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

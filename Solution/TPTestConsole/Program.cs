@@ -6,6 +6,9 @@ using System.Net;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using TodoPagoConnector;
+using TodoPagoConnector.Model;
+using TodoPagoConnector.Exceptions;
+using TodoPagoConnector.Utils;
 
 namespace TPTestConsole
 {
@@ -13,38 +16,36 @@ namespace TPTestConsole
     {
         private static void Main(string[] args)
         {
-            // Console.WriteLine("init TodoPagoConnectorSample");
+            Console.WriteLine("init TodoPagoConnectorSample");
 
             TodoPagoConnectorSample tpcs = new TodoPagoConnectorSample();
 
-            Console.WriteLine("------------------------------------------------------------------------");
+            //Console.WriteLine("------------------------------------------------------------------------");
+            //Console.WriteLine("getCredentials");
+            //tpcs.getCredentials();
 
+            Console.WriteLine("------------------------------------------------------------------------");
             Console.WriteLine("initSendAuthorizeRequestParams");
             tpcs.initSendAuthorizeRequestParams();
             Console.WriteLine("Call SendAuthorizeRequest");
             tpcs.sendAuthorizeRequest();
 
             Console.WriteLine("------------------------------------------------------------------------");
-
             Console.WriteLine("initGetAuthorizeAnswer");
             tpcs.initGetAuthorizeAnswer();
             Console.WriteLine("sendGetAuthorizeAnswer");
             tpcs.sendGetAuthorizeAnswer();
 
             Console.WriteLine("------------------------------------------------------------------------");
-
             Console.WriteLine("initGetStatus");
-            Console.WriteLine("sendGetStatus");
             tpcs.initGetStatus();
+            Console.WriteLine("sendGetStatus");
             tpcs.sendGetStatus();
-            Console.WriteLine("------------------------------------------------------------------------");
 
+            Console.WriteLine("------------------------------------------------------------------------");
+            Console.WriteLine("PaymentMethods");
             tpcs.getAllPaymentMethods();
-            Console.WriteLine("------------------------------------------------------------------------");
-
-            Console.WriteLine("initGetByRangeDateTime");
-            tpcs.getByRangeDateTime();
-
+        
             Console.WriteLine("------------------------------------------------------------------------");
             Console.WriteLine("VoidRequest");
             tpcs.voidRequest();
@@ -53,30 +54,19 @@ namespace TPTestConsole
             Console.WriteLine("ReturnRequest");
             tpcs.returnRequest();
 
+            Console.WriteLine("------------------------------------------------------------------------");
+            Console.WriteLine("initGetByRangeDateTime");
+            tpcs.getByRangeDateTime();
+
             Console.Read();
         }
 
         private class TodoPagoConnectorSample
         {
-            //Names
-            private const string SECURITY = "Security";
-
-            private const string SESSION = "Session";
-            private const string MERCHANT = "Merchant";
-            private const string REQUESTKEY = "RequestKey";
-            private const string ANSWERKEY = "AnswerKey";
-            private const string URL_OK = "URL OK";
-            private const string URL_ERROR = "URL Error";
-            private const string ENCODING_METHOD = "Encoding Method";
-            private const string OPERATIONID = "OPERATIONID";
-            private const string CURRENCYCODE = "CURRENCYCODE";
-            private const string AMOUNT = "AMOUNT";
-            private const string EMAILCLIENTE = "EMAILCLIENTE";
 
             //Connector
             private TPConnector connector;
 
-            //Parameters
             //SendAuthorizeRequest
             private Dictionary<string, string> sendAuthorizeRequestParams = new Dictionary<string, string>();
 
@@ -100,12 +90,12 @@ namespace TPTestConsole
             public TodoPagoConnectorSample()
             {
                 connector = initConnector();
+                //connector = initConnectorForCredetials();
             }
 
             private TPConnector initConnector()
             {
                 var headers = new Dictionary<String, String>();
-
                 headers.Add("Authorization", authorization); 
                 
                 //Override SSL security - must be removed on PRD
@@ -114,21 +104,26 @@ namespace TPTestConsole
                 return new TPConnector(endpoint, headers);
             }
 
+            private TPConnector initConnectorForCredetials()
+            {
+                return new TPConnector(endpoint);
+            }
+
             public void initSendAuthorizeRequestParams()
             {
-                sendAuthorizeRequestParams.Add(SECURITY, "f3d8b72c94ab4a06be2ef7c95490f7d3");
-                sendAuthorizeRequestParams.Add(SESSION, "ABCDEF-1234-12221-FDE1-00000200");
-                sendAuthorizeRequestParams.Add(MERCHANT, "2153");
-                sendAuthorizeRequestParams.Add(URL_OK, "http://someurl.com/ok");
-                sendAuthorizeRequestParams.Add(URL_ERROR, "http://someurl.com/fail");
-                sendAuthorizeRequestParams.Add(ENCODING_METHOD, "XML");
+                sendAuthorizeRequestParams.Add(ElementNames.SECURITY, "f3d8b72c94ab4a06be2ef7c95490f7d3");
+                sendAuthorizeRequestParams.Add(ElementNames.SESSION, "ABCDEF-1234-12221-FDE1-00000200");
+                sendAuthorizeRequestParams.Add(ElementNames.MERCHANT, "2153");
+                sendAuthorizeRequestParams.Add(ElementNames.URL_OK, "http://someurl.com/ok");
+                sendAuthorizeRequestParams.Add(ElementNames.URL_ERROR, "http://someurl.com/fail");
+                sendAuthorizeRequestParams.Add(ElementNames.ENCODING_METHOD, "XML");
 
                 var payload = new Dictionary<string, string>();
-                sendAuthorizeRequestPayload.Add(MERCHANT, "2153");
-                sendAuthorizeRequestPayload.Add(OPERATIONID, "2121");
-                sendAuthorizeRequestPayload.Add(CURRENCYCODE, "032");
-                sendAuthorizeRequestPayload.Add(AMOUNT, "55");
-                sendAuthorizeRequestPayload.Add(EMAILCLIENTE, "email_cliente@dominio.com");
+                sendAuthorizeRequestPayload.Add(ElementNames.MERCHANT, "2153");
+                sendAuthorizeRequestPayload.Add(ElementNames.OPERATIONID, "2121");
+                sendAuthorizeRequestPayload.Add(ElementNames.CURRENCYCODE, "032");
+                sendAuthorizeRequestPayload.Add(ElementNames.AMOUNT, "55");
+                sendAuthorizeRequestPayload.Add(ElementNames.EMAILCLIENTE, "email_cliente@dominio.com");
 
                 sendAuthorizeRequestPayload.Add("CSBTCITY", "Villa General Belgrano"); //MANDATORIO.
                 sendAuthorizeRequestPayload.Add("CSBTCOUNTRY", "AR");//MANDATORIO. Código ISO.
@@ -221,11 +216,11 @@ namespace TPTestConsole
 
             public void initGetAuthorizeAnswer()
             {
-                getAuthorizeAnswerParams.Add(SECURITY, "f3d8b72c94ab4a06be2ef7c95490f7d3");
-                getAuthorizeAnswerParams.Add(SESSION, null);
-                getAuthorizeAnswerParams.Add(MERCHANT, "2153");
-                getAuthorizeAnswerParams.Add(REQUESTKEY, "0db2e848-b0ab-6baf-f9e1-b70a82ed5844");
-                getAuthorizeAnswerParams.Add(ANSWERKEY, "31b8ae04-318c-89dd-5354-494dd5fefb2f");
+                getAuthorizeAnswerParams.Add(ElementNames.SECURITY, "f3d8b72c94ab4a06be2ef7c95490f7d3");
+                getAuthorizeAnswerParams.Add(ElementNames.SESSION, null);
+                getAuthorizeAnswerParams.Add(ElementNames.MERCHANT, "2153");
+                getAuthorizeAnswerParams.Add(ElementNames.REQUESTKEY, "710268a7-7688-c8bf-68c9-430107e6b9da");
+                getAuthorizeAnswerParams.Add(ElementNames.ANSWERKEY, "693ca9cc-c940-06a4-8d96-1ab0d66f3ee6");
             }
 
             public void sendGetAuthorizeAnswer()
@@ -278,22 +273,46 @@ namespace TPTestConsole
 
             public void initGetStatus()
             {
-                getStatusOperationId = "01";
-                getStatusMerchant = "2153";
+                getStatusOperationId = "8000";
+                getStatusMerchant = "2658";
             }
 
             public void sendGetStatus()
             {
-                List<Dictionary<string, object>> res = connector.GetStatus(getStatusMerchant, getStatusOperationId);
+                List<Dictionary<string, object>> res = new List<Dictionary<string, object>>();
+
+                try
+                {
+                    res = connector.GetStatus(getStatusMerchant, getStatusOperationId);
+                }
+                catch (ResponseException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
 
                 for (int i = 0; i < res.Count; i++)
                 {
                     Dictionary<string, object> dic = res[i];
-                    foreach (Dictionary<string, string> aux in dic.Values)
+                    foreach (Dictionary<string, object> aux in dic.Values)
                     {
                         foreach (string k in aux.Keys)
                         {
-                            Console.WriteLine("- " + k + ": " + aux[k]);
+                            if (aux[k].GetType().IsInstanceOfType(aux))
+                            {
+                               Dictionary<string, object> a = (Dictionary<string, object>) aux[k];
+                               Console.WriteLine("- " + k + ": ");
+                               foreach (Dictionary<string, object> aux2 in a.Values)
+                                {
+                                    Console.WriteLine("- REFUND: ");
+                                    foreach (string b in aux2.Keys)
+                                    {
+                                        Console.WriteLine("- " + b + ": " + aux2[b]);
+
+                                    }
+                                }
+                            }else{
+                                Console.WriteLine("- " + k + ": " + aux[k]);
+                            }
                         }
                     }
                 }
@@ -309,39 +328,68 @@ namespace TPTestConsole
             {
                 Dictionary<string, string> gbrdt = new Dictionary<string, string>();
 
-                gbrdt.Add(TPConnector.MERCHANT, "2153");
-                gbrdt.Add(TPConnector.SECURITY, "f3d8b72c94ab4a06be2ef7c95490f7d3");
-                gbrdt.Add(TPConnector.REQUESTKEY, "bb25d589-52bc-8e21-fc5d-47d677b0995c");
+                gbrdt.Add(ElementNames.MERCHANT, "2153");
+                gbrdt.Add(ElementNames.SECURITY, "f3d8b72c94ab4a06be2ef7c95490f7d3");
+                gbrdt.Add(ElementNames.REQUESTKEY, "bb25d589-52bc-8e21-fc5d-47d677b0995c");
 
-                string res = connector.VoidRequest(gbrdt);
-                Console.WriteLine("\nResponse received was :\n{0} ", res);
+                Dictionary<string, object> res = connector.VoidRequest(gbrdt);
+                printDictionary(res, "");           
             }
             
             public void returnRequest()
             {
                 Dictionary<string, string> gbrdt = new Dictionary<string, string>();
-  
-                gbrdt.Add(TPConnector.MERCHANT, "2153");
-                gbrdt.Add(TPConnector.SECURITY, "f3d8b72c94ab4a06be2ef7c95490f7d3");
-                gbrdt.Add(TPConnector.REQUESTKEY, "0db2e848-b0ab-6baf-f9e1-b70a82ed5844");
-                gbrdt.Add(TPConnector.AMOUNT, "10");
 
-                string res = connector.ReturnRequest(gbrdt);
-                Console.WriteLine("\nResponse received was :\n{0} ", res);
+                gbrdt.Add(ElementNames.MERCHANT, "2153");
+                gbrdt.Add(ElementNames.SECURITY, "f3d8b72c94ab4a06be2ef7c95490f7d3");
+                gbrdt.Add(ElementNames.REQUESTKEY, "0db2e848-b0ab-6baf-f9e1-b70a82ed5844");
+                gbrdt.Add(ElementNames.AMOUNT, "10");
+
+                Dictionary<string, object> res = connector.ReturnRequest(gbrdt);
+                printDictionary(res, "");
             }
 
             public void getByRangeDateTime()
             {
                 Dictionary<string, string> gbrdt = new Dictionary<string, string>();
-               
-                gbrdt.Add(TPConnector.MERCHANT, "2153");
-                gbrdt.Add(TPConnector.STARTDATE, "2015-01-01");
-                gbrdt.Add(TPConnector.ENDDATE, "2015-12-10");
-                gbrdt.Add(TPConnector.PAGENUMBER, "1");
+
+                gbrdt.Add(ElementNames.MERCHANT, "2153");
+                gbrdt.Add(ElementNames.STARTDATE, "2015-01-01");
+                gbrdt.Add(ElementNames.ENDDATE, "2015-12-10");
+                gbrdt.Add(ElementNames.PAGENUMBER, "1");
 
                 Dictionary<string, Object> res = connector.getByRangeDateTime(gbrdt);
                 printDictionary(res, "");
             }
+
+
+            public void getCredentials()
+            {
+                User user = new User();
+
+                try {
+                     user = connector.getCredentials(getUser());
+                     connector.setAuthorize(user.getApiKey());
+                }
+                     catch (EmptyFieldException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                     catch (ResponseException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                Console.WriteLine(user.toString()); 
+            }
+
+            private User getUser()
+            {
+                String mail = "test@Test.com.ar";
+                String pass = "pass1234";
+                User user = new User(mail, pass);
+                return user;
+            }
+
 
             //Utils
 
@@ -362,7 +410,7 @@ namespace TPTestConsole
             {
                 foreach (string k in p.Keys)
                 {
-                    if (p[k].GetType().ToString().Contains("System.Collections.Generic.Dictionary"))//.ToString().Contains("string"))
+                    if (p[k]!= null && p[k].GetType().ToString().Contains("System.Collections.Generic.Dictionary"))//.ToString().Contains("string"))
                     {
                         Console.WriteLine(tab + "- " + k);
                         Dictionary<string, object> n = (Dictionary<string, object>)p[k];

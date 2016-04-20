@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.ServiceModel;
 using TodoPagoConnector.Service_Extensions;
+using TodoPagoConnector.Model;
+using TodoPagoConnector.Exceptions;
+using TodoPagoConnector.Utils;
 
 /*
  * 
@@ -15,41 +18,27 @@ using TodoPagoConnector.Service_Extensions;
 
 namespace TodoPagoConnector
 {
-    public class TPConnector
+    public class TPConnector 
     {
-        string versionTodoPago = "1.1.0";
-        
+
+        string versionTodoPago = "1.2.0";
+       
         private AuthorizeBinding AuthorizeBinding;
         private AuthorizeEndpoint AuthorizeEndpoint;
-
         private OperationsBinding OperationsBinding;
         private OperationsEndpoint OperationsEndpoint;
-       
         private Dictionary<string, string> Headers;
-
-        public const string SECURITY = "Security";
-        public const string SESSION = "Session";
-        public const string MERCHANT = "Merchant";
-        public const string REQUESTKEY = "RequestKey";
-        public const string ANSWERKEY = "AnswerKey";
-        public const string URL_OK = "URL OK";
-        public const string URL_ERROR = "URL Error";
-        public const string ENCODING_METHOD = "Encoding Method";
-        public const string AUTHORIZATIONKEY = "AuthorizationKey";
-        public const string AMOUNT = "Amount";
-        public const string REQUESTCHANNEL = "requestChannel";
-        public const string CURRENCYCODE = "currencyCode";
-  
-        public const string STARTDATE = "STARTDATE";
-        public const string ENDDATE = "ENDDATE";
-        public const string PAGENUMBER = "PAGENUMBER";
-
         private const string tenant = "t/1.1";
         private const string soapAppend = "services/";
         private const string restAppend = "/api/";
-
         private RestConnector restClient;
+        private string restEndpoint;
 
+
+        public TPConnector(string endpoint)
+           : this(endpoint, null)
+        {
+        }
 
         public TPConnector(string endpoint, Dictionary<string, string> headers)
         {
@@ -60,12 +49,15 @@ namespace TodoPagoConnector
             this.OperationsBinding = new OperationsBinding();
             this.OperationsEndpoint = new OperationsEndpoint(sopaEndpoint);
 
-            this.Headers = headers;
-
-            string restEndpoint = endpoint + tenant + restAppend;
-            restClient = new RestConnector(restEndpoint, headers);
-
+            if (headers!= null)
+            {
+              this.Headers = headers;
+            }
+ 
+            this.restEndpoint = endpoint + tenant + restAppend;
+            this.restClient = new RestConnector(restEndpoint, headers);
         }
+
 
         public List<Dictionary<string, object>> GetStatus(string merchant, string operation)
         {
@@ -77,12 +69,12 @@ namespace TodoPagoConnector
             return restClient.GetAllPaymentMethods(merchant);
         }
 
-        public string VoidRequest(Dictionary<string, string> param)
+        public Dictionary<string, object> VoidRequest(Dictionary<string, string> param)
         {
             return restClient.VoidRequest(param);
         }
 
-        public string ReturnRequest(Dictionary<string, string> param)
+        public Dictionary<string, object> ReturnRequest(Dictionary<string, string> param)
         {
             return restClient.ReturnRequest(param);
         }
@@ -90,6 +82,44 @@ namespace TodoPagoConnector
         public Dictionary<string, object> getByRangeDateTime(Dictionary<string, string> param)
         { 
             return restClient.GetByRangeDateTime(param);
+        }
+
+        public User getCredentials(User user) 
+        {
+            User result = user;
+            if (user != null)
+            {
+                if (user.getUser() == null || user.getUser().Equals(""))
+                {
+                    throw new EmptyFieldUserException("User/Mail is empty");
+                }
+                if (user.getPassword() == null || user.getPassword().Equals(""))
+                {
+                    throw new EmptyFieldPassException("Pass is empty");
+                }
+                result = restClient.getCredentials(user);
+            }
+            else
+            {
+                throw new EmptyFieldPassException("User is null");
+            }
+            return result;		
+        }
+
+        public void setAuthorize(String authorization)
+        {
+            var headers = new Dictionary<String, String>();
+
+            if (authorization != null && !authorization.Equals(""))
+            {
+                headers.Add("Authorization", authorization);
+                this.Headers = headers;
+                this.restClient = new RestConnector(restEndpoint, headers);
+            }
+            else
+            {
+                throw new ResponseException("ApiKey is null");
+            }         
         }
 
         public Dictionary<string, object> GetAuthorizeAnswer(Dictionary<string, string> request)
@@ -106,11 +136,11 @@ namespace TodoPagoConnector
                     object payload;
 
                     var statusCode = client.GetAuthorizeAnswer(
-                        request[SECURITY],
-                        request[SESSION],
-                        request[MERCHANT],
-                        request[REQUESTKEY],
-                        request[ANSWERKEY],
+                        request[ElementNames.SECURITY],
+                        request[ElementNames.SESSION],
+                        request[ElementNames.MERCHANT],
+                        request[ElementNames.REQUESTKEY],
+                        request[ElementNames.ANSWERKEY],
                         out statusMessage,
                         out authorizationKey,
                         out encodingMethod,
@@ -188,12 +218,12 @@ namespace TodoPagoConnector
                     string statusMessage, URL_Request, RequestKey, PublicRequestKey;
 
                         var statusCode = client.SendAuthorizeRequest(
-                            request[SECURITY],
-                            request[SESSION],
-                            request[MERCHANT],
-                            request[URL_OK],
-                            request[URL_ERROR],
-                            request[ENCODING_METHOD],
+                            request[ElementNames.SECURITY],
+                            request[ElementNames.SESSION],
+                            request[ElementNames.MERCHANT],
+                            request[ElementNames.URL_OK],
+                            request[ElementNames.URL_ERROR],
+                            request[ElementNames.ENCODING_METHOD],
                             payloadTAG,
                             out statusMessage,
                             out URL_Request,

@@ -14,6 +14,7 @@ Modulo para conexión con gateway de pago Todo Pago
 ######[Status de la operación](#status)
 ######[Consulta de operaciones por rango de tiempo](#statusdate)
 ######[Devoluciónes](#devolucion)
+######[Obtener credenciales](#credenciales)
 ######[Tablas de referencia](#tablas)		
 
 <a name="instalacion"></a>		
@@ -22,6 +23,9 @@ Se debe descargar la última versión del SDK desde el botón Download ZIP, bran
 Una vez descargado y descomprimido, se debe agregar la libreria TodoPagoConnector.dll que se encuntra dentro de la carpeta dist, a las librerias del proyecto y en el codigo se debe agregar siguiente using.
 ```C#
 using TodoPagoConnector;
+using TodoPagoConnector.Utils;
+using TodoPagoConnector.Model;
+using TodoPagoConnector.Exceptions;
 ```
 
 <br />		
@@ -42,6 +46,8 @@ Esta versión soporta únicamente pago en moneda nacional argentina (CURRENCYCOD
 <a name="uso"></a>		
 ## Uso		
 ####1.Inicializar la clase correspondiente al conector (TodoPago).
+
+Si se cuenta con los http header suministrados por Todo Pago
 - crear un String con el Endpoint suministrados por Todo Pago
 
 ```C#
@@ -55,12 +61,23 @@ headers.Add("Authorization", "PRISMA 912EC803B2CE49E4A541068D495AB570");
 - crear una instancia de la clase TodoPago
 ```C#		
 TPConnector tpc = new TPConnector(endpoint, headers);	
-```		
-		
+```	
+Si se cuenta el con user y password del login en Todo Pago
+- crear una instancia de la clase TodoPago
+```C#
+String endpoint = "https://developers.todopago.com.ar/";
+```
+- crear una instancia de la clase TodoPago
+```C#		
+TPConnector tpc = new TPConnector(endpoint);	
+```	
+- obtener las credenciales a traves  del m&eacute;todo getCredentials de TodoPago  
+ver [Obtener credenciales](#credenciales)
+
 ####2.Solicitud de autorización		
 En este caso hay que llamar a sendAuthorizeRequest(). Este metodo devuelve Dictionary<string, object>
 ```C#		
-var res = connector.SendAuthorizeRequest(request, payload);		
+var res = tpc.SendAuthorizeRequest(request, payload);		
 ```		
 <ins><strong>datos propios del comercio</strong></ins>		
 
@@ -68,33 +85,34 @@ request y payload deben ser un Dictionary<string, string> con la siguiente estru
 		
 ```C#
 var request = new Dictionary<string, string>();
-request.Add(SECURITY, "f3d8b72c94ab4a06be2ef7c95490f7d3");
-request.Add(SESSION, "ABCDEF-1234-12221-FDE1-00000200");
-request.Add(MERCHANT, "2153");
-request.Add(URL_OK, "http://someurl.com/ok");
-request.Add(URL_ERROR, "http://someurl.com/fail");
-request.Add(ENCODING_METHOD, "XML");
+request.Add(ElementNames.SECURITY, "f3d8b72c94ab4a06be2ef7c95490f7d3");
+request.Add(ElementNames.SESSION, "ABCDEF-1234-12221-FDE1-00000200");
+request.Add(ElementNames.MERCHANT, "2153");
+request.Add(ElementNames.URL_OK, "http://someurl.com/ok");
+request.Add(ElementNames.URL_ERROR, "http://someurl.com/fail");
+request.Add(ElementNames.ENCODING_METHOD, "XML");
 
 var payload = new Dictionary<string, string>();
-payload.Add("MERCHANT", "2153");
-payload.Add("OPERATIONID", "8000");
-payload.Add("CURRENCYCODE", "032");
-payload.Add("AMOUNT", "1.00");
-payload.Add("EMAILCLIENTE", "some@someurl.com");
-		
+
+payload.Add(ElementNames.MERCHANT, "2153");
+payload.Add(ElementNames.OPERATIONID, "8000");
+payload.Add(ElementNames.CURRENCYCODE, "032");
+payload.Add(ElementNames.AMOUNT, "1.00");
+payload.Add(ElementNames.EMAILCLIENTE, "some@someurl.com");
+	
 ```		
 		
 ####3.Confirmación de transacción.		
 En este caso hay que llamar a getAuthorizeAnswer(), que retorna Dictionary<string, object>, enviando como parámetro un Dictionary<String, String> como se describe a continuación.		
 ```C#		
 var request = new Dictionary<String, String>();
-request.Add(SECURITY, "f3d8b72c94ab4a06be2ef7c95490f7d3");
-request.Add(SESSION, null);
-request.Add(MERCHANT, "2153");
-request.Add(REQUESTKEY, "710268a7-7688-c8bf-68c9-430107e6b9da");
-request.Add(ANSWERKEY, "693ca9cc-c940-06a4-8d96-1ab0d66f3ee6");
+request.Add(ElementNames.SECURITY, "f3d8b72c94ab4a06be2ef7c95490f7d3");
+request.Add(ElementNames.SESSION, null);
+request.Add(ElementNames.MERCHANT, "2153");
+request.Add(ElementNames.REQUESTKEY, "710268a7-7688-c8bf-68c9-430107e6b9da");
+request.Add(ElementNames.ANSWERKEY, "693ca9cc-c940-06a4-8d96-1ab0d66f3ee6");
 
-var res = connector.GetAuthorizeAnswer(request);
+var res = tpc.GetAuthorizeAnswer(request);
 ```		
 <strong><ins>*Importante:</ins></strong>El campo AnswerKey se adiciona  en la redireccion que se realiza a alguna de las direcciones ( URL ) epecificadas en el  servicio SendAurhorizationRequest, esto sucede cuando la transaccion ya fue resuelta y es necesario regresar al Site para finalizar la transaccion de pago, tambien se adiciona el campo Order, el cual tendra el contenido enviado en el campo OPERATIONID. para nuestro ejemplo: <strong>http://susitio.com/paydtodopago/ok?Order=27398173292187&Answer=1111-2222-3333-4444-5555-6666-7777</strong>		
 		
@@ -182,7 +200,7 @@ La SDK cuenta con un m&eacute;todo para consultar el status de la transacci&oacu
 TPConnector tpc = new TPConnector(endpoint, headers);
 String merchant = "2153";
 String operationID = "02";
-var res = connector.GetStatus(merchant, operationID);// Merchant es el id site y operationID es el id operación que se envio en el array a través del método sendAuthorizeRequest() 
+var res = tpc.GetStatus(merchant, operationID);// Merchant es el id site y operationID es el id operación que se envio en el array a través del método sendAuthorizeRequest() 
 ```
 El siguiente m&eacute;todo retornara el status actual de la transacci&oacute;n en Todopago, y devuelve List<Dictionary<string, object>>.
 [<sub>Volver a inicio</sub>](#inicio)		
@@ -195,12 +213,12 @@ En este caso hay que llamar a getByRangeDateTime() y devolvera todas las operaci
 TPConnector tpc = new TPConnector(endpoint, headers);
 
 Dictionary<string, string> gbrdt = new Dictionary<string, string>();
-gbrdt.Add(TPConnector.MERCHANT, "2153");
-gbrdt.Add(TPConnector.STARTDATE, "2015-01-01");
-gbrdt.Add(TPConnector.ENDDATE, "2015-12-10");
-gbrdt.Add(TPConnector.PAGENUMBER, "1");
+gbrdt.Add(ElementNames.MERCHANT, "2153");
+gbrdt.Add(ElementNames.STARTDATE, "2015-01-01");
+gbrdt.Add(ElementNames.ENDDATE, "2015-12-10");
+gbrdt.Add(ElementNames.PAGENUMBER, "1");
 
-Dictionary<string, Object> res = connector.getByRangeDateTime(gbrdt);
+Dictionary<string, Object> res = tpc.getByRangeDateTime(gbrdt);
 ```
 
 [<sub>Volver a inicio</sub>](#inicio)	
@@ -214,33 +232,61 @@ Devolución Total
 TPConnector tpc = new TPConnector(endpoint, headers);
 
 Dictionary<string, string> gbrdt = new Dictionary<string, string>();
-gbrdt.Add(TPConnector.MERCHANT, "2153");
-gbrdt.Add(TPConnector.SECURITY, "f3d8b72c94ab4a06be2ef7c95490f7d3");
-gbrdt.Add(TPConnector.REQUESTKEY, "bb25d589-52bc-8e21-fc5d-47d677b0995c");
+gbrdt.Add(ElementNames.MERCHANT, "2153");
+gbrdt.Add(ElementNames.SECURITY, "f3d8b72c94ab4a06be2ef7c95490f7d3");
+gbrdt.Add(ElementNames.REQUESTKEY, "bb25d589-52bc-8e21-fc5d-47d677b0995c");
 
-string res = connector.VoidRequest(gbrdt);// Merchant es el id site y requestKey es la key se que retorna a travÃ©s del mÃ©todo SendAuthorizeRequest() 
+Dictionary<string, Object> res = tpc.VoidRequest(gbrdt);// Merchant es el id site y requestKey es la key se que retorna a travÃ©s del mÃ©todo SendAuthorizeRequest() 
 ```
 Devolución Parcial
 ```C#
 TPConnector tpc = new TPConnector(endpoint, headers);
 
 Dictionary<string, string> gbrdt = new Dictionary<string, string>();
-gbrdt.Add(TPConnector.MERCHANT, "2153");
-gbrdt.Add(TPConnector.SECURITY, "f3d8b72c94ab4a06be2ef7c95490f7d3");
-gbrdt.Add(TPConnector.REQUESTKEY, "0db2e848-b0ab-6baf-f9e1-b70a82ed5844");
-gbrdt.Add(TPConnector.AMOUNT, "10");
+gbrdt.Add(ElementNames.MERCHANT, "2153");
+gbrdt.Add(ElementNames.SECURITY, "f3d8b72c94ab4a06be2ef7c95490f7d3");
+gbrdt.Add(ElementNames.REQUESTKEY, "0db2e848-b0ab-6baf-f9e1-b70a82ed5844");
+gbrdt.Add(ElementNames.AMOUNT, "10");
 
-string res = connector.ReturnRequest(gbrdt);// Merchant es el id site , AuthorizationKey es la key se que retorna a travÃ©s del mÃ©todo SendAuthorizeRequest() y Amount la cantidad a devolver (float Type)
+Dictionary<string, Object> res = tpc.ReturnRequest(gbrdt);// Merchant es el id site , AuthorizationKey es la key se que retorna a travÃ©s del mÃ©todo SendAuthorizeRequest() y Amount la cantidad a devolver (float Type)
 ```
 
 Si la operación fue realizada correctamente se informará con un código 2011 y un mensaje indicando el éxito de la operación.
 
 [<sub>Volver a inicio</sub>](#inicio)	
 
+<a name="credenciales"></a>
+
+## Obtener credenciales
+La SDK dispone de un m&eacute;todo para obtener las credenciales de TodoPago (Merchant, APIKey). El m&eacute;todo se utiliza de la siguiente manera:
+
+getCredentials
+```C#
+
+    User user = new User("test@Test.com.ar","pass1234");// user y pass de TodoPago
+    
+    try {
+          user = tpc.getCredentials(user);
+          tpc.setAuthorize(user.getApiKey());// set de la APIKey a TodoPagoConector
+		  
+         }catch (EmptyFieldException ex){
+			Console.WriteLine(ex.Message);
+		  
+         }catch (ResponseException ex) {
+            Console.WriteLine(ex.Message);
+         }
+          Console.WriteLine(user.toString()); 
+     }
+     
+```
+
+[<sub>Volver a inicio</sub>](#inicio)	
+
 <a name="tablas"></a>		
 ## Tablas de Referencia		
 ######[Códigos de Estado](#cde)		
-######[Provincias](#p)		
+######[Provincias](#p)	
+######[Códigos de Errores](#cderrores)		
 <a name="cde"></a>		
 <p>Codigos de Estado</p>		
 <table>		
@@ -309,7 +355,62 @@ Si la operación fue realizada correctamente se informará con un código 2011 y
 <tr><td>Tierra del Fuego</td><td>V</td></tr>		
 <tr><td>Tucumán</td><td>T</td></tr>		
 </table>		
+
+<a name="cderrores"></a>
+<p>Codigos de Errores</p>	    
+
+<table>		
+<tr><th>Id mensaje</th><th>Mensaje</th></tr>				
+<tr><td>1081</td><td>Tu saldo es insuficiente para realizar la transacción.</td></tr>
+<tr><td>1100</td><td>El monto ingresado es menor al mínimo permitido</td></tr>
+<tr><td>1101</td><td>El monto ingresado supera el máximo permitido.</td></tr>
+<tr><td>1102</td><td>La tarjeta ingresada no corresponde al Banco indicado. Revisalo.</td></tr>
+<tr><td>1104</td><td>El precio ingresado supera al máximo permitido.</td></tr>
+<tr><td>1105</td><td>El precio ingresado es menor al mínimo permitido.</td></tr>
+<tr><td>2010</td><td>En este momento la operación no pudo ser realizada. Por favor intentá más tarde. Volver a Resumen.</td></tr>
+<tr><td>2031</td><td>En este momento la validación no pudo ser realizada, por favor intentá más tarde.</td></tr>
+<tr><td>2050</td><td>Lo sentimos, el botón de pago ya no está disponible. Comunicate con tu vendedor.</td></tr>
+<tr><td>2051</td><td>La operación no pudo ser procesada. Por favor, comunicate con tu vendedor.</td></tr>
+<tr><td>2052</td><td>La operación no pudo ser procesada. Por favor, comunicate con tu vendedor.</td></tr>
+<tr><td>2053</td><td>La operación no pudo ser procesada. Por favor, intentá más tarde. Si el problema persiste comunicate con tu vendedor</td></tr>
+<tr><td>2054</td><td>Lo sentimos, el producto que querés comprar se encuentra agotado por el momento. Por favor contactate con tu vendedor.</td></tr>
+<tr><td>2056</td><td>La operación no pudo ser procesada. Por favor intentá más tarde.</td></tr>
+<tr><td>2057</td><td>La operación no pudo ser procesada. Por favor intentá más tarde.</td></tr>
+<tr><td>2059</td><td>La operación no pudo ser procesada. Por favor intentá más tarde.</td></tr>
+<tr><td>90000</td><td>La cuenta destino de los fondos es inválida. Verificá la información ingresada en Mi Perfil.</td></tr>
+<tr><td>90001</td><td>La cuenta ingresada no pertenece al CUIT/ CUIL registrado.</td></tr>
+<tr><td>90002</td><td>No pudimos validar tu CUIT/CUIL.  Comunicate con nosotros <a href="#contacto" target="_blank">acá</a> para más información.</td></tr>
+<tr><td>99900</td><td>El pago fue realizado exitosamente</td></tr>
+<tr><td>99901</td><td>No hemos encontrado tarjetas vinculadas a tu Billetera. Podés  adherir medios de pago desde www.todopago.com.ar</td></tr>
+<tr><td>99902</td><td>No se encontro el medio de pago seleccionado</td></tr>
+<tr><td>99903</td><td>Lo sentimos, hubo un error al procesar la operación. Por favor reintentá más tarde.</td></tr>
+<tr><td>99970</td><td>Lo sentimos, no pudimos procesar la operación. Por favor reintentá más tarde.</td></tr>
+<tr><td>99971</td><td>Lo sentimos, no pudimos procesar la operación. Por favor reintentá más tarde.</td></tr>
+<tr><td>99977</td><td>Lo sentimos, no pudimos procesar la operación. Por favor reintentá más tarde.</td></tr>
+<tr><td>99978</td><td>Lo sentimos, no pudimos procesar la operación. Por favor reintentá más tarde.</td></tr>
+<tr><td>99979</td><td>Lo sentimos, el pago no pudo ser procesado.</td></tr>
+<tr><td>99980</td><td>Ya realizaste un pago en este sitio por el mismo importe. Si querés realizarlo nuevamente esperá 5 minutos.</td></tr>
+<tr><td>99982</td><td>En este momento la operación no puede ser realizada. Por favor intentá más tarde.</td></tr>
+<tr><td>99983</td><td>Lo sentimos, el medio de pago no permite la cantidad de cuotas ingresadas. Por favor intentá más tarde.</td></tr>
+<tr><td>99984</td><td>Lo sentimos, el medio de pago seleccionado no opera en cuotas.</td></tr>
+<tr><td>99985</td><td>Lo sentimos, el pago no pudo ser procesado.</td></tr>
+<tr><td>99986</td><td>Lo sentimos, en este momento la operación no puede ser realizada. Por favor intentá más tarde.</td></tr>
+<tr><td>99987</td><td>Lo sentimos, en este momento la operación no puede ser realizada. Por favor intentá más tarde.</td></tr>
+<tr><td>99988</td><td>Lo sentimos, momentaneamente el medio de pago no se encuentra disponible. Por favor intentá más tarde.</td></tr>
+<tr><td>99989</td><td>La tarjeta ingresada no está habilitada. Comunicate con la entidad emisora de la tarjeta para verificar el incoveniente.</td></tr>
+<tr><td>99990</td><td>La tarjeta ingresada está vencida. Por favor seleccioná otra tarjeta o actualizá los datos.</td></tr>
+<tr><td>99991</td><td>Los datos informados son incorrectos. Por favor ingresalos nuevamente.</td></tr>
+<tr><td>99992</td><td>La fecha de vencimiento es incorrecta. Por favor seleccioná otro medio de pago o actualizá los datos.</td></tr>
+<tr><td>99993</td><td>La tarjeta ingresada no está vigente. Por favor seleccioná otra tarjeta o actualizá los datos.</td></tr>
+<tr><td>99994</td><td>El saldo de tu tarjeta no te permite realizar esta operacion.</td></tr>
+<tr><td>99995</td><td>La tarjeta ingresada es invalida. Seleccioná otra tarjeta para realizar el pago.</td></tr>
+<tr><td>99996</td><td>La operación fué rechazada por el medio de pago porque el monto ingresado es inválido.</td></tr>
+<tr><td>99997</td><td>Lo sentimos, en este momento la operación no puede ser realizada. Por favor intentá más tarde.</td></tr>
+<tr><td>99998</td><td>Lo sentimos, la operación fue rechazada. Comunicate con la entidad emisora de la tarjeta para verificar el incoveniente o seleccioná otro medio de pago.</td></tr>
+<tr><td>99999</td><td>Lo sentimos, la operación no pudo completarse. Comunicate con la entidad emisora de la tarjeta para verificar el incoveniente o seleccioná otro medio de pago.</td></tr>
+</table>
 [<sub>Volver a inicio</sub>](#inicio)
+
 
 
 
