@@ -27,6 +27,8 @@ namespace TodoPagoConnector.Utils
         public const string CLAVE = "CLAVE";
         public const string OPERATIONID = "OPERATIONID";
         public const string EMAILCLIENTE = "EMAILCLIENTE";
+        public const string ERROR = "ERROR";
+        public const string MAXINSTALLMENTS = "MAXINSTALLMENTS";
 
     }
 }

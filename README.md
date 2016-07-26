@@ -19,6 +19,7 @@ Todo Pago - módulo SDK-.NET para conexión con gateway de pago
     + [Devolucion parcial](#devolucionparcial)
     + [Formulario hibrido](#formhidrido)
     + [Obtener Credenciales](#credenciales)
+    + [Máximo de cuotas a mostrar en formulario](#maxcuotas)
  + [Diagrama de secuencia](#secuencia)
  + [Tablas de referencia](#tablareferencia)		
  + [Tabla de errores](#codigoerrores)		 
@@ -108,11 +109,12 @@ El segundo atributo payload, debe ser un Dictionary<string, string> con la sigui
 ```C#
 var payload = new Dictionary<string, string>();
 
-payload.Add(ElementNames.MERCHANT, "12345678"); //dato fijo (número identificador del comercio)
+payload.Add(ElementNames.MERCHANT, "12345678"); //dato fijo (número identificador del comercio).
 payload.Add(ElementNames.OPERATIONID, "8000"); //número único que identifica la operación, generado por el comercio.
-payload.Add(ElementNames.CURRENCYCODE, "032"); //por el momento es el único tipo de moneda aceptada
+payload.Add(ElementNames.CURRENCYCODE, "032"); //por el momento es el único tipo de moneda aceptada.
 payload.Add(ElementNames.AMOUNT, "10.00");
 payload.Add(ElementNames.EMAILCLIENTE, "some@someurl.com");
+payload.Add(ElementNames.MAXINSTALLMENTS, "12"); //NO MANDATORIO, Maxima cantidad de cuotas, valor maximo 12.
 ```	
 
 <ins><strong>datos prevención de fraude</strong></ins>	
@@ -549,6 +551,22 @@ User user = new User("test@Test.com.ar","pass1234");// user y pass de TodoPago
           Console.WriteLine(user.toString()); 
      }
 ```
+[<sub>Volver a inicio</sub>](#inicio)
+<br>
+
+<a name="maxcuotas"></a>
+####Máximo de cuotas a mostrar en formulario
+Mediante esta funcionalidad, se permite setear el número máximo de cuotas que se desplegará en el formulario de pago.
+
+Para hacer uso de esta funcionalidad debe agregarse en el parámetro **sendAuthorizeRequestPayload** del método **sendAuthorizeRequest** el campo **MAXINSTALLMENTS** con el valor máximo de cuotas a ofrecer (generalmente de 1 a 12)
+
+#####Ejemplo
+
+```C#		
+Dictionary<string, string> sendAuthorizeRequestPayload = new Dictionary<string, string>();
+sendAuthorizeRequestPayload.Add(ElementNames.MAXINSTALLMENTS, "12");
+```
+
 [<sub>Volver a inicio</sub>](#inicio)
 <br>
 

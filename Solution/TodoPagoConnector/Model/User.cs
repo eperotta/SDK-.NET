@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 
 
-namespace TodoPagoConnector.Model
-{
-    public class User
-    {
+namespace TodoPagoConnector.Model{
+
+    public class User {
 
     private String user;	
 	private String password;

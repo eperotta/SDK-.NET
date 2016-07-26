@@ -9,6 +9,7 @@ using TodoPagoConnector;
 using TodoPagoConnector.Model;
 using TodoPagoConnector.Exceptions;
 using TodoPagoConnector.Utils;
+using TodoPagoConnector.Operations;
 
 namespace TPTestConsole
 {
@@ -20,7 +21,7 @@ namespace TPTestConsole
 
             TodoPagoConnectorSample tpcs = new TodoPagoConnectorSample();
 
-            //Console.WriteLine("------------------------------------------------------------------------");
+            //Console.WriteLine("----------------------------------------------------------------------");
             //Console.WriteLine("getCredentials");
             //tpcs.getCredentials();
 
@@ -54,9 +55,9 @@ namespace TPTestConsole
             Console.WriteLine("ReturnRequest");
             tpcs.returnRequest();
 
-            Console.WriteLine("------------------------------------------------------------------------");
-            Console.WriteLine("initGetByRangeDateTime");
-            tpcs.getByRangeDateTime();
+            //Console.WriteLine("----------------------------------------------------------------------");
+            //Console.WriteLine("initGetByRangeDateTime");
+            //tpcs.getByRangeDateTime();
 
             Console.Read();
         }
@@ -118,25 +119,25 @@ namespace TPTestConsole
                 sendAuthorizeRequestParams.Add(ElementNames.URL_ERROR, "http://someurl.com/fail");
                 sendAuthorizeRequestParams.Add(ElementNames.ENCODING_METHOD, "XML");
 
-                var payload = new Dictionary<string, string>();
                 sendAuthorizeRequestPayload.Add(ElementNames.MERCHANT, "2153");
                 sendAuthorizeRequestPayload.Add(ElementNames.OPERATIONID, "2121");
                 sendAuthorizeRequestPayload.Add(ElementNames.CURRENCYCODE, "032");
-                sendAuthorizeRequestPayload.Add(ElementNames.AMOUNT, "55");
+                sendAuthorizeRequestPayload.Add(ElementNames.AMOUNT, "1.00");
                 sendAuthorizeRequestPayload.Add(ElementNames.EMAILCLIENTE, "email_cliente@dominio.com");
+                sendAuthorizeRequestPayload.Add(ElementNames.MAXINSTALLMENTS, "12"); //NO MANDATORIO, MAXIMA CANTIDAD DE CUOTAS, VALOR MAXIMO 12
 
                 sendAuthorizeRequestPayload.Add("CSBTCITY", "Villa General Belgrano"); //MANDATORIO.
-                sendAuthorizeRequestPayload.Add("CSBTCOUNTRY", "AR");//MANDATORIO. Código ISO.
+                sendAuthorizeRequestPayload.Add("CSBTCOUNTRY", "");//MANDATORIO. Código ISO.
                 sendAuthorizeRequestPayload.Add("CSBTEMAIL", "todopago@hotmail.com"); //MANDATORIO.
                 sendAuthorizeRequestPayload.Add("CSBTFIRSTNAME", "Juan");//MANDATORIO.
                 sendAuthorizeRequestPayload.Add("CSBTLASTNAME", "Perez");//MANDATORIO.
-                sendAuthorizeRequestPayload.Add("CSBTPHONENUMBER", "541160913988");//MANDATORIO.
-                sendAuthorizeRequestPayload.Add("CSBTPOSTALCODE", "1010");//MANDATORIO.
+                sendAuthorizeRequestPayload.Add("CSBTPHONENUMBER", "541161988");//MANDATORIO.
+                sendAuthorizeRequestPayload.Add("CSBTPOSTALCODE", "");//MANDATORIO.
                 sendAuthorizeRequestPayload.Add("CSBTSTATE", "B");//MANDATORIO
                 sendAuthorizeRequestPayload.Add("CSBTSTREET1", "Cerrito 740");//MANDATORIO.
-                sendAuthorizeRequestPayload.Add("CSBTSTREET2", "");//NO MANDATORIO
+                //sendAuthorizeRequestPayload.Add("CSBTSTREET2", "");//NO MANDATORIO
 
-                sendAuthorizeRequestPayload.Add("CSBTCUSTOMERID", "453458"); //MANDATORIO.
+                sendAuthorizeRequestPayload.Add("CSBTCUSTOMERID", ""); //MANDATORIO.
                 sendAuthorizeRequestPayload.Add("CSBTIPADDRESS", "192.0.0.4"); //MANDATORIO.
                 sendAuthorizeRequestPayload.Add("CSPTCURRENCY", "ARS");//MANDATORIO.
                 sendAuthorizeRequestPayload.Add("CSPTGRANDTOTALAMOUNT", "1.00");//MANDATORIO.
@@ -158,15 +159,15 @@ namespace TPTestConsole
                 sendAuthorizeRequestPayload.Add("CSSTPOSTALCODE", "1010");//MANDATORIO.
                 sendAuthorizeRequestPayload.Add("CSSTSTATE", "B");//MANDATORIO
                 sendAuthorizeRequestPayload.Add("CSSTSTREET1", "Cerrito 740");//MANDATORIO.
-                sendAuthorizeRequestPayload.Add("CSSTSTREET2", "");//NO MANDATORIO.
+                //sendAuthorizeRequestPayload.Add("CSSTSTREET2", "");//NO MANDATORIO.
 
-                sendAuthorizeRequestPayload.Add("CSITPRODUCTCODE", "electronic_good");//CONDICIONAL
-                sendAuthorizeRequestPayload.Add("CSITPRODUCTDESCRIPTION", "Prueba desde net");//CONDICIONAL.
-                sendAuthorizeRequestPayload.Add("CSITPRODUCTNAME", "netsdk");//CONDICIONAL.
-                sendAuthorizeRequestPayload.Add("CSITPRODUCTSKU", "nsdk123");//CONDICIONAL.
-                sendAuthorizeRequestPayload.Add("CSITTOTALAMOUNT", "1.00");//CONDICIONAL.
-                sendAuthorizeRequestPayload.Add("CSITQUANTITY", "1");//CONDICIONAL.
-                sendAuthorizeRequestPayload.Add("CSITUNITPRICE", "1.00");
+                sendAuthorizeRequestPayload.Add("CSITPRODUCTCODE", "electronic_good#electronic_good#electronic_good#electronic_good");//CONDICIONAL
+                sendAuthorizeRequestPayload.Add("CSITPRODUCTDESCRIPTION", "Prueba desde net#Prueba desde net#Prueba desde net");//CONDICIONAL.
+                sendAuthorizeRequestPayload.Add("CSITPRODUCTNAME", "netsdk#netsdk#netsdk#netsdk");//CONDICIONAL.
+                sendAuthorizeRequestPayload.Add("CSITPRODUCTSKU", "nsdk123#nsdk123#nsdk123#nsdk123");//CONDICIONAL.
+                sendAuthorizeRequestPayload.Add("CSITTOTALAMOUNT", "1.00#1.00#1.00#1.00");//CONDICIONAL.
+                sendAuthorizeRequestPayload.Add("CSITQUANTITY", "1#1#1#1");//CONDICIONAL.
+                sendAuthorizeRequestPayload.Add("CSITUNITPRICE", "1.00#1.00#1.00#1.00");
 
                 sendAuthorizeRequestPayload.Add("CSMDD12", "");//NO MADATORIO.
                 sendAuthorizeRequestPayload.Add("CSMDD13", "");//NO MANDATORIO.
@@ -182,15 +183,17 @@ namespace TPTestConsole
                 {
                     var res = connector.SendAuthorizeRequest(sendAuthorizeRequestParams, sendAuthorizeRequestPayload);
 
+                    printDictionary(res, "");
+
                     //string response = res["StatusCode"].ToString() + "-" + res["StatusMessage"].ToString();
                     //string detail = "URL_Request = " + res["URL_Request"] + "\r\nRequestKey = " + res["RequestKey"] + "\r\nPublicRequestKey = " + res["PublicRequestKey"];
 
-                    output += "\r\n- " + res["StatusCode"].ToString();
-                    output += "\r\n- " + res["StatusMessage"].ToString();
+                    // output += "\r\n- " + res["StatusCode"].ToString();
+                    // output += "\r\n- " + res["StatusMessage"].ToString();
 
-                    output += "\r\n- URL_Request = " + res["URL_Request"];
-                    output += "\r\n- RequestKey = " + res["RequestKey"];
-                    output += "\r\n- PublicRequestKey = " + res["PublicRequestKey"];
+                    // output += "\r\n- URL_Request = " + res["URL_Request"];
+                    //output += "\r\n- RequestKey = " + res["RequestKey"];
+                    //output += "\r\n- PublicRequestKey = " + res["PublicRequestKey"];
 
                     //Console.WriteLine(response);
                     //Console.WriteLine(detail);

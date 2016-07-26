@@ -5,6 +5,7 @@ using TodoPagoConnector.Service_Extensions;
 using TodoPagoConnector.Model;
 using TodoPagoConnector.Exceptions;
 using TodoPagoConnector.Utils;
+using TodoPagoConnector.Operations;
 
 /*
  * 
@@ -16,13 +17,11 @@ using TodoPagoConnector.Utils;
  * DENTRO DE "Service Bindings" -> AuthorizeBinding.cs
  * */
 
-namespace TodoPagoConnector
-{
-    public class TPConnector 
-    {
+namespace TodoPagoConnector{
 
-        string versionTodoPago = "1.2.0";
-       
+    public class TPConnector {
+
+        string versionTodoPago = "1.3.0";
         private AuthorizeBinding AuthorizeBinding;
         private AuthorizeEndpoint AuthorizeEndpoint;
         private OperationsBinding OperationsBinding;
@@ -30,106 +29,91 @@ namespace TodoPagoConnector
         private Dictionary<string, string> Headers;
         private const string tenant = "t/1.1";
         private const string soapAppend = "services/";
-        private const string restAppend = "/api/";
-        private RestConnector restClient;
+        private const string restAppend = "/api/"; 
         private string restEndpoint;
-
+        private TodoPago todoPagoClient;
+        private BSA bsaClient;
 
         public TPConnector(string endpoint)
-           : this(endpoint, null)
-        {
+           : this(endpoint, null){
         }
 
-        public TPConnector(string endpoint, Dictionary<string, string> headers)
-        {
-            string sopaEndpoint = endpoint + soapAppend + tenant; 
+        public TPConnector(string endpoint, Dictionary<string, string> headers){
+
+            string sopaEndpoint = endpoint + soapAppend + tenant;
             this.AuthorizeBinding = new AuthorizeBinding();
             this.AuthorizeEndpoint = new AuthorizeEndpoint(sopaEndpoint);
-
             this.OperationsBinding = new OperationsBinding();
             this.OperationsEndpoint = new OperationsEndpoint(sopaEndpoint);
-
-            if (headers!= null)
-            {
-              this.Headers = headers;
-            }
- 
             this.restEndpoint = endpoint + tenant + restAppend;
-            this.restClient = new RestConnector(restEndpoint, headers);
+
+            if (headers!= null){
+              this.Headers = headers;
+            }        
+            creteClients();
+        }
+
+        private void creteClients(){
+            this.todoPagoClient = new TodoPago(this.restEndpoint, this.Headers);
+            this.bsaClient = new BSA(this.restEndpoint, this.Headers);
+        }
+
+        public void setAuthorize(String authorization){
+            var headers = new Dictionary<String, String>();
+
+            if (authorization != null && !authorization.Equals("")) {
+                headers.Add("Authorization", authorization);
+                this.Headers = headers;
+                creteClients();
+            }else{
+                throw new ResponseException("ApiKey is null");
+            }         
         }
 
 
-        public List<Dictionary<string, object>> GetStatus(string merchant, string operation)
-        {
-            return restClient.getByOperationID(merchant, operation);
+        public List<Dictionary<string, object>> GetStatus(string merchant, string operation){
+            return todoPagoClient.getByOperationID(merchant, operation);
         }
 
-        public Dictionary<string, object> GetAllPaymentMethods(string merchant)
-        {
-            return restClient.GetAllPaymentMethods(merchant);
+        public Dictionary<string, object> GetAllPaymentMethods(string merchant){
+            return todoPagoClient.GetAllPaymentMethods(merchant);
         }
 
-        public Dictionary<string, object> VoidRequest(Dictionary<string, string> param)
-        {
-            return restClient.VoidRequest(param);
+        public Dictionary<string, object> VoidRequest(Dictionary<string, string> param){
+            return todoPagoClient.VoidRequest(param);
         }
 
-        public Dictionary<string, object> ReturnRequest(Dictionary<string, string> param)
-        {
-            return restClient.ReturnRequest(param);
+        public Dictionary<string, object> ReturnRequest(Dictionary<string, string> param){
+            return todoPagoClient.ReturnRequest(param);
         }
 
-        public Dictionary<string, object> getByRangeDateTime(Dictionary<string, string> param)
-        { 
-            return restClient.GetByRangeDateTime(param);
+        public Dictionary<string, object> getByRangeDateTime(Dictionary<string, string> param){
+            return todoPagoClient.GetByRangeDateTime(param);
         }
 
-        public User getCredentials(User user) 
-        {
+        public User getCredentials(User user){
             User result = user;
-            if (user != null)
-            {
-                if (user.getUser() == null || user.getUser().Equals(""))
-                {
+            if (user != null){
+                if (user.getUser() == null || user.getUser().Equals("")){
                     throw new EmptyFieldUserException("User/Mail is empty");
                 }
-                if (user.getPassword() == null || user.getPassword().Equals(""))
-                {
+                if (user.getPassword() == null || user.getPassword().Equals("")){
                     throw new EmptyFieldPassException("Pass is empty");
                 }
-                result = restClient.getCredentials(user);
-            }
-            else
-            {
+                result = todoPagoClient.getCredentials(user);
+            }else{
                 throw new EmptyFieldPassException("User is null");
             }
             return result;		
         }
 
-        public void setAuthorize(String authorization)
-        {
-            var headers = new Dictionary<String, String>();
+        public Dictionary<string, object> GetAuthorizeAnswer(Dictionary<string, string> request){
 
-            if (authorization != null && !authorization.Equals(""))
-            {
-                headers.Add("Authorization", authorization);
-                this.Headers = headers;
-                this.restClient = new RestConnector(restEndpoint, headers);
-            }
-            else
-            {
-                throw new ResponseException("ApiKey is null");
-            }         
-        }
-
-        public Dictionary<string, object> GetAuthorizeAnswer(Dictionary<string, string> request)
-        {
             var result =  new Dictionary<string, object>();
 
-            try
-            {
-                using (var client = new AuthorizeService.AuthorizePortTypeClient(this.AuthorizeBinding, this.AuthorizeEndpoint))
-                {
+            try{
+                using (var client = new AuthorizeService.AuthorizePortTypeClient(this.AuthorizeBinding, this.AuthorizeEndpoint)){
+
                     HeaderHttpExtension.AddCustomHeaderUserInformation(new OperationContextScope(client.InnerChannel), this.Headers);
 
                     string statusMessage, authorizationKey, encodingMethod;
@@ -152,19 +136,15 @@ namespace TodoPagoConnector
                     result.Add("EncodingMethod", encodingMethod);
                     result.Add("Payload", payload);
                 }
-            }
-            catch (Exception ex)
-            {
+            }catch (Exception ex){
                 ///TODO: ACA VA EL MANEJO DE EXCEPCIONES
                 result.Add("ErrorMessage", ex.Message);
                 throw ex;
             }
-
             return result;
         }
 
-        public Dictionary<string, object> SendAuthorizeRequest(Dictionary<string, string> request, Dictionary<string, string> payloads)
-        {
+        public Dictionary<string, object> SendAuthorizeRequest(Dictionary<string, string> request, Dictionary<string, string> payloads) {
 
             //Add version to payload dictionary
             // string val = "";
@@ -197,25 +177,25 @@ namespace TodoPagoConnector
 
 
             var result = new Dictionary<string, object>();
-
             string payloadTAG = String.Empty;
             payloadTAG = "<Request>";
-            foreach (var payload in payloads.Keys)
-            {
-                payloadTAG += "<" + payload.ToUpper() + ">" + payloads[payload] + "</" + payload.ToUpper() + ">";
-            }
-            payloadTAG += "</Request>";
 
-            try
-            {
+            FraudControlValidate fc = new FraudControlValidate();
+            payloads = fc.validate(payloads);
 
-                
-                using (var client = new AuthorizeService.AuthorizePortTypeClient(this.AuthorizeBinding, this.AuthorizeEndpoint))
-                {
-                    HeaderHttpExtension.AddCustomHeaderUserInformation(new OperationContextScope(client.InnerChannel), this.Headers);
-                    
+            if (!payloads.ContainsKey(ElementNames.ERROR)){
+            
+                foreach (var payload in payloads.Keys){
+                    payloadTAG += "<" + payload.ToUpper() + ">" + payloads[payload] + "</" + payload.ToUpper() + ">";
+                }
 
-                    string statusMessage, URL_Request, RequestKey, PublicRequestKey;
+                payloadTAG += "</Request>";
+                //Console.WriteLine(payloadTAG);
+                try {
+                    using (var client = new AuthorizeService.AuthorizePortTypeClient(this.AuthorizeBinding, this.AuthorizeEndpoint))
+                    {
+                        HeaderHttpExtension.AddCustomHeaderUserInformation(new OperationContextScope(client.InnerChannel), this.Headers);                    
+                        string statusMessage, URL_Request, RequestKey, PublicRequestKey;
 
                         var statusCode = client.SendAuthorizeRequest(
                             request[ElementNames.SECURITY],
@@ -236,21 +216,44 @@ namespace TodoPagoConnector
                         result.Add("RequestKey", RequestKey);
                         result.Add("PublicRequestKey", PublicRequestKey);
                     }
+                }catch (Exception ex) {
+                    ///TODO: ACA VA EL MANEJO DE EXCEPCIONES
+                    result.Add("ErrorMessage", ex.Message);
+                    throw ex;
                 }
-            catch (Exception ex)
-            {
-                ///TODO: ACA VA EL MANEJO DE EXCEPCIONES
-                result.Add("ErrorMessage", ex.Message);
-                throw ex;
+
+            }else{
+                result = setResult(payloads);
             }
 
             return result;
         }
 
-        private void ChannelFactory_Faulted(object sender, EventArgs e)
-        {
+        private void ChannelFactory_Faulted(object sender, EventArgs e){
             throw new NotImplementedException();
         }
+
+
+        private Dictionary<string, object> setResult(Dictionary<string, string> dic) {
+            var result = new Dictionary<string, object>();
+            var aux = new Dictionary<string, object>();
+
+            result.Add("StatusCode", "9999");
+            result.Add("StatusMessage", "Campos invalidos " + dic[ElementNames.ERROR]);
+            result.Add("URL_Request", String.Empty);
+            result.Add("RequestKey", String.Empty);
+            result.Add("PublicRequestKey", String.Empty);
+
+            foreach (string k in dic.Keys){
+                aux.Add(k, (string)dic[k]);
+            }
+
+            result.Add("ERROR", aux);
+
+            return result;
+        }
+
+
 
     }
 }
