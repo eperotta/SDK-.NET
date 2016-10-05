@@ -58,6 +58,7 @@
     <Compile Include="Model\PaymentMethodsBSA.cs" />
     <Compile Include="Model\TransactionBSA.cs" />
     <Compile Include="Model\User.cs" />
+    <Compile Include="Operations\CredentialsValidate.cs" />
     <Compile Include="Operations\FraudControlValidate.cs" />
     <Compile Include="Operations\OperationsParser.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -79,6 +80,7 @@
     <Compile Include="Services Bindings\AuthorizeBinding.cs" />
     <Compile Include="Services Bindings\OperationsBinding.cs" />
     <Compile Include="Services Extensions\HeaderHttpExtension.cs" />
+    <Compile Include="SoapConector.cs" />
     <Compile Include="TodoPago.cs" />
     <Compile Include="TPConnector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

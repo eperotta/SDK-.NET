@@ -84,9 +84,6 @@ namespace TPTestConsole
             //Authentification and Endpoint
             private string authorization = "PRISMA f3d8b72c94ab4a06be2ef7c95490f7d3";
 
-            //string endpoint = "https://apis.todopago.com.ar/";//produccion
-            private string endpoint = "https://developers.todopago.com.ar/";//desarrollo
-
             //Constructor
             public TodoPagoConnectorSample()
             {
@@ -102,12 +99,12 @@ namespace TPTestConsole
                 //Override SSL security - must be removed on PRD
                 System.Net.ServicePointManager.ServerCertificateValidationCallback += new System.Net.Security.RemoteCertificateValidationCallback(ValidateCertificate);
 
-                return new TPConnector(endpoint, headers);
+                return new TPConnector(TPConnector.developerEndpoint, headers);
             }
 
             private TPConnector initConnectorForCredetials()
             {
-                return new TPConnector(endpoint);
+                return new TPConnector(TPConnector.developerEndpoint);
             }
 
             public void initSendAuthorizeRequestParams()
@@ -127,17 +124,17 @@ namespace TPTestConsole
                 sendAuthorizeRequestPayload.Add(ElementNames.MAXINSTALLMENTS, "12"); //NO MANDATORIO, MAXIMA CANTIDAD DE CUOTAS, VALOR MAXIMO 12
 
                 sendAuthorizeRequestPayload.Add("CSBTCITY", "Villa General Belgrano"); //MANDATORIO.
-                sendAuthorizeRequestPayload.Add("CSBTCOUNTRY", "");//MANDATORIO. Código ISO.
+                sendAuthorizeRequestPayload.Add("CSBTCOUNTRY", "AR");//MANDATORIO. Código ISO.
                 sendAuthorizeRequestPayload.Add("CSBTEMAIL", "todopago@hotmail.com"); //MANDATORIO.
                 sendAuthorizeRequestPayload.Add("CSBTFIRSTNAME", "Juan");//MANDATORIO.
                 sendAuthorizeRequestPayload.Add("CSBTLASTNAME", "Perez");//MANDATORIO.
                 sendAuthorizeRequestPayload.Add("CSBTPHONENUMBER", "541161988");//MANDATORIO.
-                sendAuthorizeRequestPayload.Add("CSBTPOSTALCODE", "");//MANDATORIO.
+                sendAuthorizeRequestPayload.Add("CSBTPOSTALCODE", "1010");//MANDATORIO.
                 sendAuthorizeRequestPayload.Add("CSBTSTATE", "B");//MANDATORIO
                 sendAuthorizeRequestPayload.Add("CSBTSTREET1", "Cerrito 740");//MANDATORIO.
                 //sendAuthorizeRequestPayload.Add("CSBTSTREET2", "");//NO MANDATORIO
 
-                sendAuthorizeRequestPayload.Add("CSBTCUSTOMERID", ""); //MANDATORIO.
+                sendAuthorizeRequestPayload.Add("CSBTCUSTOMERID", "453458"); //MANDATORIO.
                 sendAuthorizeRequestPayload.Add("CSBTIPADDRESS", "192.0.0.4"); //MANDATORIO.
                 sendAuthorizeRequestPayload.Add("CSPTCURRENCY", "ARS");//MANDATORIO.
                 sendAuthorizeRequestPayload.Add("CSPTGRANDTOTALAMOUNT", "1.00");//MANDATORIO.
@@ -162,7 +159,7 @@ namespace TPTestConsole
                 //sendAuthorizeRequestPayload.Add("CSSTSTREET2", "");//NO MANDATORIO.
 
                 sendAuthorizeRequestPayload.Add("CSITPRODUCTCODE", "electronic_good#electronic_good#electronic_good#electronic_good");//CONDICIONAL
-                sendAuthorizeRequestPayload.Add("CSITPRODUCTDESCRIPTION", "Prueba desde net#Prueba desde net#Prueba desde net");//CONDICIONAL.
+                sendAuthorizeRequestPayload.Add("CSITPRODUCTDESCRIPTION", "Prueba desde net#Prueba desde net#Prueba desde net#tttt");//CONDICIONAL.
                 sendAuthorizeRequestPayload.Add("CSITPRODUCTNAME", "netsdk#netsdk#netsdk#netsdk");//CONDICIONAL.
                 sendAuthorizeRequestPayload.Add("CSITPRODUCTSKU", "nsdk123#nsdk123#nsdk123#nsdk123");//CONDICIONAL.
                 sendAuthorizeRequestPayload.Add("CSITTOTALAMOUNT", "1.00#1.00#1.00#1.00");//CONDICIONAL.
@@ -211,7 +208,7 @@ namespace TPTestConsole
                 }
                 catch (Exception ex)
                 {
-                    output += "\r\n" + ex.Message + "\r\n" + ex.InnerException.Message + "\r\n" + ex.HelpLink;
+                    output += "\r\n" + ex.Message;
                 }
 
                 Console.WriteLine(output);

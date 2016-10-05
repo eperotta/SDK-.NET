@@ -27,21 +27,11 @@ namespace TodoPagoConnector.Operations
             JObject jCredentials = (JObject)aux["Credentials"];
             JObject jresultado = (JObject)jCredentials["resultado"];
 
-            if ((int)jCredentials["codigoResultado"] == 1)
-            {
-                if ((int)jresultado["codigoResultado"] != 0)
-                {
+            if ((int)jresultado["codigoResultado"] != 0){
                     throw new ResponseException((string)jresultado["mensajeKey"] + " - " + (string)jresultado["mensajeResultado"]);
-                }
-                else
-                {
+            }else{
                     user.setApiKey((string)jCredentials["APIKey"]);
                     user.setMerchant((string)jCredentials["merchantId"]);
-                }
-            }
-            else
-            {
-                // throw new ResponseException("");	
             }
 
             return user;

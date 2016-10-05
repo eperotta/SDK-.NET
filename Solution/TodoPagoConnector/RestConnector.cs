@@ -35,7 +35,7 @@ namespace TodoPagoConnector {
                  foreach (var key in this.headders.Keys){
                      client.Headers.Add(key, this.headders[key]);
                  } 
-            }          
+            }
         }
 
         protected HttpWebRequest generateHttpWebRequest(String URL, String contentType, String method, Boolean withApiKey) {

@@ -30,5 +30,13 @@ namespace TodoPagoConnector.Utils
         public const string ERROR = "ERROR";
         public const string MAXINSTALLMENTS = "MAXINSTALLMENTS";
 
+        public const string STATUS_CODE = "StatusCode";
+        public const string STATUS_MESSAGE = "StatusMessage";
+        public const string URL_REQUEST = "URL_Request";
+        public const string REQUEST_KEY = "RequestKey";
+        public const string PUBLIC_REQUEST_KEY = "PublicRequestKey";
+        public const string ENCODINGMETHOD = "EncodingMethod";
+        public const string PAYLOAD = "Payload";
+
     }
 }

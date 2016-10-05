@@ -78,7 +78,7 @@ namespace TodoPagoConnector {
                      detailsDic.Add("REFUNDS", detailsDic2);
                      returnList.Add(masterDic);
                  }
-             }catch (System.Xml.XmlException ex){
+             }catch (System.Xml.XmlException){
                  throw new ResponseException(res);
              }
 
