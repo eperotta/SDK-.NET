@@ -195,7 +195,7 @@ Dictionary<String, Object>
 
 <a name="ejemplo"></a>      
 ####Ejemplo
-Existe un ejemplo en la carpeta https://github.com/TodoPago/dev-SDK-.Net/blob/master/Solution/TPTestConsole/Program.cs que muestra los resultados de los métodos principales del SDK.	
+Existe un ejemplo en la carpeta https://github.com/TodoPago/SDK-.NET/blob/master/Solution/TPTestConsole/Program.cs que muestra los resultados de los métodos principales del SDK.	
 
 <a name="test"></a>      
 ####Modo Test
