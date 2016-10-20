@@ -29,6 +29,7 @@ namespace TodoPagoConnector.Utils
         public const string EMAILCLIENTE = "EMAILCLIENTE";
         public const string ERROR = "ERROR";
         public const string MAXINSTALLMENTS = "MAXINSTALLMENTS";
+        public const string MININSTALLMENTS = "MININSTALLMENTS";
 
         public const string STATUS_CODE = "StatusCode";
         public const string STATUS_MESSAGE = "StatusMessage";

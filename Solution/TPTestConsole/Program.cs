@@ -122,6 +122,7 @@ namespace TPTestConsole
                 sendAuthorizeRequestPayload.Add(ElementNames.AMOUNT, "1.00");
                 sendAuthorizeRequestPayload.Add(ElementNames.EMAILCLIENTE, "email_cliente@dominio.com");
                 sendAuthorizeRequestPayload.Add(ElementNames.MAXINSTALLMENTS, "12"); //NO MANDATORIO, MAXIMA CANTIDAD DE CUOTAS, VALOR MAXIMO 12
+                sendAuthorizeRequestPayload.Add(ElementNames.MININSTALLMENTS, "3"); //NO MANDATORIO, MINIMA CANTIDAD DE CUOTAS, VALOR MINIMO 1
 
                 sendAuthorizeRequestPayload.Add("CSBTCITY", "Villa General Belgrano"); //MANDATORIO.
                 sendAuthorizeRequestPayload.Add("CSBTCOUNTRY", "AR");//MANDATORIO. Código ISO.

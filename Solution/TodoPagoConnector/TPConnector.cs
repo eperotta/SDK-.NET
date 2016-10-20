@@ -21,7 +21,7 @@ namespace TodoPagoConnector{
 
     public class TPConnector {
 
-        string versionTodoPago = "1.4.0";
+        string versionTodoPago = "1.6.0";
         private Dictionary<string, string> Headers;
         private const string tenant = "t/1.1";
         private const string soapAppend = "services/";
