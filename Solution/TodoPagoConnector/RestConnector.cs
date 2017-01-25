@@ -1,13 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 using System.Xml;
-using System.IO;
 using System;
-using Newtonsoft.Json;
-using TodoPagoConnector.Model;
-using TodoPagoConnector.Exceptions;
-using TodoPagoConnector.Utils;
-using TodoPagoConnector.Operations;
 
 namespace TodoPagoConnector {
 

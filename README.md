@@ -190,7 +190,7 @@ Este método devuelve el resumen de los datos de la transacción
 Si se pasa mal el <strong>AnswerKey</strong> o el <strong>RequestKey</strong> se verá el siguiente rechazo:
 
 ```C#
-Dictionary<String, Object>  
+Dictionary<String, Object> 
 	{ StatusCode = 404,
 	  StatusMessage = ERROR: Transaccion Inexistente }
 ```
