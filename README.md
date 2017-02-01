@@ -180,12 +180,15 @@ Dictionary<String, Object>
 				{ Request = { MERCHANT = 12345678,
 						      OPERATIONID = ABCDEF-1234-12221-FDE1-00000012,
 							  AMOUNT = 1.00,
-							  CURRENCYCODE = 032}
+							  CURRENCYCODE = 032,
+							  AMOUNTBUYER = 1.20}
 				}
 	}
 	  
 ```		
 Este método devuelve el resumen de los datos de la transacción
+
+<ins><strong>Aclaración:</strong></ins> El campo AMOUNTBUYER es el monto efectivamente pagado por el comprador, que incluye el costo financiero total.
 
 Si se pasa mal el <strong>AnswerKey</strong> o el <strong>RequestKey</strong> se verá el siguiente rechazo:
 
@@ -197,7 +200,7 @@ Dictionary<String, Object>
 
 <a name="ejemplo"></a>      
 ####Ejemplo
-Existe un ejemplo en la carpeta https://github.com/TodoPago/SDK-.NET/blob/master/Solution/TPTestConsole/Program.cs que muestra los resultados de los métodos principales del SDK.	
+Existe un ejemplo en la carpeta https://github.com/TodoPago/dev-SDK-.Net/blob/master/Solution/TPTestConsole/Program.cs que muestra los resultados de los métodos principales del SDK.	
 
 <a name="test"></a>      
 ####Modo Test
