@@ -9,7 +9,7 @@ using Newtonsoft.Json.Linq;
 
 namespace TodoPagoConnector.Operations
 {
-    public static class OperationsParser
+    internal static class OperationsParser
     {
 
         public static Dictionary<string, object> parseJsonToDictionary(string json)

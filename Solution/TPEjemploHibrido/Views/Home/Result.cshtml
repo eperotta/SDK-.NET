@@ -1,0 +1,28 @@
+﻿@model TPEjemploHibrido.Models.InfoModel
+
+@{
+    ViewBag.Title = "Resultado Formulario Híbrido";
+}
+
+<div class="jumbotron">
+    <h2 id="titulo"></h2>
+</div>
+
+<input type="button" id="volver" name="volver" value="Volver" class="k-button" />
+
+@section Scripts {
+    <script>
+        if ("@Model.StatusCode" === "-1") {
+            $('#titulo').text('La operación se realizó con éxito.');
+        } else {
+            $('#titulo').text('Hubo un error al realizar la operación.');
+        }
+
+        console.log("@Model.ResultadoGAA");
+
+        $('#volver').click(function() {
+            window.location.href = '/Home/Index'
+        });
+
+    </script>
+}

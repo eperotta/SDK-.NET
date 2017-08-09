@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace TodoPagoConnector.Utils
+﻿namespace TodoPagoConnector.Utils
 {
     public sealed class ElementNames  
     {
-
         public const string SECURITY = "Security";
         public const string SESSION = "Session";
         public const string MERCHANT = "Merchant";
@@ -30,6 +24,7 @@ namespace TodoPagoConnector.Utils
         public const string ERROR = "ERROR";
         public const string MAXINSTALLMENTS = "MAXINSTALLMENTS";
         public const string MININSTALLMENTS = "MININSTALLMENTS";
+        public const string TIMEOUT = "TIMEOUT";
 
         public const string STATUS_CODE = "StatusCode";
         public const string STATUS_MESSAGE = "StatusMessage";

@@ -5,6 +5,9 @@ using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
 using TodoPagoConnector;
+using TodoPagoConnector.Exceptions;
+using TodoPagoConnector.Model;
+using TodoPagoConnector.Utils;
 
 namespace WindowsFormsApplication1
 {
@@ -34,6 +37,12 @@ namespace WindowsFormsApplication1
             String endpoint = tbGCEp.Text;
 
             return new TPConnector(endpoint, headers);
+        }
+
+        private TPConnector initConnectorForCredetials()
+        {
+            string endpoint = tbGCEp.Text;
+            return new TPConnector(endpoint);
         }
 
         /// <summary>
@@ -212,7 +221,7 @@ namespace WindowsFormsApplication1
         {
             foreach (string k in p.Keys)
             {
-                if (p[k].GetType().ToString().Contains("System.Collections.Generic.Dictionary"))//.ToString().Contains("string"))
+                if (p[k] != null && p[k].GetType().ToString().Contains("System.Collections.Generic.Dictionary"))//.ToString().Contains("string"))
                 {
                     lDetail.Text += tab + "- " + k + "\r\n";
                     Dictionary<string, object> n = (Dictionary<string, object>)p[k];
@@ -222,6 +231,86 @@ namespace WindowsFormsApplication1
                 {
                     lDetail.Text += tab + "- " + k + ": " + p[k] + "\r\n";
                 }
+            }
+        }
+
+        private void btnGetCredentials_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                lResult.Text = String.Empty;
+                lDetail.Text = String.Empty;
+
+                var connector = initConnectorForCredetials();
+                User user = new User(txtEmailCredentials.Text, txtContrasenaCredentials.Text);
+                user = connector.getCredentials(user);
+                connector.setAuthorize(user.getApiKey());
+                lDetail.Text = user.toString();
+            }
+            catch (EmptyFieldException ex)
+            {
+                lDetail.Text = ex.Message;
+            }
+            catch (ResponseException ex)
+            {
+                lDetail.Text = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                lDetail.Text = ex.Message;
+            }
+        }
+
+        private void btnVoidRequest_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                lResult.Text = String.Empty;
+                lDetail.Text = String.Empty;
+
+                var connector = initConnector();
+                var gbrdt = new Dictionary<String, String>();
+
+                gbrdt.Add(ElementNames.MERCHANT, txtMerchantVoidRequest.Text);
+                gbrdt.Add(ElementNames.SECURITY, txtSecurityVoidRequest.Text);
+                gbrdt.Add(ElementNames.REQUESTKEY, txtRequestKeyVoidRequest.Text);
+
+                System.Net.ServicePointManager.ServerCertificateValidationCallback += new System.Net.Security.RemoteCertificateValidationCallback(ValidateCertificate);
+
+                var res = connector.VoidRequest(gbrdt);
+
+                printDictionary(res, "");
+            }
+            catch (Exception ex)
+            {
+                lDetail.Text = ex.Message;
+            }
+        }
+
+        private void btnReturnRequest_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                lResult.Text = String.Empty;
+                lDetail.Text = String.Empty;
+
+                var connector = initConnector();
+                var gbrdt = new Dictionary<String, String>();
+
+                gbrdt.Add(ElementNames.MERCHANT, txtMerchantReturnRequest.Text);
+                gbrdt.Add(ElementNames.SECURITY, txtSecurityReturnRequest.Text);
+                gbrdt.Add(ElementNames.REQUESTKEY, txtRequestKeyReturnRequest.Text);
+                gbrdt.Add(ElementNames.AMOUNT, txtAmountReturnRequest.Text);
+
+                System.Net.ServicePointManager.ServerCertificateValidationCallback += new System.Net.Security.RemoteCertificateValidationCallback(ValidateCertificate);
+
+                var res = connector.ReturnRequest(gbrdt);
+
+                printDictionary(res, "");
+            }
+            catch (Exception ex)
+            {
+                lDetail.Text = ex.Message;
             }
         }
     }

@@ -49,14 +49,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BSA.cs" />
     <Compile Include="Exceptions\ConnectionException.cs" />
     <Compile Include="Exceptions\EmptyFieldException.cs" />
     <Compile Include="Exceptions\EmptyFieldPassException.cs" />
     <Compile Include="Exceptions\EmptyFieldUserException.cs" />
     <Compile Include="Exceptions\ResponseException.cs" />
-    <Compile Include="Model\PaymentMethodsBSA.cs" />
-    <Compile Include="Model\TransactionBSA.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Operations\CredentialsValidate.cs" />
     <Compile Include="Operations\FraudControlValidate.cs" />
@@ -80,11 +77,12 @@
     <Compile Include="Services Bindings\AuthorizeBinding.cs" />
     <Compile Include="Services Bindings\OperationsBinding.cs" />
     <Compile Include="Services Extensions\HeaderHttpExtension.cs" />
-    <Compile Include="SoapConector.cs" />
+    <Compile Include="SoapConnector.cs" />
     <Compile Include="TodoPago.cs" />
     <Compile Include="TPConnector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\ElementNames.cs" />
+    <Compile Include="Services\WebService.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

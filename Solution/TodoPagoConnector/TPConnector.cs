@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ServiceModel;
-using TodoPagoConnector.Service_Extensions;
 using TodoPagoConnector.Model;
 using TodoPagoConnector.Exceptions;
-using TodoPagoConnector.Utils;
 using TodoPagoConnector.Operations;
 
 /*
@@ -17,52 +14,66 @@ using TodoPagoConnector.Operations;
  * DENTRO DE "Service Bindings" -> AuthorizeBinding.cs
  * */
 
-namespace TodoPagoConnector{
+namespace TodoPagoConnector
+{
+    public class TPConnector
+    {
+        string versionTodoPago = "1.8.0";
 
-    public class TPConnector {
-
-        string versionTodoPago = "1.6.1";
-        private Dictionary<string, string> Headers;
+        #region Constants
         private const string tenant = "t/1.1";
         private const string soapAppend = "services/";
         private const string restAppend = "/api/";
 
         public const int developerEndpoint = 0;
         public const int productionEndpoint = 1;
-
-        private string ep = String.Empty;
-        private string t = String.Empty;
+        
         private const string endPointDev = "https://developers.todopago.com.ar/";
         private const string endPointPrd = "https://apis.todopago.com.ar/";
 
+        private const string TodoPago_Endpoint_Test_Form = "https://developers.todopago.com.ar/resources/TPHybridForm-v0.1.js";
+        private const string TodoPago_Endpoint_Prod_Form = "https://forms.todopago.com.ar/resources/TPHybridForm-v0.1.js";
+        #endregion
+
+        private Dictionary<string, string> Headers;
+
+        private string ep = String.Empty;
+        private string t = String.Empty;
+
         private string restEndpoint;
-        private TodoPago todoPagoClient;
-        private BSA bsaClient;
+        protected TodoPago todoPagoClient;
 
         private string soapEndpoint;
-        private SoapConector soapClient;
+        protected SoapConnector soapClient;
+
+        private string todoPagoEndpointForm;
 
         public TPConnector(int endpoint)
-           : this(endpoint, null){
+           : this(endpoint, null)
+        {
         }
 
-        public TPConnector(int endpoint, Dictionary<string, string> headers){
-
-            switch (endpoint) {
+        public TPConnector(int endpoint, Dictionary<string, string> headers)
+        {
+            switch (endpoint)
+            {
                 case developerEndpoint:
-                    ep = endPointDev;
-                    t = tenant;
-				    break;
+                    this.ep = endPointDev;
+                    this.t = tenant;
+                    this.todoPagoEndpointForm = TodoPago_Endpoint_Test_Form;
+                    break;
                 case productionEndpoint:
-                    ep = endPointPrd;
-                    t = tenant;
+                    this.ep = endPointPrd;
+                    this.t = tenant;
+                    this.todoPagoEndpointForm = TodoPago_Endpoint_Prod_Form;
                     break;
             }
-
+            
             this.soapEndpoint = ep + soapAppend + t;
             this.restEndpoint = ep + t + restAppend;
 
-            if (headers != null) {
+            if (headers != null)
+            {
                 this.Headers = headers;
             }
 
@@ -70,7 +81,8 @@ namespace TodoPagoConnector{
         }
 
         public TPConnector(string endpoint)
-            : this(endpoint, null) {
+            : this(endpoint, null)
+        {
         }
 
         public TPConnector(string endpoint, Dictionary<string, string> headers)
@@ -78,49 +90,58 @@ namespace TodoPagoConnector{
             this.soapEndpoint = endpoint + soapAppend + tenant;
             this.restEndpoint = endpoint + tenant + restAppend;
 
-            if (headers!= null){
-              this.Headers = headers;
+            if (headers != null)
+            {
+                this.Headers = headers;
             }
 
             createClients();
         }
 
-        private void createClients(){
+        private void createClients()
+        {
             this.todoPagoClient = new TodoPago(this.restEndpoint, this.Headers);
-            this.bsaClient = new BSA(this.restEndpoint, this.Headers);
-            this.soapClient = new SoapConector(this.soapEndpoint, this.Headers);
+            this.soapClient = new SoapConnector(this.soapEndpoint, this.Headers);
         }
 
-        public void setAuthorize(String authorization){
+        public void setAuthorize(String authorization)
+        {
             var headers = new Dictionary<String, String>();
 
-            if (authorization != null && !authorization.Equals("")) {
+            if (authorization != null && !authorization.Equals(""))
+            {
                 headers.Add("Authorization", authorization);
                 this.Headers = headers;
                 createClients();
-            }else{
+            }
+            else
+            {
                 throw new ResponseException("ApiKey is null");
-            }         
+            }
         }
 
-
-        public List<Dictionary<string, object>> GetStatus(string merchant, string operation){
+        public List<Dictionary<string, object>> GetStatus(string merchant, string operation)
+        {
             return todoPagoClient.getByOperationID(merchant, operation);
         }
 
-        public Dictionary<string, object> GetAllPaymentMethods(string merchant){
+        public Dictionary<string, object> GetAllPaymentMethods(string merchant)
+        {
             return todoPagoClient.GetAllPaymentMethods(merchant);
         }
 
-        public Dictionary<string, object> VoidRequest(Dictionary<string, string> param){
+        public Dictionary<string, object> VoidRequest(Dictionary<string, string> param)
+        {
             return todoPagoClient.VoidRequest(param);
         }
 
-        public Dictionary<string, object> ReturnRequest(Dictionary<string, string> param){
+        public Dictionary<string, object> ReturnRequest(Dictionary<string, string> param)
+        {
             return todoPagoClient.ReturnRequest(param);
         }
 
-        public Dictionary<string, object> getByRangeDateTime(Dictionary<string, string> param){
+        public Dictionary<string, object> getByRangeDateTime(Dictionary<string, string> param)
+        {
             return todoPagoClient.GetByRangeDateTime(param);
         }
 
@@ -132,7 +153,7 @@ namespace TodoPagoConnector{
             if (cv.ValidateCredentials(user))
                 result = todoPagoClient.getCredentials(user);
 
-            return result;		
+            return result;
         }
 
         public Dictionary<string, object> GetAuthorizeAnswer(Dictionary<string, string> request)
@@ -145,9 +166,14 @@ namespace TodoPagoConnector{
             return this.soapClient.SendAuthorizeRequest(request, payloads);
         }
 
-        private void ChannelFactory_Faulted(object sender, EventArgs e)
+        public Dictionary<string, object> DiscoverPaymentMethods()
         {
-            throw new NotImplementedException();
+            return todoPagoClient.DiscoverPaymentMethods();
+        }
+
+        public string GetEndpointForm()
+        {
+            return this.todoPagoEndpointForm;
         }
     }
 }

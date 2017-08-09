@@ -3,17 +3,16 @@
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
+using System.ServiceModel;
+using System.ServiceModel.Channels;
+using System.Collections.Generic;
 
 namespace TodoPagoConnector.Service_Extensions
 {
-    using System.ServiceModel;
-    using System.ServiceModel.Channels;
-using System.Collections.Generic;
-
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public static class HeaderHttpExtension
+    internal static class HeaderHttpExtension
     {
         /// <summary>
         /// Scope is being passed

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Net;
 using System.Xml;
 using System.IO;
@@ -10,7 +8,6 @@ using TodoPagoConnector.Model;
 using TodoPagoConnector.Exceptions;
 using TodoPagoConnector.Utils;
 using TodoPagoConnector.Operations;
-
 
 namespace TodoPagoConnector
 {
@@ -22,6 +19,7 @@ namespace TodoPagoConnector
         private const string OPERATIONS_GET_BY_RANGE_DATE_TIME = "Operations/GetByRangeDateTime";
         private const string PAYMENT_METHODS_GET = "PaymentMethods/Get";
         private const string OPERATIONS_GET_BY_OPERATION_ID = "Operations/GetByOperationId";
+        private const string PAYMENT_METHODS_DISCOVER = "PaymentMethods/Discover";
 
         public TodoPago(string endpoint, Dictionary<string, string> headders)
              : base(endpoint, headders)
@@ -30,8 +28,9 @@ namespace TodoPagoConnector
 
         public List<Dictionary<string, object>> getByOperationID(string merchant, string operation)
         {
-            string res = client.DownloadString(endpoint + OPERATIONS_GET_BY_OPERATION_ID + "/MERCHANT/" + merchant + "/OPERATIONID/" + operation);
-
+            string url = endpoint + OPERATIONS_GET_BY_OPERATION_ID + "/MERCHANT/" + merchant + "/OPERATIONID/" + operation;
+            //string res = client.DownloadString(endpoint + OPERATIONS_GET_BY_OPERATION_ID + "/MERCHANT/" + merchant + "/OPERATIONID/" + operation);
+            string res = ExecuteRequest(null, url, METHOD_GET, true);
             List<Dictionary<string, object>> returnList = new List<Dictionary<string, object>>();
             XmlDocument xd = new XmlDocument();
 
@@ -71,7 +70,7 @@ namespace TodoPagoConnector
                     for (int k = 0; k < nl3.Count; k++)
                     {
                         Dictionary<string, object> detailsDic3 = new Dictionary<string, object>();
-                        XmlNode aux2 = nl3[i].FirstChild;
+                        XmlNode aux2 = nl3[k].FirstChild;
 
                         while (aux2 != null)
                         {
@@ -94,11 +93,12 @@ namespace TodoPagoConnector
 
             return returnList;
         }
-        
+
         public Dictionary<string, object> GetAllPaymentMethods(string merchant)
         {
-            string res = client.DownloadString(endpoint + PAYMENT_METHODS_GET + "/MERCHANT/" + merchant);
-            //System.Console.WriteLine(res);
+            string url = endpoint + PAYMENT_METHODS_GET + "/MERCHANT/" + merchant;
+            //string res = client.DownloadString(endpoint + PAYMENT_METHODS_GET + "/MERCHANT/" + merchant);
+            string res = ExecuteRequest(null, url, METHOD_GET, true);
             XmlDocument xd = new XmlDocument();
             try
             {
@@ -140,8 +140,8 @@ namespace TodoPagoConnector
 
             try
             {
-                string res = client.DownloadString(url);
-                //System.Console.WriteLine(res);
+                //string res = client.DownloadString(url);
+                string res = ExecuteRequest(null, url, METHOD_GET, true);
                 xd.LoadXml(res);
             }
             catch (Exception ex)
@@ -150,81 +150,60 @@ namespace TodoPagoConnector
             }
             return toDictionaryGetByRange(xd);
         }
-        
+
         public Dictionary<string, object> VoidRequest(Dictionary<string, string> param)
         {
-            string URL = endpoint + AUTHORIZE;
-            string result;
+            string url = endpoint + AUTHORIZE;
             param.Add(REQUESTTYPE, "VoidRequest");
 
-            var httpWebRequest = generateHttpWebRequest(URL, CONTENT_TYPE_APP_JSON, METHOD_POST, true);
+            string result = ExecuteRequest(param, url, METHOD_POST, true);
 
-            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-            {
-                string json = JsonConvert.SerializeObject(param, Newtonsoft.Json.Formatting.Indented);
-                streamWriter.Write(json);
-                //System.Console.WriteLine(json);
-            }
-
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                result = streamReader.ReadToEnd();
-                //System.Console.WriteLine(result);
-            }
             return OperationsParser.parseJsonToVoidRequest(result);
         }
-        
+
         public Dictionary<string, object> ReturnRequest(Dictionary<string, string> param)
         {
-            string URL = endpoint + AUTHORIZE;
-            string result;
+            string url = endpoint + AUTHORIZE;
+
             param.Add(REQUESTTYPE, "ReturnRequest");
 
-            var httpWebRequest = generateHttpWebRequest(URL, CONTENT_TYPE_APP_JSON, METHOD_POST, true);
+            string result = ExecuteRequest(param, url, METHOD_POST, true);
 
-            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-            {
-                string json = JsonConvert.SerializeObject(param, Newtonsoft.Json.Formatting.Indented);
-                streamWriter.Write(json);
-                //System.Console.WriteLine(json);
-            }
-
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                result = streamReader.ReadToEnd();
-                //System.Console.WriteLine(result);
-            }
             return OperationsParser.parseJsonToReturnRequest(result);
         }
-        
+
         public User getCredentials(User user)
         {
-            string URL = endpoint + CREDENTIALS;
-            URL = URL.Replace("t/1.1/", "");
+            string url = endpoint + CREDENTIALS;
+            url = url.Replace("t/1.1/", "");
+            url = url.Replace("t/1.2/", "");
             User userResponse = new User();
-            string result;
 
-            var httpWebRequest = generateHttpWebRequest(URL, CONTENT_TYPE_APP_JSON, METHOD_POST, false);
+            string result = ExecuteRequest(user.toDictionary(), url, METHOD_POST, false);
 
-            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-            {
-                string json = JsonConvert.SerializeObject(user.toDictionary(), Newtonsoft.Json.Formatting.Indented);
-                streamWriter.Write(json);
-                //System.Console.WriteLine(json);
-            }
-
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                result = streamReader.ReadToEnd();
-                //System.Console.WriteLine(result);
-            }
             userResponse = OperationsParser.parseJsonToUser(result);
             return userResponse;
         }
-        
+
+        public Dictionary<string, object> DiscoverPaymentMethods()
+        {
+            string url = endpoint + PAYMENT_METHODS_DISCOVER;
+            //string res = client.DownloadString(URL);
+            string res = ExecuteRequest(null, url, METHOD_GET, true);
+            XmlDocument xd = new XmlDocument();
+
+            try
+            {
+                xd.LoadXml(res);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return toDictionaryGetByRange(xd);
+        }
+
         protected Dictionary<string, object> toDictionaryGetByRange(XmlDocument xd)
         {
             Dictionary<string, object> rv = new Dictionary<string, object>();
@@ -296,6 +275,30 @@ namespace TodoPagoConnector
             aux.Add(keyVal, ret);
 
             return aux;
+        }
+
+        protected virtual string ExecuteRequest(Dictionary<string, string> param, string url, string method, bool withApiKey)
+        {
+            string result;
+
+            var httpWebRequest = generateHttpWebRequest(url, CONTENT_TYPE_APP_JSON, method, withApiKey);
+
+            if (method == METHOD_POST)
+            {
+                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                {
+                    string json = JsonConvert.SerializeObject(param, Newtonsoft.Json.Formatting.Indented);
+                    streamWriter.Write(json);
+                }
+            }
+
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                result = streamReader.ReadToEnd();
+            }
+
+            return result;
         }
     }
 }

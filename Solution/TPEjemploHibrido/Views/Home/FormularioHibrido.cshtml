@@ -1,0 +1,111 @@
+﻿@model TPEjemploHibrido.Models.InfoModel
+
+@{
+    ViewBag.Title = "Formulario Hibrido";
+}
+
+<div class="jumbotron">
+    <h2>Formulario Híbrido</h2>
+</div>
+<div class="container">
+    <div class="panel-group">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Todo Pago - Elegí tu forma de pago</h3>
+            </div>
+            <div class="panel-body">
+                <div class="container">
+                    <div class="panel-group">
+                        <div class="row col-sm-12 col-md-12 col-lg-12">
+                            <div id="tp-form-tph">
+                                <div id="tp-content-form">
+                                    <div>
+                                        <select id="formaDePagoCbx" class="form-control valid"></select>
+                                    </div>
+                                    <div>
+                                        <select id="bancoCbx" class="form-control valid"></select>
+                                    </div>
+                                    <div>
+                                        <select id="promosCbx" class="left form-control valid"></select>
+                                        <label id="labelPromotionTextId" class="left tp-label"></label>
+                                        <div class="clear"></div>
+                                    </div>
+
+                                    <!-- Para los casos en el que el comercio opera con PEI -->
+                                    <div>
+                                        <label id="labelPeiCheckboxId"></label>
+                                        <input id="peiCbx" class="left form-control text-box single-line" />
+                                    </div>
+
+                                    <div>
+                                        <input id="numeroTarjetaTxt" class="form-control text-box single-line" />
+                                    </div>
+                                    <div class="dateFields">
+                                        <input id="mesTxt" class="left form-control text-box">
+                                        <input id="anioTxt" class="left form-control text-box">
+                                        <div class="clear"></div>
+                                    </div>
+                                    <div>
+                                        <input id="codigoSeguridadTxt" class="left form-control text-box single-line" />
+                                        <label id="labelCodSegTextId" class="left tp-label"></label>
+                                        <div class="clear"></div>
+                                    </div>
+                                    <div>
+                                        <input id="apynTxt" class="form-control text-box single-line" />
+                                    </div>
+                                    <div>
+                                        <select id="tipoDocCbx" class="form-control valid"></select>
+                                    </div>
+                                    <div>
+                                        <input id="nroDocTxt" class="form-control text-box single-line" />
+                                    </div>
+                                    <div>
+                                        <input id="emailTxt" class="form-control text-box single-line" /><br />
+                                    </div>
+
+                                    <!-- Para los casos en el que el comercio opera con PEI -->
+                                    <div>
+                                        <label id="labelPeiTokenTextId"></label>
+                                        <input id="peiTokenTxt" class="left form-control text-box single-line" />
+                                    </div>
+
+                                    <div id="tp-bt-wrapper">
+                                        <button id="MY_btnPagarConBilletera" class="tp-button k-button" />
+                                        <button id="MY_btnConfirmarPago" class="tp-button k-button" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm("Result", "Home", FormMethod.Post, new { id = "FormResult" }))
+{
+    <input type="hidden" id="ApiKey" name="ApiKey" value="@Model.ApiKey" />
+    <input type="hidden" id="Security" name="Security" value="@Model.Security" />
+    <input type="hidden" id="MerchantId" name="MerchantId" value="@Model.MerchantId" />
+    <input type="hidden" id="PublicRequestKey" name="PublicRequestKey" value="@Model.PublicRequestKey" />
+    <input type="hidden" id="RequestKey" name="RequestKey" value="@Model.RequestKey" />
+    <input type="hidden" id="json" name="json" value="" />
+    <input type="hidden" id="AnswerKey" name="AnswerKey" value="" />
+    <input type="hidden" id="StatusCode" name="StatusCode" value="" />
+}
+
+@section Scripts {
+    <script src="https://developers.todopago.com.ar/resources/TPHybridForm-v0.1.js"></script>
+
+    <script>
+        //PublicRequesKey, esta se obtiene de la respuesta del SAR
+        var publicKey = "@Model.PublicRequestKey";
+        var mail = "prueba@tpago.com";
+        var completeName = "Juan Perez";
+        var dni = '31345234';
+        var defDniType = 'CI';
+    </script>
+
+    <script src="@Url.Content("~/Scripts/scripts.js")"></script>
+}

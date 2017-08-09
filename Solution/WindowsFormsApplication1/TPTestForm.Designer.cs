@@ -74,6 +74,9 @@
             this.label18 = new System.Windows.Forms.Label();
             this.tbGSMerc = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.gAPMMerchant = new System.Windows.Forms.TextBox();
+            this.label49 = new System.Windows.Forms.Label();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.CSMDD11 = new System.Windows.Forms.TextBox();
             this.label29 = new System.Windows.Forms.Label();
@@ -160,23 +163,47 @@
             this.label47 = new System.Windows.Forms.Label();
             this.CSSTCITY = new System.Windows.Forms.TextBox();
             this.label48 = new System.Windows.Forms.Label();
+            this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.txtContrasenaCredentials = new System.Windows.Forms.TextBox();
+            this.txtEmailCredentials = new System.Windows.Forms.TextBox();
+            this.label54 = new System.Windows.Forms.Label();
+            this.label50 = new System.Windows.Forms.Label();
+            this.tabPage9 = new System.Windows.Forms.TabPage();
+            this.txtRequestKeyVoidRequest = new System.Windows.Forms.TextBox();
+            this.txtSecurityVoidRequest = new System.Windows.Forms.TextBox();
+            this.txtMerchantVoidRequest = new System.Windows.Forms.TextBox();
+            this.label66 = new System.Windows.Forms.Label();
+            this.label62 = new System.Windows.Forms.Label();
+            this.label61 = new System.Windows.Forms.Label();
+            this.tabPage10 = new System.Windows.Forms.TabPage();
+            this.txtAmountReturnRequest = new System.Windows.Forms.TextBox();
+            this.txtRequestKeyReturnRequest = new System.Windows.Forms.TextBox();
+            this.txtSecurityReturnRequest = new System.Windows.Forms.TextBox();
+            this.txtMerchantReturnRequest = new System.Windows.Forms.TextBox();
+            this.label70 = new System.Windows.Forms.Label();
+            this.label69 = new System.Windows.Forms.Label();
+            this.label68 = new System.Windows.Forms.Label();
+            this.label67 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.gAPMMerchant = new System.Windows.Forms.TextBox();
-            this.label49 = new System.Windows.Forms.Label();
+            this.btnGetCredentials = new System.Windows.Forms.Button();
+            this.btnVoidRequest = new System.Windows.Forms.Button();
+            this.btnReturnRequest = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.tabPage5.SuspendLayout();
             this.tabPage6.SuspendLayout();
             this.tabPage7.SuspendLayout();
-            this.tabPage5.SuspendLayout();
+            this.tabPage8.SuspendLayout();
+            this.tabPage9.SuspendLayout();
+            this.tabPage10.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnGetAuth
             // 
-            this.btnGetAuth.Location = new System.Drawing.Point(245, 238);
+            this.btnGetAuth.Location = new System.Drawing.Point(149, 238);
             this.btnGetAuth.Name = "btnGetAuth";
             this.btnGetAuth.Size = new System.Drawing.Size(131, 27);
             this.btnGetAuth.TabIndex = 1;
@@ -186,7 +213,7 @@
             // 
             // btnSetAuth
             // 
-            this.btnSetAuth.Location = new System.Drawing.Point(22, 238);
+            this.btnSetAuth.Location = new System.Drawing.Point(12, 238);
             this.btnSetAuth.Name = "btnSetAuth";
             this.btnSetAuth.Size = new System.Drawing.Size(131, 27);
             this.btnSetAuth.TabIndex = 2;
@@ -196,9 +223,9 @@
             // 
             // btnGetStat
             // 
-            this.btnGetStat.Location = new System.Drawing.Point(452, 238);
+            this.btnGetStat.Location = new System.Drawing.Point(286, 238);
             this.btnGetStat.Name = "btnGetStat";
-            this.btnGetStat.Size = new System.Drawing.Size(131, 27);
+            this.btnGetStat.Size = new System.Drawing.Size(74, 27);
             this.btnGetStat.TabIndex = 3;
             this.btnGetStat.Text = "GetStatus";
             this.btnGetStat.UseVisualStyleBackColor = true;
@@ -232,6 +259,9 @@
             this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Controls.Add(this.tabPage7);
+            this.tabControl1.Controls.Add(this.tabPage8);
+            this.tabControl1.Controls.Add(this.tabPage9);
+            this.tabControl1.Controls.Add(this.tabPage10);
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -618,6 +648,34 @@
             this.label17.Size = new System.Drawing.Size(52, 13);
             this.label17.TabIndex = 4;
             this.label17.Text = "Merchant";
+            // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.gAPMMerchant);
+            this.tabPage5.Controls.Add(this.label49);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Size = new System.Drawing.Size(871, 194);
+            this.tabPage5.TabIndex = 6;
+            this.tabPage5.Text = "Get All Payment Methods";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // gAPMMerchant
+            // 
+            this.gAPMMerchant.Location = new System.Drawing.Point(87, 14);
+            this.gAPMMerchant.Name = "gAPMMerchant";
+            this.gAPMMerchant.Size = new System.Drawing.Size(480, 20);
+            this.gAPMMerchant.TabIndex = 7;
+            this.gAPMMerchant.Text = "2153";
+            // 
+            // label49
+            // 
+            this.label49.AutoSize = true;
+            this.label49.Location = new System.Drawing.Point(3, 14);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(52, 13);
+            this.label49.TabIndex = 6;
+            this.label49.Text = "Merchant";
             // 
             // tabPage6
             // 
@@ -1430,9 +1488,208 @@
             this.label48.TabIndex = 30;
             this.label48.Text = "CSSTCITY";
             // 
+            // tabPage8
+            // 
+            this.tabPage8.Controls.Add(this.txtContrasenaCredentials);
+            this.tabPage8.Controls.Add(this.txtEmailCredentials);
+            this.tabPage8.Controls.Add(this.label54);
+            this.tabPage8.Controls.Add(this.label50);
+            this.tabPage8.Location = new System.Drawing.Point(4, 22);
+            this.tabPage8.Name = "tabPage8";
+            this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage8.Size = new System.Drawing.Size(871, 194);
+            this.tabPage8.TabIndex = 7;
+            this.tabPage8.Text = "Get Credentials";
+            this.tabPage8.UseVisualStyleBackColor = true;
+            // 
+            // txtContrasenaCredentials
+            // 
+            this.txtContrasenaCredentials.Location = new System.Drawing.Point(106, 49);
+            this.txtContrasenaCredentials.Name = "txtContrasenaCredentials";
+            this.txtContrasenaCredentials.Size = new System.Drawing.Size(265, 20);
+            this.txtContrasenaCredentials.TabIndex = 3;
+            // 
+            // txtEmailCredentials
+            // 
+            this.txtEmailCredentials.Location = new System.Drawing.Point(106, 18);
+            this.txtEmailCredentials.Name = "txtEmailCredentials";
+            this.txtEmailCredentials.Size = new System.Drawing.Size(265, 20);
+            this.txtEmailCredentials.TabIndex = 2;
+            // 
+            // label54
+            // 
+            this.label54.AutoSize = true;
+            this.label54.Location = new System.Drawing.Point(17, 52);
+            this.label54.Name = "label54";
+            this.label54.Size = new System.Drawing.Size(61, 13);
+            this.label54.TabIndex = 1;
+            this.label54.Text = "Contraseña";
+            // 
+            // label50
+            // 
+            this.label50.AutoSize = true;
+            this.label50.Location = new System.Drawing.Point(17, 21);
+            this.label50.Name = "label50";
+            this.label50.Size = new System.Drawing.Size(32, 13);
+            this.label50.TabIndex = 0;
+            this.label50.Text = "Email";
+            // 
+            // tabPage9
+            // 
+            this.tabPage9.Controls.Add(this.txtRequestKeyVoidRequest);
+            this.tabPage9.Controls.Add(this.txtSecurityVoidRequest);
+            this.tabPage9.Controls.Add(this.txtMerchantVoidRequest);
+            this.tabPage9.Controls.Add(this.label66);
+            this.tabPage9.Controls.Add(this.label62);
+            this.tabPage9.Controls.Add(this.label61);
+            this.tabPage9.Location = new System.Drawing.Point(4, 22);
+            this.tabPage9.Name = "tabPage9";
+            this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage9.Size = new System.Drawing.Size(871, 194);
+            this.tabPage9.TabIndex = 8;
+            this.tabPage9.Text = "VoidRequest";
+            this.tabPage9.UseVisualStyleBackColor = true;
+            // 
+            // txtRequestKeyVoidRequest
+            // 
+            this.txtRequestKeyVoidRequest.Location = new System.Drawing.Point(115, 66);
+            this.txtRequestKeyVoidRequest.Name = "txtRequestKeyVoidRequest";
+            this.txtRequestKeyVoidRequest.Size = new System.Drawing.Size(298, 20);
+            this.txtRequestKeyVoidRequest.TabIndex = 5;
+            this.txtRequestKeyVoidRequest.Text = "bb25d589-52bc-8e21-fc5d-47d677b0995c";
+            // 
+            // txtSecurityVoidRequest
+            // 
+            this.txtSecurityVoidRequest.Location = new System.Drawing.Point(115, 38);
+            this.txtSecurityVoidRequest.Name = "txtSecurityVoidRequest";
+            this.txtSecurityVoidRequest.Size = new System.Drawing.Size(298, 20);
+            this.txtSecurityVoidRequest.TabIndex = 4;
+            this.txtSecurityVoidRequest.Text = "f3d8b72c94ab4a06be2ef7c95490f7d3";
+            // 
+            // txtMerchantVoidRequest
+            // 
+            this.txtMerchantVoidRequest.Location = new System.Drawing.Point(115, 12);
+            this.txtMerchantVoidRequest.Name = "txtMerchantVoidRequest";
+            this.txtMerchantVoidRequest.Size = new System.Drawing.Size(298, 20);
+            this.txtMerchantVoidRequest.TabIndex = 3;
+            this.txtMerchantVoidRequest.Text = "2153";
+            // 
+            // label66
+            // 
+            this.label66.AutoSize = true;
+            this.label66.Location = new System.Drawing.Point(9, 69);
+            this.label66.Name = "label66";
+            this.label66.Size = new System.Drawing.Size(68, 13);
+            this.label66.TabIndex = 2;
+            this.label66.Text = "Request Key";
+            // 
+            // label62
+            // 
+            this.label62.AutoSize = true;
+            this.label62.Location = new System.Drawing.Point(9, 41);
+            this.label62.Name = "label62";
+            this.label62.Size = new System.Drawing.Size(45, 13);
+            this.label62.TabIndex = 1;
+            this.label62.Text = "Security";
+            // 
+            // label61
+            // 
+            this.label61.AutoSize = true;
+            this.label61.Location = new System.Drawing.Point(9, 15);
+            this.label61.Name = "label61";
+            this.label61.Size = new System.Drawing.Size(64, 13);
+            this.label61.TabIndex = 0;
+            this.label61.Text = "Merchant Id";
+            // 
+            // tabPage10
+            // 
+            this.tabPage10.Controls.Add(this.txtAmountReturnRequest);
+            this.tabPage10.Controls.Add(this.txtRequestKeyReturnRequest);
+            this.tabPage10.Controls.Add(this.txtSecurityReturnRequest);
+            this.tabPage10.Controls.Add(this.txtMerchantReturnRequest);
+            this.tabPage10.Controls.Add(this.label70);
+            this.tabPage10.Controls.Add(this.label69);
+            this.tabPage10.Controls.Add(this.label68);
+            this.tabPage10.Controls.Add(this.label67);
+            this.tabPage10.Location = new System.Drawing.Point(4, 22);
+            this.tabPage10.Name = "tabPage10";
+            this.tabPage10.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage10.Size = new System.Drawing.Size(871, 194);
+            this.tabPage10.TabIndex = 9;
+            this.tabPage10.Text = "ReturnRequest";
+            this.tabPage10.UseVisualStyleBackColor = true;
+            // 
+            // txtAmountReturnRequest
+            // 
+            this.txtAmountReturnRequest.Location = new System.Drawing.Point(133, 93);
+            this.txtAmountReturnRequest.Name = "txtAmountReturnRequest";
+            this.txtAmountReturnRequest.Size = new System.Drawing.Size(266, 20);
+            this.txtAmountReturnRequest.TabIndex = 7;
+            this.txtAmountReturnRequest.Text = "10";
+            // 
+            // txtRequestKeyReturnRequest
+            // 
+            this.txtRequestKeyReturnRequest.Location = new System.Drawing.Point(133, 66);
+            this.txtRequestKeyReturnRequest.Name = "txtRequestKeyReturnRequest";
+            this.txtRequestKeyReturnRequest.Size = new System.Drawing.Size(266, 20);
+            this.txtRequestKeyReturnRequest.TabIndex = 6;
+            this.txtRequestKeyReturnRequest.Text = "0db2e848-b0ab-6baf-f9e1-b70a82ed5844";
+            // 
+            // txtSecurityReturnRequest
+            // 
+            this.txtSecurityReturnRequest.Location = new System.Drawing.Point(133, 40);
+            this.txtSecurityReturnRequest.Name = "txtSecurityReturnRequest";
+            this.txtSecurityReturnRequest.Size = new System.Drawing.Size(266, 20);
+            this.txtSecurityReturnRequest.TabIndex = 5;
+            this.txtSecurityReturnRequest.Text = "f3d8b72c94ab4a06be2ef7c95490f7d3";
+            // 
+            // txtMerchantReturnRequest
+            // 
+            this.txtMerchantReturnRequest.Location = new System.Drawing.Point(133, 12);
+            this.txtMerchantReturnRequest.Name = "txtMerchantReturnRequest";
+            this.txtMerchantReturnRequest.Size = new System.Drawing.Size(266, 20);
+            this.txtMerchantReturnRequest.TabIndex = 4;
+            this.txtMerchantReturnRequest.Text = "2153";
+            // 
+            // label70
+            // 
+            this.label70.AutoSize = true;
+            this.label70.Location = new System.Drawing.Point(17, 96);
+            this.label70.Name = "label70";
+            this.label70.Size = new System.Drawing.Size(43, 13);
+            this.label70.TabIndex = 3;
+            this.label70.Text = "Amount";
+            // 
+            // label69
+            // 
+            this.label69.AutoSize = true;
+            this.label69.Location = new System.Drawing.Point(17, 69);
+            this.label69.Name = "label69";
+            this.label69.Size = new System.Drawing.Size(68, 13);
+            this.label69.TabIndex = 2;
+            this.label69.Text = "Request Key";
+            // 
+            // label68
+            // 
+            this.label68.AutoSize = true;
+            this.label68.Location = new System.Drawing.Point(17, 43);
+            this.label68.Name = "label68";
+            this.label68.Size = new System.Drawing.Size(45, 13);
+            this.label68.TabIndex = 1;
+            this.label68.Text = "Security";
+            // 
+            // label67
+            // 
+            this.label67.AutoSize = true;
+            this.label67.Location = new System.Drawing.Point(17, 15);
+            this.label67.Name = "label67";
+            this.label67.Size = new System.Drawing.Size(64, 13);
+            this.label67.TabIndex = 0;
+            this.label67.Text = "Merchant Id";
+            // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(656, 238);
+            this.button1.Location = new System.Drawing.Point(366, 238);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(131, 27);
             this.button1.TabIndex = 11;
@@ -1440,39 +1697,44 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // tabPage5
+            // btnGetCredentials
             // 
-            this.tabPage5.Controls.Add(this.gAPMMerchant);
-            this.tabPage5.Controls.Add(this.label49);
-            this.tabPage5.Location = new System.Drawing.Point(4, 22);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(871, 194);
-            this.tabPage5.TabIndex = 6;
-            this.tabPage5.Text = "Get All Payment Methods";
-            this.tabPage5.UseVisualStyleBackColor = true;
+            this.btnGetCredentials.Location = new System.Drawing.Point(503, 238);
+            this.btnGetCredentials.Name = "btnGetCredentials";
+            this.btnGetCredentials.Size = new System.Drawing.Size(103, 27);
+            this.btnGetCredentials.TabIndex = 12;
+            this.btnGetCredentials.Text = "GetCredentials";
+            this.btnGetCredentials.UseVisualStyleBackColor = true;
+            this.btnGetCredentials.Click += new System.EventHandler(this.btnGetCredentials_Click);
             // 
-            // gAPMMerchant
+            // btnVoidRequest
             // 
-            this.gAPMMerchant.Location = new System.Drawing.Point(87, 14);
-            this.gAPMMerchant.Name = "gAPMMerchant";
-            this.gAPMMerchant.Size = new System.Drawing.Size(480, 20);
-            this.gAPMMerchant.TabIndex = 7;
-            this.gAPMMerchant.Text = "2153";
+            this.btnVoidRequest.Location = new System.Drawing.Point(612, 238);
+            this.btnVoidRequest.Name = "btnVoidRequest";
+            this.btnVoidRequest.Size = new System.Drawing.Size(91, 27);
+            this.btnVoidRequest.TabIndex = 14;
+            this.btnVoidRequest.Text = "VoidRequest";
+            this.btnVoidRequest.UseVisualStyleBackColor = true;
+            this.btnVoidRequest.Click += new System.EventHandler(this.btnVoidRequest_Click);
             // 
-            // label49
+            // btnReturnRequest
             // 
-            this.label49.AutoSize = true;
-            this.label49.Location = new System.Drawing.Point(3, 14);
-            this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(52, 13);
-            this.label49.TabIndex = 6;
-            this.label49.Text = "Merchant";
+            this.btnReturnRequest.Location = new System.Drawing.Point(709, 238);
+            this.btnReturnRequest.Name = "btnReturnRequest";
+            this.btnReturnRequest.Size = new System.Drawing.Size(88, 27);
+            this.btnReturnRequest.TabIndex = 15;
+            this.btnReturnRequest.Text = "ReturnRequest";
+            this.btnReturnRequest.UseVisualStyleBackColor = true;
+            this.btnReturnRequest.Click += new System.EventHandler(this.btnReturnRequest_Click);
             // 
             // TPTestForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(916, 418);
+            this.Controls.Add(this.btnReturnRequest);
+            this.Controls.Add(this.btnVoidRequest);
+            this.Controls.Add(this.btnGetCredentials);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.lDetail);
@@ -1491,12 +1753,18 @@
             this.tabPage2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            this.tabPage5.ResumeLayout(false);
+            this.tabPage5.PerformLayout();
             this.tabPage6.ResumeLayout(false);
             this.tabPage6.PerformLayout();
             this.tabPage7.ResumeLayout(false);
             this.tabPage7.PerformLayout();
-            this.tabPage5.ResumeLayout(false);
-            this.tabPage5.PerformLayout();
+            this.tabPage8.ResumeLayout(false);
+            this.tabPage8.PerformLayout();
+            this.tabPage9.ResumeLayout(false);
+            this.tabPage9.PerformLayout();
+            this.tabPage10.ResumeLayout(false);
+            this.tabPage10.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1640,6 +1908,30 @@
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.TextBox gAPMMerchant;
         private System.Windows.Forms.Label label49;
+        private System.Windows.Forms.TabPage tabPage8;
+        private System.Windows.Forms.Button btnGetCredentials;
+        private System.Windows.Forms.Label label54;
+        private System.Windows.Forms.Label label50;
+        private System.Windows.Forms.TextBox txtContrasenaCredentials;
+        private System.Windows.Forms.TextBox txtEmailCredentials;
+        private System.Windows.Forms.TabPage tabPage9;
+        private System.Windows.Forms.TextBox txtMerchantVoidRequest;
+        private System.Windows.Forms.Label label66;
+        private System.Windows.Forms.Label label62;
+        private System.Windows.Forms.Label label61;
+        private System.Windows.Forms.Button btnVoidRequest;
+        private System.Windows.Forms.TextBox txtSecurityVoidRequest;
+        private System.Windows.Forms.TextBox txtRequestKeyVoidRequest;
+        private System.Windows.Forms.TabPage tabPage10;
+        private System.Windows.Forms.Label label67;
+        private System.Windows.Forms.Label label70;
+        private System.Windows.Forms.Label label69;
+        private System.Windows.Forms.Label label68;
+        private System.Windows.Forms.Button btnReturnRequest;
+        private System.Windows.Forms.TextBox txtAmountReturnRequest;
+        private System.Windows.Forms.TextBox txtRequestKeyReturnRequest;
+        private System.Windows.Forms.TextBox txtSecurityReturnRequest;
+        private System.Windows.Forms.TextBox txtMerchantReturnRequest;
     }
 }
 

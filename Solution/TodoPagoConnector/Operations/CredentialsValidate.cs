@@ -7,7 +7,7 @@ using TodoPagoConnector.Model;
 
 namespace TodoPagoConnector.Operations
 {
-    public class CredentialsValidate
+    internal class CredentialsValidate
     {
         public Boolean ValidateCredentials(User user)
         {

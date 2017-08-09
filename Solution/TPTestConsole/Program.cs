@@ -21,9 +21,14 @@ namespace TPTestConsole
 
             TodoPagoConnectorSample tpcs = new TodoPagoConnectorSample();
 
-            //Console.WriteLine("----------------------------------------------------------------------");
-            //Console.WriteLine("getCredentials");
-            //tpcs.getCredentials();
+            Console.WriteLine("----------------------------------------------------------------------");
+            Console.WriteLine("getCredentials");
+            tpcs.getCredentials();
+            
+            Console.WriteLine("----------------------------------------------------------------------");
+            Console.WriteLine("GetEndpointForm");
+            string endpointForm = tpcs.GetEndpointForm();
+            Console.WriteLine("Response: {0}", endpointForm);
 
             Console.WriteLine("------------------------------------------------------------------------");
             Console.WriteLine("initSendAuthorizeRequestParams");
@@ -46,7 +51,7 @@ namespace TPTestConsole
             Console.WriteLine("------------------------------------------------------------------------");
             Console.WriteLine("PaymentMethods");
             tpcs.getAllPaymentMethods();
-        
+
             Console.WriteLine("------------------------------------------------------------------------");
             Console.WriteLine("VoidRequest");
             tpcs.voidRequest();
@@ -55,9 +60,13 @@ namespace TPTestConsole
             Console.WriteLine("ReturnRequest");
             tpcs.returnRequest();
 
-            //Console.WriteLine("----------------------------------------------------------------------");
-            //Console.WriteLine("initGetByRangeDateTime");
-            //tpcs.getByRangeDateTime();
+            Console.WriteLine("----------------------------------------------------------------------");
+            Console.WriteLine("initGetByRangeDateTime");
+            tpcs.getByRangeDateTime();
+
+            Console.WriteLine("----------------------------------------------------------------------");
+            Console.WriteLine("DiscoverPaymentMethods");
+            tpcs.discoverPaymentMethods();
 
             Console.Read();
         }
@@ -123,6 +132,7 @@ namespace TPTestConsole
                 sendAuthorizeRequestPayload.Add(ElementNames.EMAILCLIENTE, "email_cliente@dominio.com");
                 sendAuthorizeRequestPayload.Add(ElementNames.MAXINSTALLMENTS, "12"); //NO MANDATORIO, MAXIMA CANTIDAD DE CUOTAS, VALOR MAXIMO 12
                 sendAuthorizeRequestPayload.Add(ElementNames.MININSTALLMENTS, "3"); //NO MANDATORIO, MINIMA CANTIDAD DE CUOTAS, VALOR MINIMO 1
+                sendAuthorizeRequestPayload.Add(ElementNames.TIMEOUT, "300000"); //NO MANDATORIO, TIEMPO DE ESPERA DE 300000 (5 minutos) a 21600000 (6hs)
 
                 sendAuthorizeRequestPayload.Add("CSBTCITY", "Villa General Belgrano"); //MANDATORIO.
                 sendAuthorizeRequestPayload.Add("CSBTCOUNTRY", "AR");//MANDATORIO. Código ISO.
@@ -291,31 +301,48 @@ namespace TPTestConsole
                     Console.WriteLine(ex.Message);
                 }
 
-                for (int i = 0; i < res.Count; i++)
+                if (res != null && res.Count > 0)
                 {
-                    Dictionary<string, object> dic = res[i];
-                    foreach (Dictionary<string, object> aux in dic.Values)
+                    Dictionary<string, object> d = res[0];
+                    if (d.Values != null && d.Values.Count > 0)
                     {
-                        foreach (string k in aux.Keys)
+                        for (int i = 0; i < res.Count; i++)
                         {
-                            if (aux[k].GetType().IsInstanceOfType(aux))
+                            Dictionary<string, object> dic = res[i];
+                            foreach (Dictionary<string, object> aux in dic.Values)
                             {
-                               Dictionary<string, object> a = (Dictionary<string, object>) aux[k];
-                               Console.WriteLine("- " + k + ": ");
-                               foreach (Dictionary<string, object> aux2 in a.Values)
+                                foreach (string k in aux.Keys)
                                 {
-                                    Console.WriteLine("- REFUND: ");
-                                    foreach (string b in aux2.Keys)
+                                    if (aux[k].GetType().IsInstanceOfType(aux))
                                     {
-                                        Console.WriteLine("- " + b + ": " + aux2[b]);
+                                        Dictionary<string, object> a = (Dictionary<string, object>)aux[k];
+                                        Console.WriteLine("- " + k + ": ");
+                                        foreach (Dictionary<string, object> aux2 in a.Values)
+                                        {
+                                            Console.WriteLine("- REFUND: ");
+                                            foreach (string b in aux2.Keys)
+                                            {
+                                                Console.WriteLine("- " + b + ": " + aux2[b]);
 
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("- " + k + ": " + aux[k]);
                                     }
                                 }
-                            }else{
-                                Console.WriteLine("- " + k + ": " + aux[k]);
                             }
                         }
                     }
+                    else
+                    {
+                        Console.WriteLine("Sin datos");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Sin datos");
                 }
             }
 
@@ -391,20 +418,30 @@ namespace TPTestConsole
                 return user;
             }
 
+            public void discoverPaymentMethods()
+            {
+                Dictionary<string, object> res = connector.DiscoverPaymentMethods();
+                printDictionary(res, "");
+            }
 
-            //Utils
+        //Utils
 
-            /// <summary>
-            /// Permite emular la validación del Certificado SSL devolviendo true siempre
-            /// </summary>
-            /// <param name="sender"></param>
-            /// <param name="certificate"></param>
-            /// <param name="chain"></param>
-            /// <param name="sslPolicyErrors"></param>
-            /// <returns>bool true</returns>
-            private bool ValidateCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+        /// <summary>
+        /// Permite emular la validación del Certificado SSL devolviendo true siempre
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="certificate"></param>
+        /// <param name="chain"></param>
+        /// <param name="sslPolicyErrors"></param>
+        /// <returns>bool true</returns>
+        private bool ValidateCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
             {
                 return true;
+            }
+
+            public string GetEndpointForm()
+            {
+                return connector.GetEndpointForm();
             }
 
             private void printDictionary(Dictionary<string, object> p, string tab)

@@ -54,7 +54,7 @@ namespace TodoPagoConnector {
                  theProxy.Credentials = CredentialCache.DefaultCredentials;
              }
 
-             if (withApiKey != null && withApiKey != false){
+             if (withApiKey != false){
                  foreach (var key in this.headders.Keys) {
                      httpWebRequest.Headers.Add(key, this.headders[key]);
                  }
@@ -111,9 +111,5 @@ namespace TodoPagoConnector {
             aux.Add(keyVal, ret);
             return aux;
         }
-
-
-
-
     }
 }

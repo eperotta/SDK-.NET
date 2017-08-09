@@ -10,7 +10,7 @@ using TodoPagoConnector.Utils;
 using System.Text.RegularExpressions;
 namespace TodoPagoConnector.Operations
 {
-    public class FraudControlValidate{
+    internal class FraudControlValidate{
 
         private const string PUNCT = "[!\"#$%&'()*+,-./:;<=>?@[]^_`{|}~]";
 	    private const string ASCII = "\\P{ASCII}";
