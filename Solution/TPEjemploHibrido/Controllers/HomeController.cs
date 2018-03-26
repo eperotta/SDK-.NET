@@ -224,8 +224,8 @@ namespace TPEjemploHibrido.Controllers
         {
             var headers = new Dictionary<String, String>();
             headers.Add("Authorization", info.ApiKey);
+            return new TPConnector(TPConnector.productionEndpoint, headers);
 
-            return new TPConnector(TPConnector.developerEndpoint, headers);
         }
     }
 }
