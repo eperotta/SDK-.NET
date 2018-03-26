@@ -18,60 +18,37 @@
                     <div class="panel-group">
                         <div class="row col-sm-12 col-md-12 col-lg-12">
                             <div id="tp-form-tph">
-                                <div id="tp-content-form">
+                                <div class="tp-default-form">
+                                    <select id="formaPagoCbx" class="select-tp select-forma-pago-tp"></select>
+                                    <input id="numeroTarjetaTxt" class="input-tp input-nro-tarjeta-tp" />
+                                    <label id="numeroTarjetaLbl" class="label-tp label-nro-tarjeta-tp"></label>
+                                    <select id="medioPagoCbx" class="select-tp select-medio-pago-tp"></select>
+                                    <select id="bancoCbx" class="select-tp select-banco-tp"></select>
+                                    <select id="promosCbx" class="select-tp select-promos-tp"></select>
+                                    <label id="promosLbl" class="label-tp label-promos-tp"></label>
                                     <div>
-                                        <select id="formaDePagoCbx" class="form-control valid"></select>
-                                    </div>
-                                    <div>
-                                        <select id="bancoCbx" class="form-control valid"></select>
-                                    </div>
-                                    <div>
-                                        <select id="promosCbx" class="left form-control valid"></select>
-                                        <label id="labelPromotionTextId" class="left tp-label"></label>
-                                        <div class="clear"></div>
-                                    </div>
-
-                                    <!-- Para los casos en el que el comercio opera con PEI -->
-                                    <div>
-                                        <label id="labelPeiCheckboxId"></label>
-                                        <input id="peiCbx" class="left form-control text-box single-line" />
-                                    </div>
-
-                                    <div>
-                                        <input id="numeroTarjetaTxt" class="form-control text-box single-line" />
-                                    </div>
-                                    <div class="dateFields">
-                                        <input id="mesTxt" class="left form-control text-box">
-                                        <input id="anioTxt" class="left form-control text-box">
-                                        <div class="clear"></div>
+                                        <label id="peiLbl" class="label-tp label-pei-tp"></label>
+                                        <input id="peiCbx" class="input-tp input-pei-tp" />
                                     </div>
                                     <div>
-                                        <input id="codigoSeguridadTxt" class="left form-control text-box single-line" />
-                                        <label id="labelCodSegTextId" class="left tp-label"></label>
-                                        <div class="clear"></div>
+                                        <select id="mesCbx" class="select-tp select-mes-tp"></select>
+                                        <select id="anioCbx" class="select-tp select-anio-tp"></select>
+                                        <label id="fechaLbl" class="label-tp label-fecha-tp"></label>
                                     </div>
+                                    <input id="codigoSeguridadTxt" class="input-tp input-cod-seguridad-tp" />
+                                    <label id="codigoSeguridadLbl" class="label-tp label-cod-seguridad-tp"></label>
+                                    <input id="nombreTxt" class="input-tp input-nombre-tp" />
+                                    <select id="tipoDocCbx" class="select-tp select-tipo-doc-tp"></select>
+                                    <input id="nroDocTxt" class="input-tp input-nro-doc-tp" />
+                                    <input id="emailTxt" class="input-tp input-email-tp" />
                                     <div>
-                                        <input id="apynTxt" class="form-control text-box single-line" />
+                                        <label id="tokenPeiLbl" class="label-tp label-token-pei-tp"></label>
+                                        <input id="tokenPeiTxt" class="input-tp input-token-pei-tp" />
                                     </div>
-                                    <div>
-                                        <select id="tipoDocCbx" class="form-control valid"></select>
-                                    </div>
-                                    <div>
-                                        <input id="nroDocTxt" class="form-control text-box single-line" />
-                                    </div>
-                                    <div>
-                                        <input id="emailTxt" class="form-control text-box single-line" /><br />
-                                    </div>
-
-                                    <!-- Para los casos en el que el comercio opera con PEI -->
-                                    <div>
-                                        <label id="labelPeiTokenTextId"></label>
-                                        <input id="peiTokenTxt" class="left form-control text-box single-line" />
-                                    </div>
-
                                     <div id="tp-bt-wrapper">
                                         <button id="MY_btnPagarConBilletera" class="tp-button k-button" />
                                         <button id="MY_btnConfirmarPago" class="tp-button k-button" />
+                                    </div>
                                     </div>
                                 </div>
                             </div>
@@ -96,7 +73,10 @@
 }
 
 @section Scripts {
-    <script src="https://developers.todopago.com.ar/resources/TPHybridForm-v0.1.js"></script>
+    <!--<script src="https://developers.todopago.com.ar/resources/v2/TPBSAForm.min.js"></script>-->
+    <!--<script src="https://forms.todopago.com.ar/resources/TPHybridForm-v0.1.js"></script>-->
+    <script src="https://forms.todopago.com.ar/resources/v2/TPBSAForm.min.js"></script>
+    <!--<script src="https://developers.todopago.com.ar/resources/TPHybridForm-v0.1.js"></script>-->
 
     <script>
         //PublicRequesKey, esta se obtiene de la respuesta del SAR
@@ -104,7 +84,7 @@
         var mail = "prueba@tpago.com";
         var completeName = "Juan Perez";
         var dni = '31345234';
-        var defDniType = 'CI';
+        var defDniType = 'DNI';
     </script>
 
     <script src="@Url.Content("~/Scripts/scripts.js")"></script>
