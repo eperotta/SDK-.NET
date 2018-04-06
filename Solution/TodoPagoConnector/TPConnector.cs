@@ -33,7 +33,7 @@ namespace TodoPagoConnector
 
         private const string TodoPago_Endpoint_Test_Form = "https://developers.todopago.com.ar/resources/v2/TPBSAForm.min.js";
         /* "https://developers.todopago.com.ar/resources/TPHybridForm-v0.1.js";*/
-        private const string TodoPago_Endpoint_Prod_Form = "https://forms.todopago.com.ar/resources/TPHybridForm-v0.1.js";
+        private const string TodoPago_Endpoint_Prod_Form = "https://developers.todopago.com.ar/resources/v2/TPBSAForm.min.js";
         /*"https://forms.todopago.com.ar/resources/TPHybridForm-v0.1.js";*/
         #endregion
 
